@@ -1,0 +1,240 @@
+/* ─────────────────────────────────────────────────────────────
+   Finu design system — scoped under .finu so it never leaks
+   into the rest of the app.
+   ───────────────────────────────────────────────────────────── */
+
+.finu {
+  --f-bg: #06060c;
+  --f-bg-raise: #0b0b16;
+  --f-ink: #f5f5f8;
+  --f-ink-dim: rgba(245, 245, 248, 0.62);
+  --f-ink-faint: rgba(245, 245, 248, 0.38);
+  --f-line: rgba(245, 245, 248, 0.08);
+  --f-blue: #6e7bff;
+  --f-violet: #a07bff;
+  --f-mint: #4ff0c8;
+  --f-glow: rgba(110, 123, 255, 0.35);
+  --f-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  background: var(--f-bg);
+  color: var(--f-ink);
+  font-family: var(--f-font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+.finu ::selection {
+  background: var(--f-blue);
+  color: #fff;
+}
+
+/* Typography */
+.f-display {
+  font-family: var(--f-font-display), sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+.f-serif {
+  font-family: var(--f-font-serif), serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.f-eyebrow {
+  font-family: var(--f-font-display), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--f-ink-faint);
+}
+
+.f-gradient-text {
+  background: linear-gradient(
+    100deg,
+    var(--f-blue) 0%,
+    var(--f-violet) 45%,
+    var(--f-mint) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Buttons */
+.f-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.9rem;
+  border-radius: 999px;
+  font-family: var(--f-font-display), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    transform 0.5s var(--f-ease),
+    box-shadow 0.5s var(--f-ease),
+    background-color 0.5s var(--f-ease),
+    border-color 0.5s var(--f-ease);
+  will-change: transform;
+}
+.f-btn-primary {
+  background: var(--f-ink);
+  color: #0a0a12;
+}
+.f-btn-primary:hover {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 12px 48px -8px var(--f-glow);
+}
+.f-btn-ghost {
+  border: 1px solid rgba(245, 245, 248, 0.18);
+  color: var(--f-ink);
+  background: rgba(245, 245, 248, 0.02);
+}
+.f-btn-ghost:hover {
+  border-color: rgba(245, 245, 248, 0.45);
+  background: rgba(245, 245, 248, 0.06);
+}
+
+/* Nav link underline sweep */
+.f-navlink {
+  position: relative;
+  color: var(--f-ink-dim);
+  transition: color 0.4s var(--f-ease);
+}
+.f-navlink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--f-ease);
+}
+.f-navlink:hover {
+  color: var(--f-ink);
+}
+.f-navlink:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Marquee */
+@keyframes f-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.f-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: f-marquee var(--f-marquee-duration, 42s) linear infinite;
+}
+.f-marquee-track[data-reverse="true"] {
+  animation-direction: reverse;
+}
+.f-marquee:hover .f-marquee-track {
+  animation-play-state: paused;
+}
+.f-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+/* Film grain overlay */
+.f-grain::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: f-grain 9s steps(6) infinite;
+}
+@keyframes f-grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -5%); }
+  60% { transform: translate(-2%, -3%); }
+  80% { transform: translate(4%, 4%); }
+}
+
+/* Slow pulse for network dots in SVG visuals */
+@keyframes f-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.35); }
+}
+.f-pulse {
+  animation: f-pulse 2.6s var(--f-ease) infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* Dash-flow for SVG transfer lines */
+@keyframes f-dash {
+  to { stroke-dashoffset: -240; }
+}
+.f-dash {
+  stroke-dasharray: 6 14;
+  animation: f-dash 6s linear infinite;
+}
+
+/* Hairline divider */
+.f-hairline {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--f-line) 20%,
+    var(--f-line) 80%,
+    transparent
+  );
+}
+
+/* Glass card */
+.f-glass {
+  background: linear-gradient(
+    150deg,
+    rgba(245, 245, 248, 0.07),
+    rgba(245, 245, 248, 0.02)
+  );
+  border: 1px solid rgba(245, 245, 248, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Reduced motion — kill the theatrics */
+@media (prefers-reduced-motion: reduce) {
+  .finu *,
+  .finu *::before,
+  .finu *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
