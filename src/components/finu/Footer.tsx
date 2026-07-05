@@ -1,80 +1,91 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import Magnetic from "./Magnetic";
-import { TextReveal, Reveal } from "./TextReveal";
 
+/**
+ * Footnotes + the dark rounded footer card, Cleo-style: brand block,
+ * tagline, and honest link columns — no dead "#" destinations.
+ */
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden">
-      {/* Closing CTA */}
-      <div className="relative mx-auto max-w-[1400px] px-6 py-32 text-center md:px-10 md:py-44">
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/2 opacity-30 blur-[120px]"
-          style={{
-            background:
-              "radial-gradient(closest-side, rgba(110,123,255,0.5), rgba(160,123,255,0.25), transparent)",
-          }}
-        />
-        <Reveal>
-          <p className="f-eyebrow mb-9">06 / Programmable finance</p>
-        </Reveal>
-        <TextReveal
-          as="h2"
-          className="f-display mx-auto max-w-6xl text-[clamp(3.4rem,8vw,8rem)] leading-[0.9]"
-        >
-          The future of programmable finance starts now.
-        </TextReveal>
-        <Reveal delay={0.3}>
-          <div className="mt-12 flex items-center justify-center gap-4">
-            <Magnetic>
-              <a
-                href="https://app.meetfinu.com"
-                className="f-btn f-btn-primary group"
-              >
-                Enter Finu
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a href="#numbers" className="f-btn f-btn-ghost">
-                See the numbers
-              </a>
-            </Magnetic>
-          </div>
-        </Reveal>
+    <footer className="px-[var(--f-gutter)] pb-[var(--f-gutter)]">
+      {/* Footnotes — sources for the figures used above */}
+      <div
+        id="footnotes"
+        className="mx-auto max-w-[1300px] scroll-mt-24 px-4 pb-10 pt-2 md:px-6"
+      >
+        <p className="text-[0.68rem] leading-relaxed text-[var(--f-ink-faint)]">
+          <sup>1</sup> Market figures are third-party industry estimates of
+          annual global payment flows and circulating stablecoin supply. They
+          describe the market Finu operates in, not Finu transaction volumes.
+        </p>
+        <p className="mt-1.5 text-[0.68rem] leading-relaxed text-[var(--f-ink-faint)]">
+          Interface visuals on this page are illustrative product examples.
+        </p>
       </div>
 
-      <div className="f-hairline" />
+      {/* Dark footer card */}
+      <div className="rounded-[var(--f-radius)] bg-[var(--f-footer)] text-[var(--f-cream)]">
+        <div className="mx-auto grid max-w-[1300px] gap-12 px-7 py-14 md:grid-cols-[1fr_1.4fr] md:px-12 md:py-20">
+          <div>
+            <Link
+              href="/"
+              className="f-display inline-block rounded-full bg-white/10 px-4 py-1.5 text-xl tracking-[-0.04em]"
+            >
+              finu<span className="text-[var(--f-lime)]">.</span>
+            </Link>
+            <p className="f-display mt-8 max-w-xs text-2xl md:text-[1.7rem]">
+              Finu makes money move smarter.
+            </p>
+          </div>
 
-      {/* Footer proper */}
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-10 px-6 py-14 md:flex-row md:items-end md:justify-between md:px-10">
-        <div>
-          <Link href="/" className="f-display text-2xl tracking-tight">
-            finu<span className="text-[var(--f-lime)]">.</span>
-          </Link>
-          <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--f-ink-faint)]">
-            The intelligence layer for global money.
-          </p>
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-10 text-sm sm:grid-cols-3"
+          >
+            <div className="space-y-3">
+              <p className="f-mono text-[0.6rem] text-[var(--f-cream-faint)]">
+                Product
+              </p>
+              <a href="/#platform" className="block w-fit text-[var(--f-cream-dim)] transition-colors hover:text-[var(--f-cream)]">
+                Platform
+              </a>
+              <a href="/#numbers" className="block w-fit text-[var(--f-cream-dim)] transition-colors hover:text-[var(--f-cream)]">
+                Numbers
+              </a>
+              <a href="/#faq" className="block w-fit text-[var(--f-cream-dim)] transition-colors hover:text-[var(--f-cream)]">
+                FAQ
+              </a>
+            </div>
+            <div className="space-y-3">
+              <p className="f-mono text-[0.6rem] text-[var(--f-cream-faint)]">
+                Company
+              </p>
+              <Link href="/company" className="block w-fit text-[var(--f-cream-dim)] transition-colors hover:text-[var(--f-cream)]">
+                About Finu
+              </Link>
+            </div>
+            <div className="space-y-3">
+              <p className="f-mono text-[0.6rem] text-[var(--f-cream-faint)]">
+                Open
+              </p>
+              <a
+                href="https://app.meetfinu.com"
+                className="block w-fit text-[var(--f-cream-dim)] transition-colors hover:text-[var(--f-cream)]"
+              >
+                app.meetfinu.com
+              </a>
+            </div>
+          </nav>
         </div>
 
-        <nav className="flex gap-14 text-sm">
-          <div className="space-y-3">
-            <p className="f-eyebrow !text-[0.65rem]">Product</p>
-            <a href="/#features" className="f-navlink block w-fit">Platform</a>
-            <a href="/#numbers" className="f-navlink block w-fit">Numbers</a>
-          </div>
-          <div className="space-y-3">
-            <p className="f-eyebrow !text-[0.65rem]">Company</p>
-            <Link href="/company" className="f-navlink block w-fit">Company</Link>
-            <a href="#" className="f-navlink block w-fit">Careers</a>
-          </div>
-        </nav>
-
-        <p className="text-xs text-[var(--f-ink-faint)]">
-          © {new Date().getFullYear()} Finu. All rights reserved.
-        </p>
+        <div className="mx-auto flex max-w-[1300px] items-center justify-between border-t border-white/10 px-7 py-6 md:px-12">
+          <p className="text-xs text-[var(--f-cream-faint)]">
+            © {new Date().getFullYear()} Finu. All rights reserved.
+          </p>
+          <p className="flex items-center gap-2 font-mono text-[0.6rem] tracking-[0.16em] text-[var(--f-cream-faint)]">
+            <span className="f-live-dot h-1.5 w-1.5 rounded-full bg-[var(--f-lime)]" />
+            SETTLEMENT NEVER SLEEPS
+          </p>
+        </div>
       </div>
     </footer>
   );
