@@ -1,24 +1,15 @@
-import { Space_Grotesk, Instrument_Serif, Inter } from "next/font/google";
+import { Geist, Manrope } from "next/font/google";
 
-export const grotesk = Space_Grotesk({
+export const geist = Geist({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--f-font-display",
   display: "swap",
 });
 
-export const serifAccent = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--f-font-serif",
-  display: "swap",
-});
-
-export const body = Inter({
+export const manrope = Manrope({
   subsets: ["latin"],
   variable: "--f-font-body",
   display: "swap",
 });
 
-export const finuFontClass = `${grotesk.variable} ${serifAccent.variable} ${body.variable}`;
+export const finuFontClass = `${geist.variable} ${manrope.variable}`;

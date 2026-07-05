@@ -3,7 +3,7 @@
 import { useMemo, useRef, Suspense } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Preload } from "@react-three/drei";
+import { Float, Preload, RoundedBox } from "@react-three/drei";
 
 /* Shared GLSL simplex noise (Ashima / IQ) */
 const NOISE_GLSL = /* glsl */ `
@@ -329,6 +329,143 @@ function Network() {
   );
 }
 
+/* ── Stablecoin tokens and autonomous finance cards ── */
+function Stablecoin({
+  position,
+  color,
+  scale = 1,
+}: {
+  position: [number, number, number];
+  color: string;
+  scale?: number;
+}) {
+  return (
+    <Float speed={1.2} rotationIntensity={0.4} floatIntensity={0.75}>
+      <group position={position} scale={scale} rotation={[0.2, -0.35, -0.16]}>
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.78, 0.78, 0.13, 64]} />
+          <meshPhysicalMaterial
+            color={color}
+            metalness={0.82}
+            roughness={0.2}
+            clearcoat={1}
+            clearcoatRoughness={0.12}
+            emissive={color}
+            emissiveIntensity={0.08}
+          />
+        </mesh>
+        <mesh position={[0, -0.075, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.55, 0.035, 16, 64]} />
+          <meshStandardMaterial
+            color="#f7f8ff"
+            metalness={0.8}
+            roughness={0.22}
+            emissive="#ffffff"
+            emissiveIntensity={0.18}
+          />
+        </mesh>
+        <group position={[0, -0.15, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh scale={[0.08, 0.34, 0.035]}>
+            <boxGeometry />
+            <meshBasicMaterial color="#f7f8ff" />
+          </mesh>
+          <mesh position={[0, 0.18, 0]} rotation={[0, 0, 0.65]} scale={[0.24, 0.045, 0.035]}>
+            <boxGeometry />
+            <meshBasicMaterial color="#f7f8ff" />
+          </mesh>
+          <mesh position={[0, -0.18, 0]} rotation={[0, 0, 0.65]} scale={[0.24, 0.045, 0.035]}>
+            <boxGeometry />
+            <meshBasicMaterial color="#f7f8ff" />
+          </mesh>
+        </group>
+      </group>
+    </Float>
+  );
+}
+
+function FinanceCard({
+  position,
+  rotation,
+  accent,
+  scale = 1,
+}: {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  accent: string;
+  scale?: number;
+}) {
+  return (
+    <Float speed={0.85} rotationIntensity={0.14} floatIntensity={0.65}>
+      <group position={position} rotation={rotation} scale={scale}>
+        <RoundedBox args={[2.45, 1.38, 0.08]} radius={0.12} smoothness={5}>
+          <meshPhysicalMaterial
+            color="#111120"
+            transparent
+            opacity={0.72}
+            roughness={0.22}
+            metalness={0.4}
+            transmission={0.16}
+            thickness={0.8}
+            clearcoat={1}
+          />
+        </RoundedBox>
+        <mesh position={[-0.86, 0.43, 0.07]} scale={[0.35, 0.035, 0.025]}>
+          <boxGeometry />
+          <meshBasicMaterial color={accent} transparent opacity={0.95} />
+        </mesh>
+        <mesh position={[-0.56, 0.12, 0.07]} scale={[0.64, 0.07, 0.025]}>
+          <boxGeometry />
+          <meshBasicMaterial color="#f5f5f8" transparent opacity={0.82} />
+        </mesh>
+        <mesh position={[-0.73, -0.13, 0.07]} scale={[0.47, 0.03, 0.025]}>
+          <boxGeometry />
+          <meshBasicMaterial color="#f5f5f8" transparent opacity={0.28} />
+        </mesh>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <mesh
+            key={i}
+            position={[0.18 + i * 0.19, -0.27 + Math.sin(i * 1.6) * 0.16, 0.07]}
+            scale={[0.035, 0.13 + i * 0.035, 0.025]}
+          >
+            <boxGeometry />
+            <meshBasicMaterial
+              color={i > 2 ? "#4ff0c8" : accent}
+              transparent
+              opacity={0.45 + i * 0.09}
+            />
+          </mesh>
+        ))}
+        <mesh position={[0.82, 0.43, 0.07]}>
+          <circleGeometry args={[0.09, 32]} />
+          <meshBasicMaterial color="#4ff0c8" />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
+
+function FinancialObjects() {
+  return (
+    <group>
+      <Stablecoin position={[-5.8, 2.2, -0.6]} color="#6e7bff" scale={0.82} />
+      <Stablecoin position={[5.35, -2.4, -1.2]} color="#4ff0c8" scale={0.58} />
+      <Stablecoin position={[5.9, 2.65, -2.2]} color="#a07bff" scale={0.44} />
+      <FinanceCard
+        position={[-5.6, -2.2, -1.2]}
+        rotation={[0.18, 0.34, -0.12]}
+        accent="#6e7bff"
+        scale={0.72}
+      />
+      <FinanceCard
+        position={[5.3, 1.55, -1.4]}
+        rotation={[-0.1, -0.34, 0.1]}
+        accent="#a07bff"
+        scale={0.62}
+      />
+    </group>
+  );
+}
+
 /* ── Camera drift + mouse parallax on the whole scene ── */
 function Rig({ children }: { children: React.ReactNode }) {
   const group = useRef<THREE.Group>(null);
@@ -365,13 +502,19 @@ export default function HeroScene({
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
+          <ambientLight intensity={0.46} color="#c7ceff" />
+          <pointLight position={[-5, 4, 6]} intensity={36} color="#6e7bff" distance={18} />
+          <pointLight position={[5, -3, 5]} intensity={28} color="#4ff0c8" distance={16} />
           <Rig>
             <Nebula />
             <Particles count={variant === "full" ? 2600 : 1400} />
             {variant === "full" && (
-              <Float speed={1.1} rotationIntensity={0.08} floatIntensity={0.4}>
-                <Network />
-              </Float>
+              <>
+                <Float speed={1.1} rotationIntensity={0.08} floatIntensity={0.4}>
+                  <Network />
+                </Float>
+                <FinancialObjects />
+              </>
             )}
           </Rig>
           <Preload all />

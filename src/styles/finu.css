@@ -1,11 +1,37 @@
+/* General Sans — served from Fontshare's official CDN. Geist and Manrope
+   are self-hosted by next/font in components/finu/fonts.ts. */
+@font-face {
+  font-family: "General Sans";
+  src: url("https://cdn.fontshare.com/wf/MFQT7HFGCR2L5ULQTW6YXYZXXHMPKLJ3/YWQ244D6TACUX5JBKATPOW5I5MGJ3G73/7YY3ZAAE3TRV2LANYOLXNHTPHLXVWTKH.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("https://cdn.fontshare.com/wf/3RZHWSNONLLWJK3RLPEKUZOMM56GO4LJ/BPDRY7AHVI3MCDXXVXTQQ76H3UXA63S3/SB2OEB6IKZPRR6JT4GFJ2TFT6HBB6AZN.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("https://cdn.fontshare.com/wf/K46YRH762FH3QJ25IQM3VAXAKCHEXXW4/ISLWQPUZHZF33LRIOTBMFOJL57GBGQ4B/3ZLMEXZEQPLTEPMHTQDAUXP5ZZXCZAEN.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+
 /* ─────────────────────────────────────────────────────────────
    Finu design system — scoped under .finu so it never leaks
    into the rest of the app.
    ───────────────────────────────────────────────────────────── */
 
 .finu {
-  --f-bg: #06060c;
-  --f-bg-raise: #0b0b16;
+  --f-bg: #050508;
+  --f-bg-raise: #09090f;
   --f-ink: #f5f5f8;
   --f-ink-dim: rgba(245, 245, 248, 0.62);
   --f-ink-faint: rgba(245, 245, 248, 0.38);
@@ -13,6 +39,7 @@
   --f-blue: #6e7bff;
   --f-violet: #a07bff;
   --f-mint: #4ff0c8;
+  --f-lime: #c8ff3d;
   --f-glow: rgba(110, 123, 255, 0.35);
   --f-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -30,16 +57,16 @@
 
 /* Typography */
 .f-display {
-  font-family: var(--f-font-display), sans-serif;
+  font-family: "General Sans", var(--f-font-display), sans-serif;
   font-weight: 600;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.055em;
   line-height: 0.98;
 }
 .f-serif {
-  font-family: var(--f-font-serif), serif;
-  font-style: italic;
+  font-family: "General Sans", var(--f-font-display), sans-serif;
+  font-style: normal;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.055em;
 }
 .f-eyebrow {
   font-family: var(--f-font-display), sans-serif;
@@ -53,9 +80,9 @@
 .f-gradient-text {
   background: linear-gradient(
     100deg,
-    var(--f-blue) 0%,
-    var(--f-violet) 45%,
-    var(--f-mint) 100%
+    #f4f5ff 0%,
+    var(--f-violet) 42%,
+    var(--f-lime) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -83,7 +110,7 @@
   will-change: transform;
 }
 .f-btn-primary {
-  background: var(--f-ink);
+  background: var(--f-lime);
   color: #0a0a12;
 }
 .f-btn-primary:hover {
@@ -125,6 +152,37 @@
 .f-navlink:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.f-nav-glass {
+  background: rgba(9, 9, 15, 0.72);
+  box-shadow:
+    0 10px 50px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+
+.f-split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.f-split-word {
+  display: inline-block;
+  will-change: transform, filter, opacity;
+}
+
+.f-live-dot {
+  animation: f-live 1.8s ease-in-out infinite;
+  box-shadow: 0 0 18px rgba(200, 255, 61, 0.65);
+}
+
+@keyframes f-live {
+  0%, 100% { opacity: 0.45; transform: scale(0.78); }
+  50% { opacity: 1; transform: scale(1.12); }
 }
 
 /* Marquee */
@@ -228,6 +286,57 @@
   -webkit-backdrop-filter: blur(24px);
 }
 
+.f-number-grid,
+.f-infra-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at center, black 15%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle at center, black 15%, transparent 72%);
+}
+
+.f-infra-grid {
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.f-coin-stage {
+  background: radial-gradient(circle, rgba(110, 123, 255, 0.09), transparent 64%);
+  transform-style: preserve-3d;
+}
+
+.f-coin-orbit {
+  animation: f-orbit 18s linear infinite;
+}
+
+.f-coin-orbit:nth-child(2) {
+  animation-direction: reverse;
+  animation-duration: 13s;
+}
+
+.f-coin-orbit::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--f-lime);
+  box-shadow: 0 0 20px rgba(200, 255, 61, 0.7);
+}
+
+@keyframes f-orbit {
+  to { transform: rotate(360deg); }
+}
+
+.finu :focus-visible {
+  outline: 2px solid var(--f-lime);
+  outline-offset: 4px;
+}
+
 /* Reduced motion — kill the theatrics */
 @media (prefers-reduced-motion: reduce) {
   .finu *,
@@ -236,5 +345,16 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .f-number-grid,
+  .f-infra-grid {
+    background-size: 36px 36px;
+  }
+
+  .f-grain::before {
+    opacity: 0.035;
   }
 }

@@ -5,7 +5,10 @@ import PageShell from "@/components/finu/PageShell";
 import Hero from "@/components/finu/Hero";
 import LogoWall from "@/components/finu/LogoWall";
 import Manifesto from "@/components/finu/Manifesto";
+import WhyStablecoins from "@/components/finu/WhyStablecoins";
 import Features from "@/components/finu/Features";
+import NumbersStory from "@/components/finu/NumbersStory";
+import Infrastructure from "@/components/finu/Infrastructure";
 
 export const metadata: Metadata = {
   // Title falls through to the root layout default (no template suffix).
@@ -20,7 +23,10 @@ export default function HomePage() {
         <Hero />
         <LogoWall />
         <Manifesto />
+        <WhyStablecoins />
         <Features />
+        <NumbersStory />
+        <Infrastructure />
       </PageShell>
     </div>
   );

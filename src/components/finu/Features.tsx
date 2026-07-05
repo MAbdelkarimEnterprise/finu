@@ -9,7 +9,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { Globe2, Zap, Sparkles } from "lucide-react";
-import { TextReveal, Reveal } from "./TextReveal";
+import { TextReveal, Reveal, SplitTextReveal } from "./TextReveal";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -256,25 +256,25 @@ function IntelligenceVisual() {
 /* ── Section copy ── */
 const FEATURES = [
   {
-    icon: Globe2,
-    kicker: "01 — Spend",
-    title: "Spend globally.",
-    body: "One card, every currency. Finu settles in stablecoins under the hood while you pay like a local in 150+ countries — no FX spreads, no weekend cutoffs, no borders.",
-    Visual: CardVisual,
+    icon: Sparkles,
+    kicker: "01 — Understand",
+    title: "Read the intent.",
+    body: "Finu interprets the goal, constraints, timing, and risk behind every movement of money.",
+    Visual: IntelligenceVisual,
   },
   {
     icon: Zap,
-    kicker: "02 — Move",
-    title: "Move money instantly.",
-    body: "Transfers that used to take three days settle in seconds, around the clock. Finu routes value across 15+ blockchain networks and picks the fastest, cheapest rail every time.",
+    kicker: "02 — Route",
+    title: "Choose the rail.",
+    body: "AI selects the fastest, safest, and most efficient path across currencies and networks.",
     Visual: FlowVisual,
   },
   {
-    icon: Sparkles,
-    kicker: "03 — Think",
-    title: "Financial intelligence built in.",
-    body: "An AI layer watches every flow — optimizing routes, deploying idle treasury, and catching anomalies before they cost you. Your money finally thinks for itself.",
-    Visual: IntelligenceVisual,
+    icon: Globe2,
+    kicker: "03 — Settle",
+    title: "Complete the outcome.",
+    body: "Value arrives globally in seconds, with the full transaction state visible from start to finish.",
+    Visual: CardVisual,
   },
 ];
 
@@ -282,7 +282,22 @@ export default function Features() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="features" className="relative mx-auto max-w-[1400px] px-6 md:px-10">
+    <section id="features" className="relative mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+      <div className="mb-20 border-b border-[var(--f-line)] pb-20 md:mb-28 md:pb-28">
+        <Reveal>
+          <p className="f-eyebrow mb-8">03 / The orchestration layer</p>
+        </Reveal>
+        <div className="grid gap-10 lg:grid-cols-[1fr_0.34fr] lg:items-end">
+          <SplitTextReveal className="f-display max-w-5xl text-[clamp(3.2rem,7.5vw,7.8rem)] leading-[0.9]">
+            How Finu orchestrates money.
+          </SplitTextReveal>
+          <Reveal delay={0.2}>
+            <p className="max-w-sm text-sm leading-relaxed text-[var(--f-ink-dim)] md:text-base">
+              Intent in. The right financial action out.
+            </p>
+          </Reveal>
+        </div>
+      </div>
       <div className="lg:grid lg:grid-cols-2 lg:gap-16">
         {/* Text column — each block owns a full viewport of scroll */}
         <div>
@@ -306,7 +321,7 @@ export default function Features() {
                 {f.title}
               </TextReveal>
               <Reveal delay={0.2}>
-                <p className="mt-7 max-w-md text-lg leading-relaxed text-[var(--f-ink-dim)]">
+                <p className="mt-7 max-w-sm text-base leading-relaxed text-[var(--f-ink-dim)] md:text-lg">
                   {f.body}
                 </p>
               </Reveal>

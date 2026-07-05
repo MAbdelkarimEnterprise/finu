@@ -7,10 +7,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const LINES = [
-  "Money is becoming software.",
-  "Value should move like information —",
-  "instantly, globally, intelligently.",
-  "Finu is the operating layer for that world.",
+  "The financial system",
+  "wasn't built",
+  "for AI.",
 ];
 
 /**
@@ -47,16 +46,27 @@ export default function Manifesto() {
   }, []);
 
   return (
-    <section id="platform" ref={root} className="relative flex min-h-screen items-center">
-      <div className="mx-auto max-w-5xl px-6 md:px-10">
-        <p className="f-display text-[clamp(2rem,5.2vw,4.5rem)] leading-[1.12]">
+    <section
+      id="thesis"
+      ref={root}
+      className="relative flex min-h-screen items-center overflow-hidden"
+    >
+      <div className="absolute inset-0 opacity-70 [background:radial-gradient(circle_at_75%_45%,rgba(110,123,255,0.14),transparent_32%)]" />
+      <div className="relative mx-auto w-full max-w-[1400px] px-6 md:px-10">
+        <div className="mb-16 flex items-center justify-between">
+          <p className="f-eyebrow">01 / The problem</p>
+          <p className="hidden max-w-[15rem] text-right text-xs leading-relaxed text-[var(--f-ink-faint)] md:block">
+            Legacy rails were designed for institutions, batch files, and business hours.
+          </p>
+        </div>
+        <p className="f-display text-[clamp(3.5rem,8.5vw,8.6rem)] leading-[0.9]">
           {LINES.map((line, li) => (
             <span key={li} className="block">
               {line.split(" ").map((word, wi) => (
                 <span
                   key={wi}
                   className={`manifesto-word mr-[0.28em] inline-block will-change-transform ${
-                    li === 3 ? "f-gradient-text" : ""
+                    li === 2 ? "f-gradient-text" : ""
                   }`}
                 >
                   {word}
@@ -65,6 +75,11 @@ export default function Manifesto() {
             </span>
           ))}
         </p>
+        <div className="mt-16 grid gap-8 border-t border-[var(--f-line)] pt-8 text-sm text-[var(--f-ink-dim)] md:grid-cols-3">
+          <p>Slow settlement creates trapped capital.</p>
+          <p>Fragmented rails create unnecessary cost.</p>
+          <p>Static systems cannot act on intent.</p>
+        </div>
       </div>
     </section>
   );
