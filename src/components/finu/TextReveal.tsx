@@ -1,9 +1,14 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Word-by-word masked reveal. Each word rises out of an overflow-hidden
@@ -83,5 +88,66 @@ export function Reveal({
     >
       {children}
     </motion.div>
+  );
+}
+
+/**
+ * GSAP + SplitType line reveal for large editorial statements. SplitType
+ * preserves natural wrapping while GSAP drives the masked rise on scroll.
+ */
+export function SplitTextReveal({
+  children,
+  as: Tag = "h2",
+  className,
+  delay = 0,
+}: {
+  children: string;
+  as?: "p" | "h1" | "h2" | "h3";
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLHeadingElement | HTMLParagraphElement>(null);
+
+  useLayoutEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const split = new SplitType(element, {
+      types: "lines,words",
+      lineClass: "f-split-line",
+      wordClass: "f-split-word",
+    });
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        split.words,
+        { yPercent: 115, opacity: 0, filter: "blur(8px)" },
+        {
+          yPercent: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1.05,
+          delay,
+          stagger: 0.035,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: element,
+            start: "top 86%",
+            once: true,
+          },
+        }
+      );
+    }, element);
+
+    return () => {
+      ctx.revert();
+      split.revert();
+    };
+  }, [children, delay]);
+
+  return (
+    <Tag ref={ref as never} className={className}>
+      {children}
+    </Tag>
   );
 }
