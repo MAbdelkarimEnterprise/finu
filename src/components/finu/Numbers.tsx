@@ -86,15 +86,13 @@ function StatCell({ stat, index }: { stat: Stat; index: number }) {
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(500px circle at 30% 20%, rgba(110,123,255,0.08), transparent 70%)",
+            "radial-gradient(500px circle at 30% 20%, rgba(33,29,25,0.05), transparent 70%)",
         }}
       />
-      <p className="f-eyebrow mb-6">{stat.label}</p>
+      <p className="f-eyebrow mb-6 text-[var(--f-ink-faint)]">{stat.label}</p>
       <div className="f-display text-[clamp(3.2rem,7vw,6rem)] leading-none tracking-tight">
         {stat.literal ? (
-          <span className={stat.literal === "∞" ? "f-gradient-text" : ""}>
-            {stat.literal}
-          </span>
+          <span>{stat.literal}</span>
         ) : (
           <>
             {stat.prefix}

@@ -1,4 +1,4 @@
-import { Geist, Manrope } from "next/font/google";
+import { Geist, Geist_Mono, Manrope } from "next/font/google";
 
 export const geist = Geist({
   subsets: ["latin"],
@@ -12,4 +12,11 @@ export const manrope = Manrope({
   display: "swap",
 });
 
-export const finuFontClass = `${geist.variable} ${manrope.variable}`;
+export const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--f-font-mono",
+  display: "swap",
+});
+
+export const finuFontClass = `${geist.variable} ${manrope.variable} ${geistMono.variable}`;

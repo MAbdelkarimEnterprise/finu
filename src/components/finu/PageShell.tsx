@@ -6,14 +6,12 @@ import FinuNav from "./FinuNav";
 import Footer from "./Footer";
 
 /**
- * Common chrome for every Finu page: smooth scroll, nav, footer, grain
- * overlay. NOTE: no transform/filter animation on this wrapper — an
- * ancestor filter creates a containing block that breaks GSAP pinning.
+ * Common chrome for every Finu page: smooth scroll, nav, footer.
  */
 export default function PageShell({ children }: { children: ReactNode }) {
   return (
     <SmoothScroll>
-      <div className="finu f-grain min-h-screen">
+      <div className="finu min-h-screen">
         <FinuNav />
         <main>{children}</main>
         <Footer />
