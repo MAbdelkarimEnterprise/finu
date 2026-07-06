@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Globe, Menu, X } from "lucide-react";
 import { APP_URL, LANGUAGES, NAV_GROUPS } from "./links";
 import MagneticButton from "./MagneticButton";
+import ProductExplorer from "./ProductExplorer";
 import { setScrollLocked } from "./SmoothScroll";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -177,7 +178,23 @@ export default function FinuNav() {
   const [scrolled, setScrolled] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [explorerOpen, setExplorerOpen] = useState(false);
+  const explorerTriggerRef = useRef<HTMLButtonElement>(null);
   const reduced = useReducedMotion();
+
+  const lastExplorerTrigger = useRef<HTMLButtonElement | null>(null);
+
+  const openExplorer = useCallback((trigger: HTMLButtonElement | null) => {
+    lastExplorerTrigger.current = trigger;
+    setOpenGroup(null);
+    setMobileOpen(false);
+    setExplorerOpen(true);
+  }, []);
+
+  const closeExplorer = useCallback(() => {
+    setExplorerOpen(false);
+    lastExplorerTrigger.current?.focus();
+  }, []);
 
   useEffect(() => {
     let frame = 0;
@@ -194,13 +211,14 @@ export default function FinuNav() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.overflow = mobileOpen ? "hidden" : "";
-    setScrollLocked(mobileOpen);
+    const locked = mobileOpen || explorerOpen;
+    document.documentElement.style.overflow = locked ? "hidden" : "";
+    setScrollLocked(locked);
     return () => {
       document.documentElement.style.overflow = "";
       setScrollLocked(false);
     };
-  }, [mobileOpen]);
+  }, [mobileOpen, explorerOpen]);
 
   return (
     <motion.header
@@ -231,6 +249,21 @@ export default function FinuNav() {
           aria-label="Primary"
           className="relative z-10 hidden items-center gap-6 lg:flex"
         >
+          <button
+            ref={explorerTriggerRef}
+            type="button"
+            className="f-navlink text-[0.88rem]"
+            aria-haspopup="dialog"
+            aria-expanded={explorerOpen}
+            onClick={() => openExplorer(explorerTriggerRef.current)}
+          >
+            <span className="f-nav-glyph" aria-hidden>
+              <span />
+              <span />
+              <span />
+            </span>
+            Products
+          </button>
           {NAV_GROUPS.map((group) => (
             <DesktopDropdown
               key={group.label}
@@ -278,6 +311,23 @@ export default function FinuNav() {
             transition={{ duration: 0.3, ease: EASE }}
             className="f-dropdown mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-[1360px] overflow-y-auto p-4 lg:hidden"
           >
+            <button
+              type="button"
+              className="mb-5 flex min-h-[48px] w-full items-center justify-between rounded-xl border border-[rgba(79,124,255,0.4)] bg-[rgba(79,124,255,0.1)] px-4 text-[0.92rem] font-medium text-[var(--color-text-primary)]"
+              onClick={(e) => openExplorer(e.currentTarget)}
+            >
+              <span className="flex items-center gap-2.5">
+                <span className="f-nav-glyph" aria-hidden>
+                  <span />
+                  <span />
+                  <span />
+                </span>
+                Explore products
+              </span>
+              <span className="f-mono text-[0.6rem] text-[var(--color-accent)]">
+                7
+              </span>
+            </button>
             <div className="grid gap-6 sm:grid-cols-2">
               {NAV_GROUPS.map((group) => (
                 <div key={group.label}>
@@ -340,6 +390,8 @@ export default function FinuNav() {
           </motion.nav>
         )}
       </AnimatePresence>
+
+      <ProductExplorer open={explorerOpen} onClose={closeExplorer} />
     </motion.header>
   );
 }
