@@ -1,110 +1,392 @@
-Continue the existing FINU website work in this repository.
+Continue the existing FINU redesign in this repository and take it from “strong static fintech landing page” to a polished, active, premium financial-AI experience.
 
-Project context
-- Production reference: https://meetfinu.netlify.app/
-- Important deep link: https://meetfinu.netlify.app/#numbers
-- Experience reference: https://web.meetcleo.com/
-- Stack: Next.js 15 App Router, React 19, TypeScript, Tailwind CSS, Framer Motion, GSAP/ScrollTrigger, Lenis, React Three Fiber, Drei, and Three.js.
-- Deployment target: Netlify.
+Work directly in the current codebase. Do not rebuild the site from scratch and do not discard the existing uncommitted redesign.
 
-Goal
-Evolve FINU from a visually impressive but abstract technology story into a clear, credible, conversion-oriented product website. Preserve FINU's cinematic, AI-native stablecoin identity. Learn from Cleo's product clarity, human storytelling, progressive proof, and contextual calls to action, but do not copy Cleo's layouts, assets, copy, branding, or visual identity.
+PROJECT AND CURRENT STATE
 
-Before editing
-1. Read AGENTS.md, README.md, package.json, and all existing FINU components and styles.
-2. Inspect git status and preserve all existing user changes. In particular, determine whether the existing split-type dependency is genuinely useful; keep it only if it improves the implementation, otherwise remove it cleanly.
-3. Inspect the two live reference websites at desktop and mobile sizes.
-4. Run the current site locally and understand its scroll interactions before changing them.
-5. Do not invent customers, testimonials, certifications, regulatory claims, transaction volumes, or performance data. Existing unverified figures should be clearly framed or replaced with truthful capability statements.
+- Project directory: /Users/abdelkarim/Documents/Claude/Projects/FINU
+- Local preview: http://localhost:3456/
+- Official product reference: https://meetfinu.com/
+- Stack actually installed: Next.js 15.5, React 19, TypeScript, Tailwind CSS 3.4, Framer Motion 12, GSAP 3.15, Lenis, and plain WebGL/GLSL.
+- Do not assume React Three Fiber, Drei, or Three.js are installed. The README is stale and currently mentions packages and routes that no longer match the repository.
+- Current branch: main
+- Remote: https://github.com/MAbdelkarimEnterprise/finu.git
+- The repository is already linked to a Netlify site through .netlify/state.json and configured through netlify.toml.
+- The worktree currently contains a large set of intentional redesign changes, including modified, added, and deleted files. Preserve them. Never use git reset, git checkout --, git clean, or another destructive command.
 
-Product direction
-The homepage must answer these questions quickly:
-- Who is Finu for?
-- What does Finu enable?
-- How does its AI layer improve money movement?
-- Why are stablecoin rails useful?
-- Why should a visitor trust Finu?
-- What should the visitor do next?
+I inspected the current site at 1280×720 and 390×844. The current implementation already has:
 
-Use this positioning direction as a starting point, refining it if the current repository contains stronger approved language:
-- Category: AI-native money orchestration
-- Audience: businesses, platforms, and treasury teams moving money globally
-- Core outcome: Finu interprets intent, selects the appropriate rail, and settles value across markets
-- Tone: precise, intelligent, calm, globally ambitious
+- A strong responsive hero with a clear H1, two CTAs, a FINU dashboard mockup, transfer status, AI recommendation, and spending chart.
+- A polished fixed navigation that becomes glassy while scrolling.
+- Responsive cards, product tabs, partner marquees, metrics, testimonials, FAQ, QR CTA, and footer.
+- A working WebGL shader in src/components/MidnightIntelligenceShader.tsx.
+- Good mobile composition, readable cards, accessible product tabs, and a strong final CTA.
+- No browser console errors during the audit.
+- npm run typecheck passes.
+- npm run lint passes with only the expected Next.js “next lint is deprecated” notice.
+- npm run build passes successfully.
 
-Implementation requirements
+WHAT IS CURRENTLY MISSING
+
+The site is visually competent, but it does not yet feel alive enough:
+
+1. The WebGL hero shader is so dark and heavily covered by the hero veil that it reads as an almost static navy gradient.
+2. Pointer interaction is too subtle and may not reliably activate when content overlays the canvas.
+3. The shader exists only in the hero. Below the fold, the page becomes one long, nearly uniform dark field.
+4. Cards use a fixed CSS hover rotation rather than cursor-aware light, depth, or parallax.
+5. Product interface demonstrations are clear but mostly static after entering the viewport.
+6. Section transitions lack energy and visual continuity.
+7. Partner logos are too dim on mobile and the marquees can feel sparse.
+8. The metrics count-up can temporarily display awkward values such as “0M+” while entering the viewport.
+9. The README and previous implementation prompt describe an older architecture and need to be brought in line with the real codebase.
+
+PRIMARY OBJECTIVE
+
+Make FINU feel like a living financial intelligence system.
+
+Increase shader activity, responsive lighting, data movement, interface feedback, and section-to-section visual continuity while protecting readability, trust, accessibility, and performance.
+
+The result should feel premium and precise—not like a generic crypto site, gaming interface, cyberpunk dashboard, or WebGL demo reel.
+
+Do not change the selected visual direction.
+
+MIDNIGHT INTELLIGENCE COLOR SYSTEM
+
+Continue using the existing centralized tokens:
+
+- Background: #050816
+- Surface: #0D1428
+- Raised surface: #141F3A
+- Primary electric blue: #4F7CFF
+- AI violet: #8668FF
+- Live-data cyan: #38DDF8
+- Primary text: #F7F9FF
+- Secondary text: #A8B3CC
+- Border: #2A385A
+- Success: #39D98A
+- Warning: #F5C451
+- Danger: #FF6B7A
+
+Keep approximately 75% of the interface navy and neutral, 15% blue, and 10% violet/cyan. Cyan should indicate live information and interaction rather than becoming a general decoration color.
+
+IMPLEMENTATION REQUIREMENTS
+
+1. UPGRADE THE HERO SHADER
+
+Improve the existing shader in src/components/MidnightIntelligenceShader.tsx instead of replacing it with a generic gradient or importing a large 3D library.
+
+The upgraded shader should include:
+
+- Broad, slow domain-warped FBM fields for dimensional blue and violet movement.
+- Thin data-like filaments or contour lines that travel through the field.
+- A few restrained cyan energy pulses that move along those filaments.
+- A subtle depth layer so the background feels spatial rather than flat.
+- A soft pointer field that bends or attracts nearby flow.
+- Gentle brightness and distortion changes based on pointer velocity.
+- A very slow ambient “breathing” intensity when the pointer is idle.
+- Fine grain to prevent banding.
+- A vignette and content-safe dark zone behind the hero text.
+
+Make the shader visibly active without making it fast or noisy:
+
+- Broad color cycles: approximately 16–24 seconds.
+- Traveling data pulses: approximately 5–9 seconds.
+- Pointer movement must be damped and elegant.
+- No rapid flashes, rainbow gradients, smoke, fire, liquid-metal effects, or full-screen brightness changes.
+
+The current shader colors should remain rooted in:
+
+- Base: #050816
+- Deep field: #101B49
+- Electric blue: #3A43B7
+- Violet: #7B4DFF
+- Cyan pulse: #22C7E8
+
+Bind pointer tracking to the hero container or a reliable parent rather than depending exclusively on receiving pointer events directly on the canvas behind the content.
+
+Add robust shader lifecycle handling:
+
+- Pause animation while the document is hidden.
+- Pause when the shader is well outside the viewport.
+- Cap device pixel ratio.
+- Reduce complexity on mobile.
+- Disable pointer behavior on touch devices.
+- Respect prefers-reduced-motion with a polished static fallback.
+- Keep the DOM hero interface fully usable if WebGL fails.
+- Clean up programs, shaders, buffers, observers, and listeners.
+
+Reduce the opacity of the current hero veil where necessary so the shader is actually visible, but maintain excellent headline contrast. The right side around the product UI can be more luminous than the text side.
+
+Do not add Three.js or React Three Fiber unless there is a genuinely unavoidable technical reason. The current plain-WebGL approach is sufficient.
+
+2. ADD CONTROLLED AMBIENT MOTION BELOW THE HERO
+
+The page needs visual continuity after the hero, but do not place a heavy WebGL canvas behind every section.
+
+Create a lightweight reusable ambient system using one of these approaches:
+
+- One additional low-cost shader canvas that is reused across the products/metrics region and pauses when not visible; or
+- CSS/SVG animated light fields and data paths derived from the hero shader language.
+
+Use a maximum of two active WebGL canvases on the page at once.
+
+Add restrained section-level details:
+
+- Slow blue/violet light fields that drift behind section boundaries.
+- Thin SVG data paths that connect selected sections.
+- Small pulses that travel through paths when a section enters the viewport.
+- A soft grid or coordinate texture in one or two places only.
+- Gradient separators that appear to transmit data from one section to the next.
+- Distinct tonal treatments for cards, products, trust, community, and CTA sections.
+
+The page should no longer look like one uninterrupted navy rectangle, but it must still feel like one coherent system.
+
+3. MAKE CARDS REACT TO THE USER
+
+Replace the fixed one-direction card rotation with a reusable cursor-aware interaction component or hook.
+
+For desktop pointer devices:
+
+- Calculate pointer position relative to each interactive card.
+- Apply no more than approximately 1.5–2 degrees of rotation.
+- Move the internal highlight independently from the card.
+- Expose CSS variables such as --pointer-x and --pointer-y for radial edge lighting.
+- Add a restrained electric-blue/cyan border bloom near the pointer.
+- Smoothly return cards to rest on pointer leave.
+
+Disable tilt on touch devices and when reduced motion is enabled.
+
+Do not make text, buttons, QR codes, or form-like controls difficult to click.
+
+Apply the effect selectively to major cards, not every small row.
+
+4. ENRICH THE PRODUCT INTERFACE DETAILS
+
+Preserve the existing product mockups and content. Add meaningful activity:
+
+- The hero chart can cycle a subtle active data point while idle and respond to hover/focus.
+- The transfer card should show a short progress-to-settled sequence with a traveling route pulse.
+- The AI insight card may use a restrained typing/reveal effect once, then remain stable.
+- Category progress bars should animate once when entering view.
+- Product tab panels should transition with depth and directional continuity rather than only fading.
+- Active tabs should have a moving highlight or data pulse.
+- On mobile, preserve horizontal scrolling but add an unobtrusive visual cue that more tabs are available.
+- Use real keyboard-operable controls and retain the existing ARIA tab relationships.
+
+Do not turn illustrative controls into deceptive interactive financial actions. Clearly keep illustrative product data as product examples.
+
+5. ADD HIGH-QUALITY “COOL DETAILS”
+
+Use a small number of memorable details:
+
+- Cursor-responsive ambient light on desktop without replacing the native cursor.
+- A subtle data-trail response inside the hero.
+- A soft navigation edge glow that reacts to scroll state.
+- Section eyebrow dots that pulse once when revealed.
+- Button light sweeps and magnetic behavior with reduced movement.
+- Partner logos that brighten and gain a faint brand-neutral halo on hover.
+- A metric card glow that responds to the number finishing its count.
+- A thin animated border around the final CTA that travels very slowly.
+- Optional tiny coordinate or network labels used sparingly as texture.
+
+Every effect must support the “financial intelligence in motion” idea. Avoid adding motion simply to fill space.
+
+6. IMPROVE SECTION RHYTHM AND CONTRAST
+
+Keep the existing section order and content unless a small structural change materially improves the page:
 
 1. Hero
-- Retain the distinctive WebGL network atmosphere, but make product meaning more immediate.
-- Use one sharp outcome-led H1 and a supporting sentence that names the audience or use case.
-- Keep one clear primary CTA and one lower-commitment secondary CTA.
-- Make the route/settlement interface cards feel like meaningful product evidence, not decorative labels.
-- Ensure the hero remains legible when WebGL is unavailable, reduced motion is enabled, or the device is resource constrained.
+2. Cards
+3. Product tabs
+4. Investors and partners
+5. Metrics
+6. Community testimonials
+7. FAQ
+8. Final CTA
+9. Footer
 
-2. Product narrative
-- Create a coherent progression: problem -> new financial rail -> Finu orchestration -> product outcomes -> proof -> global infrastructure -> CTA.
-- Explain "Understand, Route, Settle" with concrete examples and concise copy.
-- Show the product in use through interface-led visuals such as routing decisions, settlement status, treasury optimization, and guardrail alerts.
-- Avoid vague AI language. Every AI claim should describe a visible action or benefit.
+Improve:
 
-3. Numbers section
-- Rebuild #numbers so the deep link lands on a complete, understandable section rather than the middle of a scroll animation.
-- Display the key metrics or capabilities in semantic HTML before relying on animation.
-- Each number must have a clear label and explanation of why it matters.
-- Preserve a premium animated experience, but make scroll-scrubbing progressive enhancement.
-- The section must work with keyboard navigation, reduced motion, refresh-at-anchor, and direct linking.
+- Tonal separation between sections.
+- Excessive empty-feeling dark areas.
+- Section transition continuity.
+- Mobile spacing around the hero dashboard and the cards heading.
+- Partner-logo visibility on mobile.
+- The sense of hierarchy between proof, product, and conversion sections.
 
-4. Trust and conversion
-- Strengthen trust without fabricating proof.
-- Clarify what partner/infrastructure logos represent; do not imply partnerships that cannot be substantiated.
-- Add appropriate placeholders or structurally complete sections for real proof only when the content is honestly available.
-- Add a concise security/infrastructure explanation or FAQ using claims supported by the project.
-- Repeat CTAs only where the surrounding content earns them, and use action-specific labels such as "Explore the platform", "See how routing works", or "Open Finu".
-- Replace dead "#" links with real destinations or non-clickable elements.
+Preserve the current final CTA direction; it is already one of the strongest sections.
 
-5. Visual system
-- Preserve FINU's dark, luminous, infrastructure-grade character.
-- Introduce controlled tonal variation so the full page is not one continuous dark visual field.
-- Improve hierarchy, body-text readability, contrast, spacing rhythm, and section differentiation.
-- Keep the work original. Do not reproduce Cleo's scenic imagery, pill navigation, typography, wording, or compositions.
-- Reuse existing design tokens and components where sensible; consolidate repeated values instead of adding scattered one-off styles.
+7. CONTENT AND TRUST INTEGRITY
 
-6. Accessibility and resilience
+Preserve FINU’s actual positioning and external destinations from src/components/finu/links.ts.
+
+Do not invent:
+
+- User counts
+- Country counts
+- Advice counts
+- Partnerships
+- Investors
+- Security certifications
+- Regulatory status
+- Customer quotes
+- Product capabilities
+
+Verify any metrics and partner labels against FINU’s existing approved site content. If a value cannot be verified, replace it with a truthful capability statement or flag it for the user instead of fabricating proof.
+
+Ensure animated metrics expose their final semantic value to assistive technologies and never remain visually stuck at zero. Avoid awkward “0M+” states during capture or slow devices.
+
+The language selector currently changes its visible selection but does not translate the page. Do not imply that localization is functional unless it truly is. Either connect it to existing real localized routes or label/present it honestly.
+
+8. ACCESSIBILITY AND RESILIENCE
+
 - Keep exactly one meaningful H1.
-- Use logical heading order and semantic landmarks.
-- Meet WCAG 2.1 AA contrast for essential text and controls.
-- Provide visible focus states, keyboard-operable navigation, descriptive link labels, and adequate touch targets.
-- Respect prefers-reduced-motion across Framer Motion, GSAP, Lenis, and WebGL.
-- Avoid hiding important content inside canvas or animation-only states.
+- Preserve semantic heading order.
+- Maintain WCAG 2.1 AA contrast for important text and controls.
+- Keep all navigation, tabs, chart controls, and FAQs keyboard operable.
+- Use visible focus states.
+- Respect prefers-reduced-motion across WebGL, Framer Motion, GSAP, Lenis, CSS keyframes, marquees, counters, and card effects.
+- Ensure important content is visible without relying exclusively on IntersectionObserver animation.
+- Maintain at least 44×44 pixel touch targets.
+- Do not communicate financial state through color alone.
+- Prevent horizontal page overflow at every breakpoint.
 
-7. Responsive behavior and performance
-- Verify at approximately 375px, 768px, 1280px, and 1440px widths.
-- Prevent clipped headlines, overlapping cards, horizontal scrolling, and unusable pinned sections.
-- Keep expensive WebGL and animation work isolated to client components.
-- Avoid unnecessary dependencies and large media assets.
-- Maintain good loading behavior and a polished fallback while the 3D scene initializes.
+9. PERFORMANCE
 
-8. Code quality
-- Follow the existing architecture and TypeScript conventions.
-- Prefer focused reusable components over one oversized homepage component.
-- Clean up obsolete code and styles made unnecessary by the redesign.
-- Do not modify unrelated files.
-- Do not commit, push, deploy, or change external services unless explicitly asked.
+- Target smooth interaction on modern desktop hardware.
+- Keep the hero shader isolated to a client component.
+- Avoid React state updates on every animation frame.
+- Prefer refs and uniforms for shader animation.
+- Avoid unnecessary new dependencies.
+- Lazy-load only genuinely heavy visual components.
+- Keep mobile shader complexity lower than desktop.
+- Preserve a static CSS fallback.
+- Do not allow animation to continue in hidden tabs or completely offscreen canvases.
+- Watch the existing First Load JS size and avoid a large increase.
 
-Acceptance criteria
-- The hero communicates audience, product, and outcome within a few seconds.
-- The homepage has a clear narrative and no dead CTA links.
-- /#numbers works correctly when opened directly and remains understandable without animation.
-- The experience is original and recognizably FINU, not a Cleo clone.
-- Important content remains accessible with JavaScript animation reduced or WebGL unavailable.
-- Desktop and mobile layouts are polished.
-- Browser console shows no application errors.
-- npm run build succeeds with zero TypeScript or compilation errors.
-- Run any available linting or tests and report their results.
+10. FILE-LEVEL GUIDANCE
 
-Working approach
-- Implement the work rather than only writing a plan.
-- Make informed decisions from the existing code and references.
-- Keep me updated briefly while working.
-- After implementation, inspect the result in a real browser at desktop and mobile sizes and iterate on visible issues.
-- Finish with a concise summary of changes, files touched, verification performed, and any remaining content decisions that require real business information.
+Inspect and improve these existing files before creating replacements:
+
+- src/components/MidnightIntelligenceShader.tsx
+- src/components/finu/Hero.tsx
+- src/components/finu/AppMock.tsx
+- src/components/finu/CardsSection.tsx
+- src/components/finu/ProductTabs.tsx
+- src/components/finu/PartnersSection.tsx
+- src/components/finu/MetricsSection.tsx
+- src/components/finu/AnimatedValue.tsx
+- src/components/finu/TextReveal.tsx
+- src/components/finu/FinalCTA.tsx
+- src/components/finu/FinuNav.tsx
+- src/components/finu/SmoothScroll.tsx
+- src/styles/finu.css
+
+Create focused reusable components only when they reduce duplication, such as:
+
+- AmbientField or DataFlowField
+- InteractiveSurface
+- PointerGlow
+- DataPath
+
+Do not create one oversized client-side homepage component.
+
+Update README.md so it describes the repository’s real current stack, routes, shader architecture, development commands, and Netlify workflow. Remove stale claims about React Three Fiber, Drei, Three.js, the deleted company route, and old pinned manifesto sections unless those features truly exist after your work.
+
+WORKING METHOD
+
+1. Read AGENTS.md, package.json, README.md, netlify.toml, the current git diff, and all relevant components before editing.
+2. Open http://localhost:3456/ in a real browser and understand the current motion before changing it.
+3. Preserve existing user changes and build on them.
+4. Implement the improvements rather than returning only a plan.
+5. Keep progress updates concise.
+6. After implementation, test the complete page by scrolling through every section at approximately:
+   - 390×844
+   - 768×1024
+   - 1280×720
+   - 1440×900
+7. Test pointer interaction, keyboard focus, tab navigation, the mobile menu, FAQ controls, reduced motion, WebGL fallback, and touch behavior.
+8. Inspect the browser console after the final pass.
+
+VALIDATION
+
+Run:
+
+- npm run typecheck
+- npm run lint
+- npm run build
+
+All must succeed. The current project passes all three before this task, so do not leave regressions.
+
+Confirm:
+
+- No application errors in the browser console.
+- No horizontal overflow.
+- No clipped hero cards at mobile widths.
+- No unreadable text over shader states.
+- No animation-only hidden content.
+- No runaway requestAnimationFrame loops.
+- No duplicate WebGL contexts.
+- No broken external CTA links.
+- Product tabs remain keyboard accessible.
+- The mobile menu locks and restores scrolling correctly.
+- The final CTA and QR code remain sharp and usable.
+
+GIT, GITHUB, AND NETLIFY DELIVERY
+
+The user explicitly authorizes committing the completed FINU redesign, pushing it, and deploying it to the linked production Netlify site so it can be shared.
+
+Before staging:
+
+- Run git status -sb.
+- Review git diff --stat and the actual diff.
+- Confirm that files belong to the current FINU redesign.
+- Do not silently discard, revert, or overwrite existing changes.
+- Do not stage generated .next output, caches, local credentials, or secrets.
+
+The current worktree is intentionally not clean. Treat the existing homepage redesign plus the new shader/interaction work as the intended commit scope after reviewing it.
+
+When validation passes:
+
+1. Stage the relevant FINU source, asset, configuration, and documentation files explicitly.
+2. Commit with a concise message such as:
+   Enhance Finu shader and interaction system
+3. Push the current main branch to origin/main because the user wants the production Netlify site updated, not a draft pull request.
+4. Do not force-push.
+
+GitHub CLI is currently installed, but its saved GitHub authentication was reported as invalid during the audit. Normal git credentials may still allow git push. If push authentication fails:
+
+- Do not expose or request tokens in chat.
+- Tell the user to run gh auth login -h github.com or refresh their Git credential.
+- Preserve the completed local commit and report its hash.
+
+After pushing:
+
+- Check whether the linked Netlify production deployment starts automatically.
+- Prefer the Git-connected production deploy from origin/main.
+- If automatic deployment is not connected or does not start, and the Netlify CLI is authenticated, the user authorizes:
+  netlify deploy --build --prod
+- Do not create a second unrelated Netlify site.
+- Verify the resulting production URL, deployment status, page title, hero, shader, and main CTA.
+- Open the live production URL in a browser at desktop and mobile widths.
+- Confirm the live deployment serves the new commit.
+
+If Netlify authentication or filesystem permissions block deployment, stop after preserving the pushed commit and clearly state the exact command the user must run. Do not claim the site is live until the production URL has been verified.
+
+FINAL RESPONSE
+
+Report:
+
+- What changed visually and technically
+- The most important interaction improvements
+- Files added or changed
+- Typecheck, lint, and build results
+- Browser sizes tested
+- Accessibility and reduced-motion checks
+- Commit hash
+- Pushed branch
+- Netlify production deployment status
+- Verified shareable live URL
+- Any remaining decisions that require real FINU business information
+
+Do not stop at analysis. Implement, verify, commit, push, deploy, and confirm the live result unless blocked by authentication that genuinely requires the user.
