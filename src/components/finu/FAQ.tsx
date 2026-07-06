@@ -1,75 +1,89 @@
+"use client";
+
+import { useId, useState } from "react";
 import { Plus } from "lucide-react";
 import { Reveal, TextReveal } from "./TextReveal";
 
+/* Answers published on meetfinu.com, paired with the questions they
+   actually answer (the live page currently shuffles them). */
 const QA = [
   {
-    q: "What is Finu?",
-    a: "Finu is an AI-native orchestration layer for money. Businesses and platforms use it to route, settle, and optimize value across stablecoin and banking rails from one interface.",
+    q: "How do I get started with Finu?",
+    a: "Download the app, register an account, and follow the onboarding instructions to start using Finu.",
   },
   {
-    q: "How does Finu decide how money moves?",
-    a: "Every transfer starts as an intent — amount, destination, deadline, constraints. Finu scores the available rails on speed, cost, and risk, selects the best one, and shows you the full decision from start to finish.",
+    q: "Is Finu safe?",
+    a: "Yes, Finu uses advanced security measures to protect your funds and personal information.",
   },
   {
-    q: "Which rails does Finu support?",
-    a: "Stablecoins such as USDC, USDT, and EURC across major blockchain networks, alongside banking and local payout rails — chosen per transaction, not per integration.",
-  },
-  {
-    q: "Is Finu a bank?",
-    a: "No. Finu is financial infrastructure — an intelligence layer that works across regulated rails rather than replacing them.",
-  },
-  {
-    q: "How do I get started?",
-    a: "Open Finu in your browser at app.meetfinu.com — no download required.",
+    q: "Can I use Finu for business transactions?",
+    a: "Yes, our platform supports both personal and business transactions. Businesses can benefit from our secure and efficient transfer options tailored to their needs.",
   },
 ];
 
-/**
- * FAQ styled as a conversation with Finu: question pills that expand
- * into answer bubbles. Native details/summary keeps it fully
- * keyboard-operable and JS-free.
- */
 export default function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+  const baseId = useId();
+
   return (
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="scroll-mt-24 px-[var(--f-gutter)] py-[var(--f-gutter)]"
+      className="scroll-mt-24 px-5 py-24 md:px-8 md:py-28"
     >
-      <div className="f-scene f-scene-grain !mx-0 bg-[var(--f-bg-warm)] px-5 py-20 md:py-28">
-        <div className="f-faq mx-auto w-full max-w-2xl">
-          <Reveal>
-            <p className="f-eyebrow text-[var(--f-ink-faint)]">Ask Finu</p>
-          </Reveal>
-          <TextReveal
-            as="h2"
-            className="f-display mt-5 text-[clamp(2rem,4vw,3.2rem)]"
-          >
-            Questions, answered.
-          </TextReveal>
+      <div className="mx-auto grid max-w-[1080px] gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+        <TextReveal
+          as="h2"
+          className="f-display text-[clamp(2rem,4.4vw,3.2rem)] lg:sticky lg:top-32 lg:self-start"
+        >
+          Frequently Asked Questions
+        </TextReveal>
+        <span id="faq-title" className="sr-only">
+          Frequently asked questions
+        </span>
 
-          <div className="mt-12 space-y-4">
-            {QA.map((item, i) => (
-              <Reveal key={item.q} delay={i * 0.05}>
-                <details className="group">
-                  <summary className="f-bubble-q flex w-fit max-w-full items-center gap-4 py-3 pl-5 pr-3">
-                    <span className="text-[0.92rem] font-medium text-[var(--f-ink)]">
+        <Reveal>
+          <div className="border-t border-[var(--f-border-soft)]">
+            {QA.map((item, i) => {
+              const expanded = open === i;
+              return (
+                <div key={item.q} className="f-faq-item">
+                  <h3 className="m-0">
+                    <button
+                      type="button"
+                      id={`${baseId}-q-${i}`}
+                      className="f-faq-trigger"
+                      aria-expanded={expanded}
+                      aria-controls={`${baseId}-a-${i}`}
+                      onClick={() => setOpen(expanded ? null : i)}
+                    >
                       {item.q}
-                    </span>
-                    <span className="f-faq-icon grid h-8 w-8 flex-none place-items-center rounded-full border border-[rgba(33,29,25,0.1)] bg-white text-[var(--f-ink-dim)]">
-                      <Plus className="h-3.5 w-3.5" />
-                    </span>
-                  </summary>
-                  <div className="f-bubble-a mt-3 max-w-[90%] px-5 py-4 md:max-w-[80%]">
-                    <p className="text-[0.88rem] leading-relaxed text-[var(--f-ink-dim)]">
-                      {item.a}
-                    </p>
+                      <span
+                        className="f-faq-icon grid h-9 w-9 place-items-center rounded-full border border-[var(--f-border-soft)] text-[var(--color-text-secondary)]"
+                        aria-hidden
+                      >
+                        <Plus className="h-4 w-4" />
+                      </span>
+                    </button>
+                  </h3>
+                  <div
+                    id={`${baseId}-a-${i}`}
+                    role="region"
+                    aria-labelledby={`${baseId}-q-${i}`}
+                    className="f-faq-panel"
+                    data-open={expanded}
+                  >
+                    <div>
+                      <p className="pb-6 pr-12 text-[0.92rem] leading-relaxed text-[var(--color-text-secondary)]">
+                        {item.a}
+                      </p>
+                    </div>
                   </div>
-                </details>
-              </Reveal>
-            ))}
+                </div>
+              );
+            })}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

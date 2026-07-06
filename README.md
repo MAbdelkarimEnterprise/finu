@@ -1,22 +1,65 @@
-# Finu — Where AI Meets Stablecoins
+# Finu — Money talks. Finu talks back.
 
-Marketing site for Finu: intelligent global payments powered by AI,
-programmable finance, and stablecoin infrastructure.
+Marketing site for [Finu](https://meetfinu.com/): the AI financial
+assistant for stablecoin payments, transfers, credit, swaps, and P2P.
+
+Design direction: **Midnight Intelligence** — dark navy surfaces
+(~75%), electric blue actions (~15%), violet + cyan reserved for AI
+moments and live data (~10%).
 
 ## Stack
 
 - Next.js 15 (App Router) + React 19 + TypeScript
-- Tailwind CSS
-- Framer Motion (reveals, magnetic buttons, crossfades)
-- GSAP ScrollTrigger (pinned scroll-scrubbed manifesto)
-- Lenis (smooth scrolling, driven by the GSAP ticker)
-- React Three Fiber + Drei + Three.js (hero WebGL: GLSL particle field,
-  fbm nebula backdrop, blockchain network with traveling transfer pulses)
+- Tailwind CSS 3.4 + a token-driven design system in
+  `src/styles/finu.css` (scoped under `.finu`)
+- Framer Motion (reveals, tab transitions, magnetic buttons)
+- Lenis smooth scrolling driven by the GSAP ticker (`SmoothScroll.tsx`)
+- Plain WebGL hero shader — no Three.js / React Three Fiber
+
+## Shader architecture
+
+`src/components/MidnightIntelligenceShader.tsx` is a dependency-free
+WebGL fragment shader:
+
+- domain-warped FBM fields (blue/violet flow) over a slow depth layer
+- thin contour filaments with sparse cyan pulses traveling along them
+- pointer attraction + velocity response (events bind to the `.hero`
+  container, not the canvas), damped in JS and fed in as uniforms
+- ambient "breathing" while idle; ~16–24s broad color cycles
+- lifecycle: pauses when the tab is hidden or the hero leaves the
+  viewport (IntersectionObserver), DPR capped (1.75 desktop / 1.25
+  mobile), fewer octaves + no filament pass on mobile, one static
+  frame under `prefers-reduced-motion`, CSS gradient fallback when
+  WebGL is unavailable, full GL resource cleanup on unmount
+
+Below the fold, continuity comes from lightweight CSS/SVG systems
+instead of more canvases: ambient light fields (`.f-ambient`), SVG
+data paths with in-view pulses (`DataPath.tsx`), seam separators
+(`.f-seam`), and a faint coordinate grid (`.f-grid-texture`).
+
+## Interaction system
+
+- `InteractiveSurface.tsx` — cursor-aware cards: ≤ ~2° tilt, an
+  independent light highlight via `--px`/`--py`, border bloom; ref +
+  rAF driven (no per-frame React state); inert on touch and reduced
+  motion
+- `PointerGlow.tsx` — one page-level ambient light trailing the
+  cursor (desktop only)
+- `MagneticButton.tsx` — damped magnetic pull on primary CTAs
+- `AnimatedValue.tsx` — in-view count-up with compact formatting
+  (412K → 1M, never "0M+"), final value exposed via `aria-label`
+- Product tabs: ARIA tablist with arrow-key navigation, directional
+  panel transitions, animated pill with periodic light sweep, mobile
+  scroll cue
 
 ## Routes
 
-- `/` — homepage (hero, trust marquee, pinned manifesto, sticky-storytelling features, closing CTA)
-- `/company` — "Finu in Numbers" (count-up industry stats)
+- `/` — the complete homepage (hero, cards, product tabs, partners,
+  metrics, community, FAQ, final CTA)
+
+Product/company links point to their live pages on meetfinu.com. All
+copy, metrics, testimonials, and brand assets mirror the live site —
+nothing invented. Interface visuals are labelled illustrative.
 
 ## Develop
 
@@ -25,37 +68,23 @@ npm install
 npm run dev
 ```
 
-## Build
+## Validate
 
 ```bash
-npm run build && npm start
+npm run typecheck
+npm run lint
+npm run build
 ```
 
 ## Deploy to Netlify
 
-The project is preconfigured for Netlify via `netlify.toml` and
-`@netlify/plugin-nextjs` — no manual build settings needed.
+Preconfigured via `netlify.toml` + `@netlify/plugin-nextjs`. Pushing
+to the connected GitHub repo's `main` branch triggers a production
+deploy; no environment variables are required (`URL` is injected by
+Netlify and used for sitemap/OpenGraph absolute URLs).
 
-1. Push this repo to GitHub.
-2. In Netlify: **Add new site → Import an existing project → GitHub → select the repo → Deploy**.
+Manual deploy, if ever needed:
 
-Netlify picks up the build command (`npm run build`) and publish
-directory (`.next`) from `netlify.toml` automatically.
-
-**Environment variables: none required.** The site is fully static —
-no API keys, no database, no secrets. (`URL` is injected by Netlify
-automatically and used for sitemap/OpenGraph absolute URLs.)
-
-### Deployment checklist
-
-- [x] `@netlify/plugin-nextjs` installed
-- [x] `netlify.toml` with build command + plugin
-- [x] All WebGL (React Three Fiber) scenes loaded with `dynamic(..., { ssr: false })`
-- [x] All animation components are client components (`"use client"`)
-- [x] Fonts self-hosted via `next/font` (zero layout shift, no external requests)
-- [x] SEO metadata + OpenGraph + Twitter cards
-- [x] `sitemap.xml` and `robots.txt` generated at build time
-- [x] `npm run build` — zero errors, zero warnings, all routes static
-
-All Finu-specific styling is scoped under the `.finu` class in
-`src/styles/finu.css`; components live in `src/components/finu/`.
+```bash
+netlify deploy --build --prod
+```

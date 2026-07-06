@@ -7,33 +7,34 @@ const BASE_URL = process.env.URL ?? "https://finu.netlify.app";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Finu — Where AI Meets Stablecoins",
+    default: "Money talks. Finu talks back.",
     template: "%s · Finu",
   },
   description:
-    "Intelligent global payments powered by AI, programmable finance, and stablecoin infrastructure.",
+    "The world's first AI financial assistant. Finu analyzes your spending, calls out bad habits, and makes you better at money.",
   keywords: [
+    "AI financial assistant",
     "stablecoins",
+    "crypto card",
     "AI payments",
-    "programmable finance",
-    "global payments",
+    "multi-currency wallet",
     "USDC",
-    "blockchain",
+    "international transfer",
   ],
   openGraph: {
     type: "website",
     url: BASE_URL,
     siteName: "Finu",
-    title: "Finu — Where AI Meets Stablecoins",
+    title: "Money talks. Finu talks back.",
     description:
-      "Intelligent global payments powered by AI, programmable finance, and stablecoin infrastructure.",
+      "The world's first AI financial assistant. Finu analyzes your spending, calls out bad habits, and makes you better at money.",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Finu — Where AI Meets Stablecoins",
+    title: "Money talks. Finu talks back.",
     description:
-      "Intelligent global payments powered by AI, programmable finance, and stablecoin infrastructure.",
+      "The world's first AI financial assistant. Finu analyzes your spending, calls out bad habits, and makes you better at money.",
   },
   robots: {
     index: true,
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6f4f0",
+  themeColor: "#050816",
   width: "device-width",
   initialScale: 1,
 };

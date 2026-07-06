@@ -7,6 +7,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+let lenisInstance: Lenis | null = null;
+
+/** Pause/resume smooth scrolling — CSS overflow can't stop Lenis. */
+export function setScrollLocked(locked: boolean) {
+  if (locked) lenisInstance?.stop();
+  else lenisInstance?.start();
+}
+
 /**
  * Lenis smooth scrolling driven by the GSAP ticker so ScrollTrigger
  * and Lenis share a single clock — no drift, no double-RAF.
@@ -20,6 +28,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       smoothWheel: true,
       anchors: true,
     });
+    lenisInstance = lenis;
 
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => lenis.raf(time * 1000);
@@ -29,6 +38,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     return () => {
       gsap.ticker.remove(tick);
       lenis.destroy();
+      lenisInstance = null;
     };
   }, []);
 
