@@ -43,8 +43,6 @@ data paths with in-view pulses (`DataPath.tsx`), seam separators
   independent light highlight via `--px`/`--py`, border bloom; ref +
   rAF driven (no per-frame React state); inert on touch and reduced
   motion
-- `PointerGlow.tsx` — one page-level ambient light trailing the
-  cursor (desktop only)
 - `MagneticButton.tsx` — damped magnetic pull on primary CTAs
 - `AnimatedValue.tsx` — in-view count-up with compact formatting
   (412K → 1M, never "0M+"), final value exposed via `aria-label`
