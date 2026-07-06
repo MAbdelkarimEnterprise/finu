@@ -640,25 +640,6 @@
     0 0 24px -12px rgba(56, 221, 248, 0.35);
 }
 
-/* Page-level ambient light that trails the cursor (desktop only). */
-.f-pointer-glow {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.8s var(--f-ease);
-  background: radial-gradient(
-    520px circle at var(--gx, 50%) var(--gy, 40%),
-    rgba(79, 124, 255, 0.05),
-    rgba(56, 221, 248, 0.02) 45%,
-    transparent 70%
-  );
-}
-.f-pointer-glow[data-on="true"] {
-  opacity: 1;
-}
-
 /* ── Ambient fields (below-the-hero continuity, CSS only) ──── */
 .f-ambient {
   position: absolute;
@@ -1002,16 +983,8 @@
   border-radius: 6px;
 }
 
-/* No page-level cursor light on touch devices. */
-@media (pointer: coarse) {
-  .f-pointer-glow {
-    display: none;
-  }
-}
-
 /* Reduced motion — kill the theatrics, keep the content */
 @media (prefers-reduced-motion: reduce) {
-  .f-pointer-glow,
   .f-tabs-cue svg {
     display: none;
   }
