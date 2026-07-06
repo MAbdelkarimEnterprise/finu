@@ -1,0 +1,628 @@
+Continue the existing FINU redesign in:
+
+/Users/abdelkarim/Documents/Claude/Projects/FINU
+
+Implement a new layer of active, high-end interactions inspired by the supplied Cleo reference screenshots and the behavior of:
+
+- https://web.meetcleo.com/
+- https://web.meetcleo.com/company
+- https://web.meetcleo.com/2024-annual-report
+
+IMPORTANT CREATIVE RULE
+
+Use the references to understand interaction principles, motion choreography, visual hierarchy, and data storytelling.
+
+Do not clone Cleo.
+
+Do not copy Cleo’s:
+
+- Logo or branding
+- Written copy
+- Product names
+- Color palette
+- Photos or illustrations
+- Icon artwork
+- Pixel symbols
+- Exact page layouts
+- Exact card dimensions
+- Source code
+- Shaders
+- Proprietary assets
+
+Create an original FINU implementation using the existing Midnight Intelligence identity, FINU content, FINU product hierarchy, and the project’s current components.
+
+The goal is interaction parity and comparable polish—not visual duplication.
+
+REFERENCE SCREENSHOTS
+
+The supplied screenshots show three main interaction systems:
+
+Screenshots 1–4:
+An immersive product-navigation grid where one tile becomes the focal point while surrounding tiles blur, dim, and move into the background.
+
+Screenshots 5–6:
+Editorial data visualizations with oversized metrics, rounded chart cards, animated bars and lines, unusual layouts, and strong storytelling rather than a generic dashboard.
+
+Screenshot 7:
+A full-screen particle field that morphs into recognizable shapes while text changes as the user scrolls.
+
+Screenshots 8–9:
+An interactive bento metrics system with a large central particle visualization, surrounding metric cards, imagery, micro charts, and segmented time-range controls.
+
+Build FINU-native versions of these systems.
+
+CURRENT FINU CONTEXT
+
+The current site already has:
+
+- A strong Midnight Intelligence hero
+- A plain WebGL/GLSL hero shader
+- A realistic FINU dashboard mockup
+- FINU card products
+- Product tabs
+- Investors and partner marquees
+- A basic metrics section
+- Community testimonials
+- FAQ
+- Final QR-code CTA
+- Fixed glass navigation
+- Framer Motion, GSAP, ScrollTrigger, and Lenis
+
+Keep the strongest existing work. Do not rebuild the homepage from scratch.
+
+Actual installed stack:
+
+- Next.js 15.5 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 3.4
+- Framer Motion 12
+- GSAP 3.15 with ScrollTrigger
+- Lenis
+- Plain WebGL/GLSL
+
+Do not assume Three.js, React Three Fiber, or Drei are installed. Prefer the current plain-WebGL architecture, Canvas 2D, SVG, CSS, and existing dependencies.
+
+DESIGN LANGUAGE
+
+Keep FINU’s Midnight Intelligence colors:
+
+- Background: #050816
+- Surface: #0D1428
+- Raised surface: #141F3A
+- Electric blue: #4F7CFF
+- AI violet: #8668FF
+- Live-data cyan: #38DDF8
+- Primary text: #F7F9FF
+- Secondary text: #A8B3CC
+- Border: #2A385A
+- Success: #39D98A
+- Warning: #F5C451
+- Danger: #FF6B7A
+
+The result should feel like a living financial intelligence system: precise, responsive, dimensional, calm, and premium.
+
+Avoid:
+
+- Generic crypto neon
+- Cyberpunk visual noise
+- Constant motion everywhere
+- Heavy glassmorphism
+- Large rainbow gradients
+- Floating coins
+- Robot or brain stock art
+- Fake financial claims
+- Decorative effects that obscure product meaning
+
+FEATURE 1: IMMERSIVE FINU PRODUCT EXPLORER
+
+Create a full-screen product explorer opened from the “Personal” or “Products” navigation control.
+
+This should translate the focus behavior shown in screenshots 1–4 into an original FINU interface.
+
+Use an asymmetric rounded-tile composition containing:
+
+- Finu AI as the primary tall or wide feature tile
+- FINU Card
+- International Transfer
+- Multi-Currency Wallet
+- Credit
+- Swap
+- P2P Marketplace
+
+The composition should feel designed rather than like a standard equal-card grid.
+
+DESKTOP INTERACTION
+
+When no tile is active:
+
+- All tiles remain readable.
+- The ambient Midnight Intelligence shader or gradient field is visible behind the grid.
+- Tiles have quiet depth, thin borders, and small animated FINU-native product symbols.
+
+When a tile is hovered or keyboard-focused:
+
+- The active tile becomes completely sharp.
+- It rises approximately 6–10 pixels.
+- It may scale up slightly, with a maximum around 1.02–1.035.
+- Its border illumination increases.
+- Its product symbol becomes brighter and more active.
+- Its arrow or action indicator resolves from scattered dots into a directional arrow.
+- The background and non-active tiles blur slightly.
+- Non-active tiles reduce opacity to approximately 40–60%.
+- Non-active tiles may scale down very slightly.
+- The active tile’s local light field follows the pointer with damping.
+
+The focus effect should transition smoothly over approximately 400–650ms using FINU’s existing easing.
+
+Do not apply such strong blur that users lose spatial orientation. The active tile should be unmistakable, but the complete grid must remain understandable.
+
+When the pointer leaves the complete grid:
+
+- All cards smoothly return to their neutral state.
+- Blur, opacity, and scale reset without snapping.
+
+KEYBOARD BEHAVIOR
+
+Keyboard focus must produce the same hierarchy as hover:
+
+- A focused card becomes sharp and elevated.
+- Sibling cards soften.
+- Enter activates the link.
+- Escape closes the explorer.
+- Focus is trapped inside the open explorer.
+- Focus returns to the menu trigger after closing.
+
+MOBILE BEHAVIOR
+
+Do not reproduce the large desktop blur choreography on touch devices.
+
+On mobile:
+
+- Use a clean stacked or two-column tile layout.
+- Keep every tile sharp and readable.
+- Make Finu AI the first and largest tile.
+- Use tap feedback, active borders, and icon motion.
+- Maintain 44×44-pixel minimum controls.
+- Prevent horizontal overflow.
+
+PRODUCT SYMBOLS
+
+Each main product tile should include a small animated icon or visual vignette.
+
+Create original FINU symbols using combinations of:
+
+- Dots
+- Short data lines
+- Grid cells
+- Tiny bars
+- Currency paths
+- Network nodes
+- Wallet layers
+- AI spark geometry
+
+These symbols can be rendered with SVG, Canvas 2D, or lightweight CSS. They should subtly animate at rest and become more active on hover/focus.
+
+Do not copy Cleo’s icon imagery, halftone patterns, trophy, clouds, card art, or dotted arrow design exactly.
+
+Create a FINU-native dotted arrow motif that uses blue/cyan nodes and clearly belongs to this design system.
+
+OVERLAY MECHANICS
+
+- Animate the explorer in from the navigation, not as an unrelated modal.
+- Lock Lenis and document scrolling while open.
+- Use a dark translucent backdrop with a blurred shader field.
+- Add an explicit close button.
+- Support Escape.
+- Close after a product navigation action.
+- Preserve correct browser history behavior.
+- Use semantic links for product destinations.
+- Avoid mounting multiple shader canvases every time the menu opens.
+
+Suggested component structure:
+
+- ProductExplorer
+- ProductExplorerTile
+- ProductGlyph
+- FocusGroup or useFocusField hook
+
+FEATURE 2: SCROLL-DRIVEN PARTICLE NARRATIVE
+
+Create one full-viewport FINU particle-story section between the product experience and the trust/metrics content.
+
+The reference in screenshot 7 uses many small symbols that morph into larger recognizable forms as scroll progress changes. Build an original version using FINU’s visual vocabulary.
+
+Use FINU-native particles such as:
+
+- Small circles
+- Short line segments
+- Tiny squares
+- Plus signs
+- Currency-path nodes
+- Minimal FINU mark fragments
+
+Do not use Cleo’s omega-like characters or reproduce its exact particle formations.
+
+SCROLL STORY
+
+Create a short sequence of three or four meaningful formations.
+
+Suggested FINU sequence:
+
+1. Distributed particles representing fragmented financial activity
+2. Particles organize into a global payment network or connected globe
+3. The network contracts into an AI intelligence pulse or FINU mark
+4. The final shape resolves into a clean circular settlement signal
+
+Pair these states with concise DOM text such as:
+
+- Money moves everywhere.
+- Finu understands the signal.
+- Routes the right path.
+- Settles with confidence.
+
+Refine this copy to match existing approved FINU language. Do not make unsupported product claims.
+
+ANIMATION MECHANICS
+
+- Use GSAP ScrollTrigger to map scroll progress to particle targets.
+- Pin the scene only on sufficiently large screens.
+- Do not create a long or frustrating scroll trap.
+- A total pinned duration of approximately 200–300vh is enough.
+- Precompute target positions rather than recalculating complex shapes every frame.
+- Use deterministic seeded placement so the composition is stable.
+- Interpolate particle positions with smooth damping.
+- Add tiny independent drift only when it does not interfere with the main formation.
+- Crossfade DOM copy at defined progress thresholds.
+- Use opacity, scale, and density changes to make each formation feel intentional.
+
+Optional desktop pointer behavior:
+
+- Apply a small repulsion or magnetic field within a limited radius.
+- Particles should return to their target positions smoothly.
+- Keep pointer strength subtle.
+
+IMPLEMENTATION OPTIONS
+
+Prefer:
+
+- Canvas 2D for hundreds of simple glyph particles; or
+- A specialized lightweight WebGL point renderer built on the existing plain-WebGL approach.
+
+Do not add a major 3D dependency for this effect.
+
+The text must remain real HTML above the visual layer. Do not render important copy only into canvas.
+
+REDUCED MOTION
+
+When prefers-reduced-motion is active:
+
+- Do not pin the section.
+- Show the final organized formation as a static SVG/canvas frame.
+- Display the complete narrative in semantic HTML.
+- Remove cursor repulsion and continuous particle drift.
+
+MOBILE
+
+- Use fewer particles.
+- Shorten or remove pinning.
+- Advance formations with standard section reveals instead of long scroll scrubbing.
+- Preserve the meaning even if the particle animation is disabled.
+
+Suggested component structure:
+
+- ParticleNarrative
+- ParticleCanvas
+- particleTargets.ts
+- useParticleStory
+
+FEATURE 3: INTERACTIVE FINU METRICS BENTO
+
+Redesign the current basic three-card MetricsSection into an interactive bento data story inspired by screenshots 8–9.
+
+Do not use Cleo’s numbers, chart content, labels, imagery, or light color palette.
+
+Only use metrics that are already approved and verifiable from FINU’s real content. Never invent user counts, transaction totals, country counts, savings totals, revenue, advice counts, or growth rates.
+
+If the current figures cannot be verified, replace numerical cards with truthful capability-based proof or leave clearly marked content hooks for FINU to approve.
+
+BENTO COMPOSITION
+
+Use an original Midnight Intelligence bento layout with:
+
+- One large central interactive metric tile
+- Two or three smaller surrounding metric or capability tiles
+- One mini chart tile
+- One trust/infrastructure tile
+- Optional approved FINU product imagery or interface detail
+
+Avoid using unrelated stock photography. Existing FINU product UI is preferable.
+
+CENTRAL PARTICLE METRIC
+
+Create a circular or orbital data visualization around the main metric.
+
+The ring can use:
+
+- Tiny squares
+- Nodes
+- Short bars
+- Data pulses
+- Orbital paths
+
+The particles should:
+
+- Gently orbit or breathe at rest
+- Reconfigure when the selected metric or time range changes
+- Respond to hover/focus with a restrained local disturbance
+- Maintain a clean central zone for the metric value
+
+SEGMENTED CONTROL
+
+Add an accessible segmented control appropriate to FINU’s real data.
+
+Possible structures:
+
+- Daily / Weekly / All time
+- Users / Markets / Insights
+- Card / Transfers / AI
+
+Choose labels that correspond to truthful available data.
+
+When the selection changes:
+
+- Animate the value between states.
+- Reconfigure the particle density or radius.
+- Animate the relevant supporting bars.
+- Update supporting copy.
+- Move the active control indicator.
+- Announce the updated value through an appropriate aria-live region without becoming noisy.
+
+Use real buttons with:
+
+- aria-pressed or tab semantics
+- Arrow-key navigation when presented as tabs
+- Visible focus states
+- A static final state under reduced motion
+
+SURROUNDING CARDS
+
+Surrounding cards can include:
+
+- A radial settlement-speed visualization
+- A small network-coverage visualization
+- A FINU AI insight activity waveform
+- A transfer-route pulse
+- A partner/infrastructure summary
+- A product adoption hook awaiting approved data
+
+Keep them visually distinct but part of one system.
+
+FEATURE 4: EDITORIAL FINANCIAL CHARTS
+
+Use the principles in screenshots 5–6 to make FINU’s data presentation feel editorial and memorable rather than like a generic admin dashboard.
+
+Create no more than two large chart moments.
+
+Possible FINU-native chart patterns:
+
+1. A combined bar-and-line chart:
+   - Bars represent transfer or activity volume only if approved data exists.
+   - A line represents a related percentage or performance dimension.
+   - Bars grow upward on entry.
+   - The line draws from left to right.
+   - Data-point labels fade and rise into position.
+
+2. A horizontal route-distribution or product-usage chart:
+   - Rounded horizontal bars.
+   - Large direct labels.
+   - Minimal axes and grid lines.
+   - One tasteful dimensional illustration derived from the FINU interface, not stock art.
+
+If no real historical data exists, do not fake a chart. Use illustrative product-data examples that are explicitly labeled “Illustrative” or keep the existing semantic metrics until approved data is supplied.
+
+CHART INTERACTION
+
+- Animate once when entering the viewport.
+- Provide hover and keyboard tooltips.
+- Use direct labels where possible.
+- Keep the complete values available to screen readers.
+- Avoid relying only on color.
+- Do not begin at zero in a way that leaves awkward values such as “0M+” visible on slow devices or screenshots.
+- Render the final semantic value in the initial HTML and animate a separate visual layer where practical.
+
+FEATURE 5: FOCUS ORCHESTRATION ACROSS FINU
+
+The references feel sophisticated because attention is actively directed.
+
+Create a reusable focus-orchestration system:
+
+- When one major interactive tile is active, siblings become quieter.
+- When no tile is active, the complete composition is equally readable.
+- Focus changes should affect blur, opacity, scale, local lighting, and animated glyph intensity.
+- Use the same behavior for keyboard focus.
+- Never blur the global page just because the pointer passes over a small control.
+- Use strong focus choreography only for deliberate feature groups.
+
+Suggested CSS variables:
+
+- --focus-x
+- --focus-y
+- --focus-strength
+- --sibling-opacity
+- --sibling-blur
+- --tile-rotate-x
+- --tile-rotate-y
+
+Use refs and motion values for high-frequency interaction. Avoid setting React state on every pointermove.
+
+FEATURE 6: ACTIVE NAVIGATION DETAILS
+
+Improve the existing FINU navigation without copying Cleo’s centered pill layout.
+
+Add:
+
+- A product-explorer trigger with a small animated data glyph
+- A scroll-state edge glow
+- A smooth background-depth transition
+- A close/menu glyph assembled from small nodes
+- A subtle link indicator that follows active focus
+
+Preserve FINU’s current navigation structure, real external links, language handling, and Get App CTA.
+
+Do not claim localization works if the selector only changes its label.
+
+FEATURE 7: SECTION TRANSITIONS
+
+Connect the new active systems:
+
+- Hero shader energy should narrow into a data path before the product section.
+- The product explorer’s node language should reappear in the particle narrative.
+- The particle narrative’s final circular settlement signal should visually hand off to the central metrics ring.
+- The metrics bento should gradually return to the quieter page language before testimonials and FAQ.
+
+Use SVG paths, masks, gradients, and light pulses to create continuity.
+
+Do not run a full WebGL canvas behind every section. Use a maximum of two active WebGL canvases simultaneously.
+
+PERFORMANCE REQUIREMENTS
+
+- Target smooth interaction on modern desktop hardware.
+- Keep pointer updates out of React state.
+- Use requestAnimationFrame only when a visual is visible and active.
+- Pause canvases when the document is hidden.
+- Use IntersectionObserver to pause offscreen continuous animation.
+- Cap device pixel ratio.
+- Reduce particle counts and shader complexity on mobile.
+- Clean up all buffers, programs, observers, ScrollTriggers, GSAP contexts, and event listeners.
+- Avoid unnecessary dependencies.
+- Do not significantly increase First Load JS.
+- Do not allow multiple hidden product-explorer canvases to stay active.
+
+ACCESSIBILITY REQUIREMENTS
+
+- Exactly one meaningful H1.
+- Logical heading order.
+- Every navigation tile must be a real link or button.
+- Product explorer must support keyboard focus, Escape, focus trapping, and focus restoration.
+- Metrics controls must be operable by keyboard.
+- Charts must expose text equivalents.
+- Particle narrative copy must remain semantic HTML.
+- Maintain WCAG 2.1 AA contrast.
+- Maintain 44×44-pixel touch targets.
+- Respect prefers-reduced-motion everywhere.
+- Avoid long pinned scroll sequences on mobile.
+- Do not hide essential content inside canvas.
+- Do not use blur as the only focus indicator.
+
+FILE-LEVEL GUIDANCE
+
+Inspect these existing files first:
+
+- src/components/MidnightIntelligenceShader.tsx
+- src/components/finu/FinuNav.tsx
+- src/components/finu/Hero.tsx
+- src/components/finu/AppMock.tsx
+- src/components/finu/ProductTabs.tsx
+- src/components/finu/MetricsSection.tsx
+- src/components/finu/AnimatedValue.tsx
+- src/components/finu/TextReveal.tsx
+- src/components/finu/SmoothScroll.tsx
+- src/components/finu/PageShell.tsx
+- src/styles/finu.css
+- src/app/page.tsx
+
+Create focused components rather than one large client component.
+
+Suggested additions:
+
+- src/components/finu/ProductExplorer.tsx
+- src/components/finu/ProductExplorerTile.tsx
+- src/components/finu/ProductGlyph.tsx
+- src/components/finu/ParticleNarrative.tsx
+- src/components/finu/InteractiveMetricsBento.tsx
+- src/components/finu/ParticleMetric.tsx
+- src/components/finu/InteractiveSurface.tsx
+- src/components/finu/useFocusField.ts
+
+Keep product definitions centralized so the navigation explorer and in-page product tabs do not drift apart.
+
+IMPLEMENTATION ORDER
+
+1. Audit the current worktree and preserve every existing user change.
+2. Open the current site at http://localhost:3456/ and study its existing interactions.
+3. Centralize shared product data if necessary.
+4. Build the accessible product explorer.
+5. Build the particle narrative with reduced-motion fallback.
+6. Redesign MetricsSection into the interactive bento.
+7. Add no more than two editorial chart moments, only when real or clearly illustrative data is available.
+8. Connect the sections through restrained data-path transitions.
+9. Test desktop, tablet, mobile, keyboard, touch, and reduced-motion behavior.
+10. Remove obsolete styles or components only after confirming they are no longer used.
+
+REFERENCE-QUALITY ACCEPTANCE CRITERIA
+
+The implementation is complete only when:
+
+- Opening the FINU product explorer feels like entering an intentional product environment.
+- Hovering or focusing a product tile creates a clear sharp-versus-soft hierarchy.
+- The same feature remains usable without hover.
+- The particle narrative visibly morphs through at least three FINU-relevant formations.
+- Scroll text transitions are synchronized and readable.
+- The metrics bento contains a meaningful central interactive visualization.
+- Segmented metrics controls change values and visuals accessibly.
+- Data animations feel physical and editorial rather than like a template dashboard.
+- The experience is recognizably FINU and cannot be mistaken for a Cleo clone.
+- No Cleo copy, media, icon assets, code, or exact layouts are present.
+- The site works at approximately 390px, 768px, 1280px, and 1440px widths.
+- The browser console has no application errors.
+- There is no horizontal overflow.
+- Reduced-motion mode remains polished and complete.
+- npm run typecheck passes.
+- npm run lint passes.
+- npm run build passes.
+
+GIT AND DELIVERY
+
+The current worktree already contains a large intentional FINU redesign. Preserve it.
+
+Do not use:
+
+- git reset
+- git checkout --
+- git clean
+- force push
+
+Before staging:
+
+- Run git status -sb.
+- Review git diff --stat and the actual diff.
+- Exclude generated output, caches, local credentials, and secrets.
+
+After all validation succeeds:
+
+1. Stage the relevant FINU source, style, asset, configuration, and documentation files.
+2. Commit with a concise message such as:
+   Add immersive Finu product and data interactions
+3. Push the current main branch to origin/main if the user still wants the linked Netlify production site updated.
+4. Do not force-push.
+5. Verify the linked Netlify deployment before reporting it as live.
+
+If GitHub or Netlify authentication fails, preserve the completed local work and commit, then report the exact authentication step required. Never expose tokens or credentials.
+
+FINAL RESPONSE
+
+Report:
+
+- Interaction systems implemented
+- How the reference mechanics were translated into original FINU design
+- Files added and changed
+- Accessibility and reduced-motion behavior
+- Performance safeguards
+- Browser sizes tested
+- Typecheck, lint, and build results
+- Commit hash and pushed branch, if publishing was requested
+- Verified Netlify production URL, if deployment completed
+- Any metrics or claims still waiting for real FINU business approval
+
+Do not return only a plan. Implement and verify the active features.

@@ -6,14 +6,10 @@ import {
   ArrowRightLeft,
   ArrowUpRight,
   ChevronRight,
-  Landmark,
-  MessageSquareText,
   Send,
   Sparkles,
-  Users,
-  Wallet,
 } from "lucide-react";
-import { LINKS } from "./links";
+import { TAB_PRODUCTS } from "./products";
 import Eyebrow from "./Eyebrow";
 import { Reveal, TextReveal } from "./TextReveal";
 
@@ -216,64 +212,15 @@ function P2PVisual() {
   );
 }
 
-/* ── Products — copy taken verbatim from meetfinu.com ──────── */
-
-const PRODUCTS = [
-  {
-    id: "finu-ai",
-    label: "Finu AI",
-    icon: MessageSquareText,
-    title: "Money talks. Finu talks back.",
-    body: "Finu analyzes spending, calls out bad habits, and makes you better at money.",
-    href: LINKS.ai,
-    visual: AiVisual,
-  },
-  {
-    id: "transfer",
-    label: "International Transfer",
-    icon: Send,
-    title: "Send Crypto, Receive Local Currency",
-    body: "Experience hassle-free sending. Every transaction protected, every recipient just moments away.",
-    href: LINKS.sendBankEwallet,
-    visual: TransferVisual,
-  },
-  {
-    id: "wallet",
-    label: "Multi-Currency Wallet",
-    icon: Wallet,
-    title: "Bridging Crypto and Everyday Life",
-    body: "Crypto or Local Currency. Jump straight into action and access your funds easily.",
-    href: LINKS.wallet,
-    visual: WalletVisual,
-  },
-  {
-    id: "credit",
-    label: "Credit",
-    icon: Landmark,
-    title: "Unlock Your Credit Power",
-    body: "Access instant funds using your crypto as collateral, with flexible repayment options and no credit checks.",
-    href: LINKS.credit,
-    visual: CreditVisual,
-  },
-  {
-    id: "swap",
-    label: "Swap",
-    icon: ArrowRightLeft,
-    title: "Crypto Conversions, Made Easy",
-    body: "Convert your assets or move funds in and out on the go, with competitive rates and minimal friction.",
-    href: LINKS.swap,
-    visual: SwapVisual,
-  },
-  {
-    id: "p2p",
-    label: "P2P Marketplace",
-    icon: Users,
-    title: "Peer-to-Peer, Powered By You",
-    body: "Connect directly with others to access stablecoins. Enjoy secure, low-cost peer-to-peer trading with real-time settlements.",
-    href: LINKS.p2p,
-    visual: P2PVisual,
-  },
-];
+/* Per-product interface vignettes, keyed to the shared catalog. */
+const VISUALS: Record<string, React.FC> = {
+  "finu-ai": AiVisual,
+  transfer: TransferVisual,
+  wallet: WalletVisual,
+  credit: CreditVisual,
+  swap: SwapVisual,
+  p2p: P2PVisual,
+};
 
 /* Directional depth: panels slide in from the side you're heading to. */
 const PANEL_VARIANTS = {
@@ -313,7 +260,7 @@ export default function ProductTabs() {
   }, []);
 
   const onKeyDown = (event: React.KeyboardEvent) => {
-    const last = PRODUCTS.length - 1;
+    const last = TAB_PRODUCTS.length - 1;
     let next: number | null = null;
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
       next = active === last ? 0 : active + 1;
@@ -331,8 +278,8 @@ export default function ProductTabs() {
     }
   };
 
-  const product = PRODUCTS[active];
-  const Visual = product.visual;
+  const product = TAB_PRODUCTS[active];
+  const Visual = VISUALS[product.id];
 
   return (
     <section
@@ -376,7 +323,7 @@ export default function ProductTabs() {
             className="flex gap-2 overflow-x-auto pb-2"
             onKeyDown={onKeyDown}
           >
-            {PRODUCTS.map((p, i) => {
+            {TAB_PRODUCTS.map((p, i) => {
               const selected = i === active;
               const Icon = p.icon;
               return (
