@@ -11,6 +11,7 @@ import TestimonialsSection from "@/components/finu/TestimonialsSection";
 import FAQ from "@/components/finu/FAQ";
 import FinalCTA from "@/components/finu/FinalCTA";
 import DataPath from "@/components/finu/DataPath";
+import ParticleNarrative from "@/components/finu/ParticleNarrative";
 
 export const metadata: Metadata = {
   // Title falls through to the root layout default (no template suffix).
@@ -26,6 +27,7 @@ export default function HomePage() {
         <DataPath height={104} className="-mb-6" />
         <CardsSection />
         <ProductTabs />
+        <ParticleNarrative />
         <DataPath height={104} className="-my-4" />
         <PartnersSection />
         <div className="f-seam" aria-hidden />
