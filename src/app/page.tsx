@@ -3,6 +3,7 @@ import "@/styles/finu.css";
 import { finuFontClass } from "@/components/finu/fonts";
 import PageShell from "@/components/finu/PageShell";
 import Hero from "@/components/finu/Hero";
+import AppShowcase from "@/components/finu/AppShowcase";
 import CardsSection from "@/components/finu/CardsSection";
 import ProductTabs from "@/components/finu/ProductTabs";
 import PartnersSection from "@/components/finu/PartnersSection";
@@ -25,6 +26,7 @@ export default function HomePage() {
       <PageShell>
         <Hero />
         <DataPath height={104} className="-mb-6" />
+        <AppShowcase />
         <CardsSection />
         <ProductTabs />
         <ParticleNarrative />
