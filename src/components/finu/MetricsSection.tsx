@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import AnimatedValue from "./AnimatedValue";
 import Eyebrow from "./Eyebrow";
 import InteractiveSurface from "./InteractiveSurface";
@@ -164,11 +164,42 @@ function InsightWave() {
 export default function MetricsSection() {
   const [activeId, setActiveId] = useState(METRICS[0].id);
   const [landedId, setLandedId] = useState<string | null>(null);
+  const [announcement, setAnnouncement] = useState("");
+  const [engaged, setEngaged] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInView = useInView(chartRef, { once: true, margin: "-12% 0px" });
+  const centralRef = useRef<HTMLDivElement>(null);
+  const centralInView = useInView(centralRef, { margin: "-15% 0px" });
+  const manualUntil = useRef(0);
+  const reduced = useReducedMotion();
 
   const active = METRICS.find((m) => m.id === activeId) ?? METRICS[0];
-  const announcement = `${COMPACT.format(active.value)}${active.suffix} ${active.label}`;
+
+  /* The story tells itself: while the tile is in view and nobody is
+     hovering or focusing it, the metric advances on its own. Manual
+     selection wins for a while; reduced motion turns rotation off. */
+  useEffect(() => {
+    if (reduced || !centralInView || engaged) return;
+    const id = setInterval(() => {
+      if (Date.now() < manualUntil.current) return;
+      setLandedId(null);
+      setActiveId((current) => {
+        const idx = METRICS.findIndex((m) => m.id === current);
+        return METRICS[(idx + 1) % METRICS.length].id;
+      });
+    }, 5200);
+    return () => clearInterval(id);
+  }, [reduced, centralInView, engaged]);
+
+  /* Only user-driven changes are announced to assistive tech, so the
+     auto-rotation never spams screen readers. */
+  const selectMetric = (id: string) => {
+    manualUntil.current = Date.now() + 14000;
+    setLandedId(null);
+    setActiveId(id);
+    const m = METRICS.find((x) => x.id === id);
+    if (m) setAnnouncement(`${COMPACT.format(m.value)}${m.suffix} ${m.label}`);
+  };
 
   return (
     <section
@@ -192,6 +223,14 @@ export default function MetricsSection() {
         <div className="mt-14 grid gap-5 lg:grid-cols-12">
           {/* Central interactive metric */}
           <Reveal className="lg:col-span-7 lg:row-span-2">
+            <div
+              ref={centralRef}
+              className="h-full"
+              onPointerEnter={() => setEngaged(true)}
+              onPointerLeave={() => setEngaged(false)}
+              onFocusCapture={() => setEngaged(true)}
+              onBlurCapture={() => setEngaged(false)}
+            >
             <InteractiveSurface
               className={`f-card f-card-raised relative h-full min-h-[24rem] overflow-hidden md:min-h-[27rem] ${
                 landedId === active.id ? "f-metric-done" : ""
@@ -218,10 +257,7 @@ export default function MetricsSection() {
                 <div className="mt-4">
                   <SegmentedControl
                     activeId={activeId}
-                    onChange={(id) => {
-                      setLandedId(null);
-                      setActiveId(id);
-                    }}
+                    onChange={selectMetric}
                   />
                 </div>
               </div>
@@ -229,6 +265,7 @@ export default function MetricsSection() {
                 {announcement}
               </p>
             </InteractiveSurface>
+            </div>
           </Reveal>
 
           {/* Finu AI activity */}

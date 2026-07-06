@@ -236,8 +236,9 @@
     #050816;
 }
 
-/* Veil kept light enough for the shader to read as alive; the shader
-   itself darkens the headline side (content-safe guard) on wide screens. */
+/* Veil kept light enough for the shader to read as alive; the hero
+   copy is centered, so the dark content-safe zone sits mid-frame and
+   the shader stays luminous toward the edges. */
 .hero::before {
   content: "";
   position: absolute;
@@ -245,12 +246,11 @@
   z-index: -2;
   pointer-events: none;
   background:
-    linear-gradient(
-      90deg,
-      rgba(5, 8, 22, 0.82) 0%,
-      rgba(5, 8, 22, 0.5) 34%,
-      rgba(5, 8, 22, 0.08) 68%,
-      rgba(5, 8, 22, 0.3) 100%
+    radial-gradient(
+      64% 58% at 50% 44%,
+      rgba(5, 8, 22, 0.78),
+      rgba(5, 8, 22, 0.32) 70%,
+      rgba(5, 8, 22, 0.05)
     ),
     linear-gradient(
       180deg,
