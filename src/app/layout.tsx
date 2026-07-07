@@ -55,6 +55,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Switzer is loaded from Fontshare's CDN via @font-face with
+            font-display: swap; this just speeds up that connection.
+            The type stack already falls back to self-hosted Geist and
+            system-ui, so a slow or blocked CDN never blocks text. */}
+        <link rel="preconnect" href="https://cdn.fontshare.com" />
+        <link rel="dns-prefetch" href="https://cdn.fontshare.com" />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
