@@ -1,37 +1,3 @@
-/* Switzer (Fontshare, free for commercial use) — the closest match
-   to PP Neue Montreal. The stack lists "PP Neue Montreal" first: if
-   licensed files are ever added via @font-face, the site upgrades to
-   the exact face with no further changes. Direct @font-face rules —
-   the bundler strips remote @import. */
-@font-face {
-  font-family: "Switzer";
-  src: url("https://cdn.fontshare.com/wf/EW5HJEX6O4L64XUWQA2XU7Q6BZ3B4JA4/ZWUP4SQYHHMMSS5LFHFFBX6DXL7C3DTU/H5EOHLIZH5K7IZK6SGYJI75L4KV6FUO7.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Switzer";
-  src: url("https://cdn.fontshare.com/wf/BLNB4FAQFNK56DWWNF7PMGTCOTZHOEII/ST3WKSSDMBK2MIQQO3MAVYWLF4FTOLFV/6IN5WOLRCYP4G4MOCOHOMXNON6Q7MDAR.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Switzer";
-  src: url("https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Switzer";
-  src: url("https://cdn.fontshare.com/wf/5SZVFDB7V52TI6ULVC6J3WQZQCIZVDV5/ODYPSTCUDMKSTYIPTV4CLQ7URIK7XYBJ/YS3VPNVO4B3TOJMEXDGFZQ4TLZGGSRZC.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ─────────────────────────────────────────────────────────────
    Finu design system — "Midnight Intelligence".
 
@@ -41,11 +7,6 @@
    ───────────────────────────────────────────────────────────── */
 
 .finu {
-  /* One grotesque family carries the whole voice (light display,
-     regular body) — the Cleo-style single-family system. */
-  --f-font-sans: "PP Neue Montreal", "Switzer", var(--f-font-display),
-    system-ui, sans-serif;
-
   /* Core tokens */
   --color-background: #050816;
   --color-surface: #0d1428;
@@ -60,17 +21,6 @@
   --color-warning: #f5c451;
   --color-danger: #ff6b7a;
 
-  /* Light app-surface tokens — the in-app mockups render light-mode
-     Finu screens against the midnight site. Brand accents reuse the
-     core tokens; neutrals below exist only for these light surfaces. */
-  --app-bg: #f7f9ff;
-  --app-surface: #ffffff;
-  --app-ink: #07152f;
-  --app-muted: #667085;
-  --app-border: #e6eaf2;
-  --app-success: #16a34a;
-  --app-warning: #f59e0b;
-
   /* Derived */
   --f-border-soft: rgba(42, 56, 90, 0.55);
   --f-text-faint: rgba(168, 179, 204, 0.62);
@@ -80,7 +30,7 @@
 
   background: var(--color-background);
   color: var(--color-text-primary);
-  font-family: var(--f-font-sans);
+  font-family: var(--f-font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -92,10 +42,10 @@
 
 /* Typography */
 .f-display {
-  font-family: var(--f-font-sans);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  line-height: 1.06;
+  font-family: var(--f-font-display), sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
 .f-eyebrow {
@@ -135,7 +85,7 @@
   min-height: 48px;
   padding: 0.8rem 1.7rem;
   border-radius: 999px;
-  font-family: var(--f-font-sans);
+  font-family: var(--f-font-display), sans-serif;
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -286,9 +236,8 @@
     #050816;
 }
 
-/* Veil kept light enough for the shader to read as alive; the hero
-   copy is centered, so the dark content-safe zone sits mid-frame and
-   the shader stays luminous toward the edges. */
+/* Veil kept light enough for the shader to read as alive; the shader
+   itself darkens the headline side (content-safe guard) on wide screens. */
 .hero::before {
   content: "";
   position: absolute;
@@ -296,11 +245,12 @@
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(
-      64% 58% at 50% 44%,
-      rgba(5, 8, 22, 0.78),
-      rgba(5, 8, 22, 0.32) 70%,
-      rgba(5, 8, 22, 0.05)
+    linear-gradient(
+      90deg,
+      rgba(5, 8, 22, 0.82) 0%,
+      rgba(5, 8, 22, 0.5) 34%,
+      rgba(5, 8, 22, 0.08) 68%,
+      rgba(5, 8, 22, 0.3) 100%
     ),
     linear-gradient(
       180deg,
@@ -929,52 +879,6 @@
   }
 }
 
-/* Segmented metric control */
-.f-segmented {
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 999px;
-  border: 1px solid var(--f-border-soft);
-  background: rgba(5, 8, 22, 0.6);
-}
-.f-segment {
-  position: relative;
-  min-height: 44px;
-  padding: 0.5rem 1.05rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: color 0.35s var(--f-ease);
-}
-.f-segment:hover {
-  color: var(--color-text-primary);
-}
-.f-segment[aria-pressed="true"] {
-  color: var(--color-text-primary);
-}
-.f-segment-pill {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: var(--color-surface-raised);
-  border: 1px solid rgba(79, 124, 255, 0.5);
-  box-shadow: 0 0 18px -6px rgba(79, 124, 255, 0.45);
-}
-
-/* Horizontal editorial bars (grow from the left once in view) */
-.f-bar-h {
-  border-radius: 999px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 1.1s var(--f-ease);
-}
-.f-bar-h[data-drawn="true"] {
-  transform: scaleX(1);
-}
-
 /* Metric card: confirming glow when its number lands. */
 .f-metric-done {
   animation: f-metric-land 1.6s var(--f-ease) 1;
@@ -1072,369 +976,6 @@
   );
 }
 
-/* ── Product explorer ────────────────────────────────────── */
-.f-explorer-backdrop {
-  background: rgba(5, 8, 22, 0.88);
-  backdrop-filter: blur(22px) saturate(130%);
-  -webkit-backdrop-filter: blur(22px) saturate(130%);
-}
-
-/* Asymmetric tile composition: Finu AI anchors a 2×2 field, the
-   bottom row spreads wide. Collapses to 2 columns, then a stack. */
-.f-explorer-grid {
-  display: grid;
-  gap: 0.75rem;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "ai"
-    "card"
-    "transfer"
-    "wallet"
-    "credit"
-    "swap"
-    "p2p";
-}
-@media (min-width: 640px) {
-  .f-explorer-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "ai ai"
-      "card transfer"
-      "wallet credit"
-      "swap p2p";
-  }
-}
-@media (min-width: 1024px) {
-  .f-explorer-grid {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr 1fr 0.85fr;
-    grid-template-areas:
-      "ai ai card card transfer transfer"
-      "ai ai wallet wallet credit credit"
-      "swap swap swap p2p p2p p2p";
-    min-height: 0;
-  }
-}
-.f-x-finu-ai {
-  grid-area: ai;
-}
-.f-x-card {
-  grid-area: card;
-}
-.f-x-transfer {
-  grid-area: transfer;
-}
-.f-x-wallet {
-  grid-area: wallet;
-}
-.f-x-credit {
-  grid-area: credit;
-}
-.f-x-swap {
-  grid-area: swap;
-}
-.f-x-p2p {
-  grid-area: p2p;
-}
-
-.f-explorer-tile {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 8.5rem;
-  padding: 1.35rem 1.45rem;
-  border-radius: calc(var(--f-radius) * 0.9);
-  background: rgba(13, 20, 40, 0.78);
-  border: 1px solid var(--f-border-soft);
-  overflow: hidden;
-  transition:
-    transform 0.55s var(--f-ease),
-    opacity 0.55s var(--f-ease),
-    filter 0.55s var(--f-ease),
-    border-color 0.55s var(--f-ease),
-    box-shadow 0.55s var(--f-ease);
-}
-.f-explorer-tile-big {
-  min-height: 11rem;
-  padding: 1.6rem 1.7rem;
-}
-
-/* Local light field that follows the pointer (--px/--py set in JS). */
-.f-explorer-tile::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  background: radial-gradient(
-    260px circle at var(--px, 60%) var(--py, 40%),
-    rgba(56, 221, 248, 0.09),
-    rgba(79, 124, 255, 0.07) 45%,
-    transparent 70%
-  );
-  transition: opacity 0.5s var(--f-ease);
-}
-
-/* Sharp-vs-soft focus choreography. */
-.f-explorer-tile[data-state="active"] {
-  transform: translateY(-8px) scale(1.02);
-  border-color: rgba(79, 124, 255, 0.65);
-  box-shadow:
-    0 28px 64px -26px rgba(2, 4, 12, 0.95),
-    0 0 34px -12px rgba(56, 221, 248, 0.4),
-    0 0 0 1px rgba(79, 124, 255, 0.2);
-  z-index: 1;
-}
-.f-explorer-tile[data-state="active"]::before {
-  opacity: 1;
-}
-.f-explorer-tile[data-state="dim"] {
-  opacity: 0.5;
-  filter: blur(2px);
-  transform: scale(0.988);
-}
-
-/* Product symbol: quiet at rest, brighter and livelier when active. */
-.f-explorer-glyph {
-  display: block;
-  width: 2.6rem;
-  height: 2.6rem;
-  margin-bottom: 1.1rem;
-  opacity: 0.78;
-  transition:
-    opacity 0.5s var(--f-ease),
-    filter 0.5s var(--f-ease),
-    transform 0.5s var(--f-ease);
-}
-.f-explorer-tile-big .f-explorer-glyph {
-  width: 3.1rem;
-  height: 3.1rem;
-}
-.f-explorer-tile[data-state="active"] .f-explorer-glyph,
-.f-explorer-tile:focus-visible .f-explorer-glyph {
-  opacity: 1;
-  transform: scale(1.06);
-  filter: brightness(1.3) saturate(1.15)
-    drop-shadow(0 0 10px rgba(79, 124, 255, 0.45));
-}
-
-.f-explorer-action {
-  position: absolute;
-  right: 1.35rem;
-  bottom: 1.35rem;
-}
-
-/* ── Product glyphs (SVG micro-animations) ───────────────── */
-.f-glyph {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.f-glyph-core {
-  animation: f-glyph-core 3.2s ease-in-out infinite;
-  transform-origin: center;
-  transform-box: fill-box;
-}
-@keyframes f-glyph-core {
-  0%,
-  100% {
-    opacity: 0.75;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.25);
-  }
-}
-
-.f-glyph-orbit {
-  animation: f-glyph-spin 14s linear infinite;
-  transform-origin: 22px 22px;
-}
-.f-glyph-spin {
-  animation: f-glyph-spin 9s linear infinite;
-  transform-origin: 22px 22px;
-}
-@keyframes f-glyph-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.f-glyph-slide {
-  animation: f-glyph-slide 4.6s var(--f-ease) infinite;
-}
-@keyframes f-glyph-slide {
-  0%,
-  55%,
-  100% {
-    transform: translate(0, 0);
-  }
-  25%,
-  35% {
-    transform: translate(-2.5px, 2.5px);
-  }
-}
-
-/* Transfer packet rides the dashed route via a CSS motion path. */
-.f-glyph-travel {
-  opacity: 0;
-}
-@supports (offset-path: path("M0 0 L1 1")) {
-  .f-glyph-travel {
-    opacity: 1;
-    offset-path: path("M6 30 C 16 12, 28 12, 38 26");
-    animation: f-glyph-travel 3.4s ease-in-out infinite;
-  }
-  @keyframes f-glyph-travel {
-    0% {
-      offset-distance: 0%;
-      opacity: 0;
-    }
-    12% {
-      opacity: 1;
-    }
-    88% {
-      opacity: 1;
-    }
-    100% {
-      offset-distance: 100%;
-      opacity: 0;
-    }
-  }
-}
-
-.f-glyph-breathe {
-  animation: f-glyph-breathe 3.6s ease-in-out infinite;
-  transform-origin: 22px 22px;
-  transform-box: view-box;
-}
-@keyframes f-glyph-breathe {
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.85;
-  }
-  50% {
-    transform: translateX(2px);
-    opacity: 1;
-  }
-}
-
-.f-glyph-meter {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: f-glyph-meter 5.2s var(--f-ease) infinite;
-}
-@keyframes f-glyph-meter {
-  0% {
-    stroke-dashoffset: 100;
-  }
-  45%,
-  70% {
-    stroke-dashoffset: 28;
-  }
-  100% {
-    stroke-dashoffset: 100;
-  }
-}
-
-.f-glyph-link {
-  stroke-dashoffset: 0;
-  animation: f-glyph-link 2.8s linear infinite;
-}
-@keyframes f-glyph-link {
-  to {
-    stroke-dashoffset: -24;
-  }
-}
-
-/* ── FINU dotted arrow: scattered nodes resolve into an arrow ── */
-.f-dotted-arrow {
-  display: block;
-  width: 2.4rem;
-  height: 1rem;
-  overflow: visible;
-}
-.f-da-dot {
-  fill: var(--color-primary);
-  opacity: 0.45;
-  transition:
-    transform 0.45s var(--f-ease),
-    opacity 0.45s var(--f-ease),
-    fill 0.45s var(--f-ease);
-}
-.f-da-dot:nth-of-type(1) {
-  transform: translate(-2px, -2.5px);
-}
-.f-da-dot:nth-of-type(2) {
-  transform: translate(1.5px, 2.5px);
-}
-.f-da-dot:nth-of-type(3) {
-  transform: translate(-1px, -1.5px);
-}
-.f-da-head {
-  stroke: var(--color-accent);
-  opacity: 0;
-  transform: translateX(-7px);
-  transition:
-    transform 0.5s var(--f-ease) 0.08s,
-    opacity 0.5s var(--f-ease) 0.08s;
-}
-.f-explorer-tile[data-state="active"] .f-da-dot,
-.f-explorer-tile:focus-visible .f-da-dot {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-.f-explorer-tile[data-state="active"] .f-da-dot:nth-of-type(3),
-.f-explorer-tile:focus-visible .f-da-dot:nth-of-type(3) {
-  fill: var(--color-accent);
-}
-.f-explorer-tile[data-state="active"] .f-da-head,
-.f-explorer-tile:focus-visible .f-da-head {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* ── Nav data glyph: three live nodes beside the trigger ───── */
-.f-nav-glyph {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-}
-.f-nav-glyph span {
-  width: 4px;
-  height: 4px;
-  border-radius: 1px;
-  background: var(--color-primary);
-  animation: f-nav-glyph 2.6s ease-in-out infinite;
-}
-.f-nav-glyph span:nth-child(2) {
-  background: var(--color-accent);
-  animation-delay: 0.35s;
-}
-.f-nav-glyph span:nth-child(3) {
-  background: var(--color-secondary);
-  animation-delay: 0.7s;
-}
-@keyframes f-nav-glyph {
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-2px);
-  }
-}
-.f-navlink:hover .f-nav-glyph span,
-.f-navlink[aria-expanded="true"] .f-nav-glyph span {
-  opacity: 1;
-}
-
 /* Focus */
 .finu :focus-visible {
   outline: 2px solid var(--color-accent);
@@ -1470,8 +1011,5 @@
   }
   .f-bar {
     transform: scaleY(1) !important;
-  }
-  .f-bar-h {
-    transform: scaleX(1) !important;
   }
 }
