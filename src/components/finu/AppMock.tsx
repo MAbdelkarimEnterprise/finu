@@ -1,297 +1,307 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { ArrowDownLeft, ArrowUpRight, Sparkles } from "lucide-react";
+import {
+  ArrowRightLeft,
+  ArrowUpRight,
+  CalendarClock,
+  CreditCard,
+  Flame,
+  Home,
+  ShieldCheck,
+  Sparkles,
+  UserRound,
+} from "lucide-react";
 import AnimatedValue from "./AnimatedValue";
+import FinuCard from "./FinuCard";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/* Illustrative interface data — labelled as such in the footer. */
-const WEEKLY_SPEND = [
-  { day: "Mon", amount: 42 },
-  { day: "Tue", amount: 18 },
-  { day: "Wed", amount: 65 },
-  { day: "Thu", amount: 31 },
-  { day: "Fri", amount: 88 },
-  { day: "Sat", amount: 54 },
-  { day: "Sun", amount: 23 },
+/* Illustrative interface data — labelled beneath the phone. */
+const INSIGHTS = [
+  {
+    icon: ShieldCheck,
+    tone: "var(--app-success)",
+    label: "Safe to spend",
+    value: "$312",
+    progress: 0.62,
+  },
+  {
+    icon: CalendarClock,
+    tone: "var(--app-warning)",
+    label: "Bills coming up",
+    value: "$128",
+    progress: 0.34,
+  },
+  {
+    icon: Flame,
+    tone: "var(--color-secondary)",
+    label: "Savings streak",
+    value: "6 wks",
+    progress: 0.86,
+  },
 ];
 
-const CATEGORIES = [
-  { label: "Subscriptions", share: 34, tone: "var(--color-primary)" },
-  { label: "Groceries", share: 27, tone: "var(--color-accent)" },
-  { label: "Travel", share: 22, tone: "var(--color-secondary)" },
-  { label: "Dining", share: 17, tone: "var(--color-warning)" },
+const NAV = [
+  { icon: Home, label: "Home", active: true },
+  { icon: CreditCard, label: "Card", active: false },
+  { icon: ArrowRightLeft, label: "Pay", active: false },
+  { icon: Sparkles, label: "Finu AI", active: false },
+  { icon: UserRound, label: "You", active: false },
 ];
-
-const MAX_SPEND = Math.max(...WEEKLY_SPEND.map((d) => d.amount));
-
-const AI_MESSAGE =
-  "Delivery spending is up 38% this week. Want me to set a dining cap?";
-
-function SpendingChart() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
-  const reduced = useReducedMotion();
-  const [active, setActive] = useState<number | null>(null);
-  const [idle, setIdle] = useState(4);
-
-  /* While nobody hovers or focuses, a soft highlight wanders the week —
-     the chart reads as live without announcing anything to SRs. */
-  useEffect(() => {
-    if (reduced || !inView || active !== null) return;
-    const id = setInterval(
-      () => setIdle((i) => (i + 1) % WEEKLY_SPEND.length),
-      2600
-    );
-    return () => clearInterval(id);
-  }, [reduced, inView, active]);
-
-  return (
-    <div ref={ref}>
-      <div className="flex items-baseline justify-between">
-        <p className="text-[0.72rem] font-medium text-[var(--color-text-secondary)]">
-          This week
-        </p>
-        <p
-          className="f-mono text-[0.6rem] text-[var(--color-accent)]"
-          role="status"
-          aria-live="polite"
-        >
-          {active === null
-            ? "USDC · LIVE"
-            : `${WEEKLY_SPEND[active].day} · $${WEEKLY_SPEND[active].amount}`}
-        </p>
-      </div>
-
-      <div
-        className="mt-3 grid h-24 grid-cols-7 items-end gap-2"
-        role="img"
-        aria-label={`Bar chart of this week's spending. ${WEEKLY_SPEND.map(
-          (d) => `${d.day} $${d.amount}`
-        ).join(", ")}.`}
-      >
-        {WEEKLY_SPEND.map((d, i) => (
-          <div key={d.day} className="relative flex h-full flex-col justify-end">
-            {active === i && (
-              <span
-                className="absolute -top-7 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--f-border-soft)] bg-[var(--color-surface-raised)] px-2 py-0.5 text-[0.62rem] font-semibold text-[var(--color-text-primary)]"
-                aria-hidden
-              >
-                ${d.amount}
-              </span>
-            )}
-            <button
-              type="button"
-              className="f-bar w-full rounded-t-md"
-              data-drawn={inView}
-              style={{
-                height: `${(d.amount / MAX_SPEND) * 100}%`,
-                background:
-                  active === i
-                    ? "var(--color-accent)"
-                    : active === null && !reduced && idle === i
-                      ? "linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 45%, var(--color-primary)), rgba(79,124,255,0.5))"
-                      : "linear-gradient(180deg, var(--color-primary), rgba(79,124,255,0.35))",
-                transitionDelay: `${i * 70}ms`,
-              }}
-              aria-label={`${d.day}: $${d.amount} spent`}
-              onMouseEnter={() => setActive(i)}
-              onMouseLeave={() => setActive(null)}
-              onFocus={() => setActive(i)}
-              onBlur={() => setActive(null)}
-            />
-            <span className="mt-1.5 text-center text-[0.55rem] text-[var(--f-text-faint)]">
-              {d.day}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 /**
- * The Finu interface, drawn in DOM: balance, spending analysis,
- * an AI callout, and money in motion. Pure markup + CSS, so it
- * reads even when WebGL is unavailable.
+ * The Finu app main screen, drawn in DOM as a light premium mock —
+ * greeting, balance, the Finu card, a conversational assistant panel,
+ * insight tiles, and a bottom nav. Pure markup + CSS on the light
+ * app tokens; the visual is decorative, so controls are non-interactive.
  */
 export default function AppMock() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-12% 0px" });
   const reduced = useReducedMotion();
-  const [settled, setSettled] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setSettled(true), reduced ? 0 : 2400);
-    return () => clearTimeout(timer);
-  }, [reduced]);
 
   return (
-    <div className="f-tilt relative mx-auto w-full max-w-[26rem]" aria-hidden={false}>
-      {/* Main dashboard card */}
+    <div ref={ref} className="relative mx-auto w-full max-w-[23.5rem]">
+      {/* Phone frame */}
       <motion.div
-        initial={reduced ? false : { opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, ease: EASE, delay: 0.35 }}
-        className="f-card f-card-hover p-5 md:p-6"
+        initial={reduced ? false : { opacity: 0, y: 36 }}
+        animate={inView ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 1, ease: EASE }}
+        className="overflow-hidden rounded-[32px] border border-[rgba(247,249,255,0.14)]"
+        style={{
+          background: "var(--app-bg)",
+          boxShadow:
+            "0 50px 110px -35px rgba(2,4,12,0.9), 0 0 0 6px rgba(13,20,40,0.85)",
+        }}
       >
-        <div className="flex items-center justify-between">
-          <p className="text-[0.72rem] font-medium text-[var(--color-text-secondary)]">
-            Total balance
-          </p>
-          <span className="f-chip f-chip-live">
-            <span className="f-live-dot" aria-hidden />
-            Live
-          </span>
-        </div>
-
-        <p className="f-display mt-2 text-3xl md:text-[2.2rem]">
-          <AnimatedValue value={4820.64} decimals={2} prefix="$" />
-        </p>
-        <p className="mt-1 text-[0.7rem] text-[var(--f-text-faint)]">
-          USDC · USDT · EURC across 4 networks
-        </p>
-
-        <div className="f-hairline my-5" />
-
-        <SpendingChart />
-
-        <div className="f-hairline my-5" />
-
-        <ul className="space-y-2.5">
-          {CATEGORIES.map((c) => (
-            <li key={c.label} className="flex items-center gap-3">
-              <span
-                className="h-2 w-2 flex-none rounded-full"
-                style={{ background: c.tone }}
-                aria-hidden
-              />
-              <span className="w-28 text-[0.74rem] text-[var(--color-text-secondary)]">
-                {c.label}
-              </span>
-              <span
-                className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--color-surface-raised)]"
-                role="img"
-                aria-label={`${c.label}: ${c.share}% of spending`}
-              >
-                <motion.span
-                  className="absolute inset-y-0 left-0 rounded-full"
-                  style={{ background: c.tone }}
-                  initial={reduced ? { width: `${c.share}%` } : { width: 0 }}
-                  animate={{ width: `${c.share}%` }}
-                  transition={{ duration: 1.2, ease: EASE, delay: 0.9 }}
-                />
-              </span>
-              <span className="w-9 text-right text-[0.72rem] font-semibold">
-                {c.share}%
-              </span>
-            </li>
-          ))}
-        </ul>
-      </motion.div>
-
-      {/* Finu AI callout — the violet moment */}
-      <motion.div
-        initial={reduced ? false : { opacity: 0, y: 24, x: -16 }}
-        animate={{ opacity: 1, y: 0, x: 0 }}
-        transition={{ duration: 1, ease: EASE, delay: 0.85 }}
-        className="f-card f-card-raised f-card-hover !absolute left-0 -bottom-16 w-[78%] border-[rgba(134,104,255,0.4)] p-4 sm:-left-10 md:-bottom-14"
-      >
-        <div className="flex items-start gap-3">
-          <span
-            className="grid h-8 w-8 flex-none place-items-center rounded-lg"
-            style={{ background: "rgba(134,104,255,0.16)" }}
-            aria-hidden
-          >
-            <Sparkles className="h-4 w-4 text-[var(--color-secondary)]" />
-          </span>
-          <div>
-            <p className="f-mono text-[0.55rem] text-[var(--color-secondary)]">
-              Finu AI
+        {/* Greeting */}
+        <div className="px-5 pb-1 pt-6">
+          <div className="flex items-center justify-between">
+            <p className="text-[0.78rem] text-[var(--app-muted)]">
+              Good morning, Maria
             </p>
-            <p className="mt-1 text-[0.76rem] leading-snug text-[var(--color-text-primary)]">
-              {reduced
-                ? AI_MESSAGE
-                : AI_MESSAGE.split(" ").map((word, i) => (
-                    <motion.span
-                      key={i}
-                      className="inline"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.2, delay: 1.5 + i * 0.05 }}
-                    >
-                      {word}{" "}
-                    </motion.span>
-                  ))}
-            </p>
-            <motion.div
-              className="mt-2.5 flex gap-2"
-              initial={reduced ? false : { opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE, delay: 2.4 }}
-            >
-              <span className="f-chip f-chip-success">Set cap</span>
-              <span className="f-chip f-chip-warning">Remind me</span>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Money in motion */}
-      <motion.div
-        initial={reduced ? false : { opacity: 0, y: -18, x: 16 }}
-        animate={{ opacity: 1, y: 0, x: 0 }}
-        transition={{ duration: 1, ease: EASE, delay: 1.15 }}
-        className="f-card f-card-raised f-card-hover !absolute right-0 -top-10 w-[64%] p-4 sm:-right-8"
-      >
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
             <span
-              className="grid h-8 w-8 flex-none place-items-center rounded-lg bg-[rgba(79,124,255,0.14)]"
+              className="grid h-8 w-8 place-items-center rounded-full text-[0.7rem] font-semibold text-white"
+              style={{ background: "var(--color-primary)" }}
               aria-hidden
             >
-              {settled ? (
-                <ArrowUpRight className="h-4 w-4 text-[var(--color-primary)]" />
-              ) : (
-                <ArrowDownLeft className="h-4 w-4 text-[var(--color-primary)]" />
+              MS
+            </span>
+          </div>
+          <p className="mt-1.5 text-[1.02rem] font-medium leading-snug text-[var(--app-ink)]">
+            You’re looking good this week.
+          </p>
+        </div>
+
+        {/* Balance + CTA */}
+        <div className="px-5 pt-4">
+          <div
+            className="rounded-[22px] border p-4"
+            style={{
+              background: "var(--app-surface)",
+              borderColor: "var(--app-border)",
+              boxShadow: "0 10px 28px -18px rgba(7,21,47,0.25)",
+            }}
+          >
+            <p className="text-[0.68rem] font-medium uppercase tracking-[0.08em] text-[var(--app-muted)]">
+              Available
+            </p>
+            <p className="mt-1 text-[1.9rem] font-medium leading-none tracking-tight text-[var(--app-ink)]">
+              <AnimatedValue value={4820.64} decimals={2} prefix="$" />
+            </p>
+            <p className="mt-1.5 text-[0.66rem] text-[var(--app-muted)]">
+              USDC · USDT · EURC across 4 networks
+            </p>
+            <span
+              className="mt-4 flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-full text-[0.85rem] font-medium text-white"
+              style={{
+                background: "var(--color-primary)",
+                boxShadow: "0 10px 22px -10px rgba(79,124,255,0.65)",
+              }}
+            >
+              Check my spending
+              <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </span>
+          </div>
+        </div>
+
+        {/* The Finu card */}
+        <div className="px-5 pt-4">
+          <FinuCard variant="royal" />
+        </div>
+
+        {/* Assistant panel */}
+        <div className="px-5 pt-4">
+          <div
+            className="rounded-[22px] border p-4"
+            style={{
+              background: "var(--app-surface)",
+              borderColor: "var(--app-border)",
+              boxShadow: "0 10px 28px -18px rgba(7,21,47,0.25)",
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <span
+                className="grid h-7 w-7 place-items-center rounded-full"
+                style={{ background: "rgba(134,104,255,0.14)" }}
+                aria-hidden
+              >
+                <Sparkles className="h-3.5 w-3.5 text-[var(--color-secondary)]" />
+              </span>
+              <p className="f-mono text-[0.56rem] text-[var(--color-secondary)]">
+                Finu says
+              </p>
+            </div>
+            <p className="mt-2.5 text-[0.85rem] leading-relaxed text-[var(--app-ink)]">
+              You spent 18% less on food this week. Want to move the
+              difference into savings?
+            </p>
+            <div className="mt-3.5 flex flex-wrap gap-2">
+              <span
+                className="inline-flex min-h-[36px] items-center rounded-full px-4 text-[0.76rem] font-medium text-white"
+                style={{ background: "var(--color-primary)" }}
+              >
+                Move to savings
+              </span>
+              <span
+                className="inline-flex min-h-[36px] items-center rounded-full border px-4 text-[0.76rem] font-medium text-[var(--app-ink)]"
+                style={{ borderColor: "var(--app-border)" }}
+              >
+                Show me why
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Insight tiles */}
+        <div className="grid grid-cols-3 gap-2.5 px-5 pt-4">
+          {INSIGHTS.map((tile, i) => (
+            <div
+              key={tile.label}
+              className="rounded-2xl border p-3"
+              style={{
+                background: "var(--app-surface)",
+                borderColor: "var(--app-border)",
+              }}
+            >
+              <tile.icon
+                className="h-4 w-4"
+                style={{ color: tile.tone }}
+                aria-hidden
+              />
+              <p className="mt-2 text-[0.6rem] leading-tight text-[var(--app-muted)]">
+                {tile.label}
+              </p>
+              <p className="mt-0.5 text-[0.86rem] font-semibold text-[var(--app-ink)]">
+                {tile.value}
+              </p>
+              <div
+                className="mt-2 h-1 overflow-hidden rounded-full"
+                style={{ background: "var(--app-border)" }}
+                role="img"
+                aria-label={`${tile.label}: ${tile.value}`}
+              >
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ background: tile.tone }}
+                  initial={
+                    reduced
+                      ? { width: `${tile.progress * 100}%` }
+                      : { width: 0 }
+                  }
+                  animate={
+                    inView
+                      ? { width: `${tile.progress * 100}%` }
+                      : undefined
+                  }
+                  transition={{
+                    duration: 1.1,
+                    ease: EASE,
+                    delay: 0.4 + i * 0.15,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom navigation */}
+        <div
+          className="mt-5 flex items-center justify-between border-t px-7 pb-5 pt-3"
+          style={{
+            borderColor: "var(--app-border)",
+            background: "var(--app-surface)",
+          }}
+        >
+          {NAV.map((item) => (
+            <span
+              key={item.label}
+              className="flex min-w-[44px] flex-col items-center gap-1"
+              style={{
+                color: item.active ? "var(--color-primary)" : "var(--app-muted)",
+              }}
+            >
+              <item.icon className="h-[1.15rem] w-[1.15rem]" aria-hidden />
+              <span className="text-[0.55rem] font-medium">{item.label}</span>
+              {item.active && (
+                <span
+                  className="h-1 w-1 rounded-full"
+                  style={{ background: "var(--color-primary)" }}
+                  aria-hidden
+                />
               )}
             </span>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Floating settled transfer — money in motion */}
+      <motion.div
+        initial={reduced ? false : { opacity: 0, y: -14, x: 10 }}
+        animate={inView ? { opacity: 1, y: 0, x: 0 } : undefined}
+        transition={{ duration: 0.9, ease: EASE, delay: 0.5 }}
+        className="absolute -right-3 top-16 w-[62%] rounded-2xl border p-3.5 sm:-right-8"
+        style={{
+          background: "var(--app-surface)",
+          borderColor: "var(--app-border)",
+          boxShadow: "0 24px 50px -22px rgba(2,4,12,0.7)",
+        }}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span
+              className="grid h-7 w-7 flex-none place-items-center rounded-lg"
+              style={{ background: "rgba(79,124,255,0.12)" }}
+              aria-hidden
+            >
+              <ArrowUpRight className="h-3.5 w-3.5 text-[var(--color-primary)]" />
+            </span>
             <div>
-              <p className="text-[0.74rem] font-semibold">Send to bank</p>
-              <p className="text-[0.62rem] text-[var(--f-text-faint)]">
+              <p className="text-[0.68rem] font-semibold text-[var(--app-ink)]">
+                Send to bank
+              </p>
+              <p className="text-[0.56rem] text-[var(--app-muted)]">
                 USDC → PHP · Maria S.
               </p>
             </div>
           </div>
-          {settled ? (
-            <span className="f-chip f-chip-success">Settled</span>
-          ) : (
-            <span
-              className="f-skeleton h-5 w-14"
-              role="status"
-              aria-label="Transfer in progress"
-            />
-          )}
-        </div>
-
-        {/* Route: a light packet travels the rail until settlement. */}
-        <div
-          className="relative mt-3 h-[3px] overflow-hidden rounded-full bg-[var(--color-surface)]"
-          aria-hidden
-        >
-          {settled ? (
-            <span
-              className="absolute inset-0 rounded-full"
-              style={{
-                background:
-                  "linear-gradient(90deg, var(--color-primary), var(--color-success))",
-              }}
-            />
-          ) : (
-            <span className="f-route-pulse" />
-          )}
+          <span
+            className="rounded-full px-2 py-0.5 text-[0.58rem] font-semibold"
+            style={{
+              color: "var(--app-success)",
+              background: "rgba(22,163,74,0.1)",
+            }}
+          >
+            Settled
+          </span>
         </div>
       </motion.div>
+
+      <p className="f-mono mt-4 text-center text-[0.55rem] text-[var(--f-text-faint)]">
+        Illustrative interface
+      </p>
     </div>
   );
 }

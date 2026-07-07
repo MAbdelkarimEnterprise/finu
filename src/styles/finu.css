@@ -1,3 +1,37 @@
+/* Switzer (Fontshare, free for commercial use) — the closest match
+   to PP Neue Montreal. The stack lists "PP Neue Montreal" first: if
+   licensed files are ever added via @font-face, the site upgrades to
+   the exact face with no further changes. Direct @font-face rules —
+   the bundler strips remote @import. */
+@font-face {
+  font-family: "Switzer";
+  src: url("https://cdn.fontshare.com/wf/EW5HJEX6O4L64XUWQA2XU7Q6BZ3B4JA4/ZWUP4SQYHHMMSS5LFHFFBX6DXL7C3DTU/H5EOHLIZH5K7IZK6SGYJI75L4KV6FUO7.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("https://cdn.fontshare.com/wf/BLNB4FAQFNK56DWWNF7PMGTCOTZHOEII/ST3WKSSDMBK2MIQQO3MAVYWLF4FTOLFV/6IN5WOLRCYP4G4MOCOHOMXNON6Q7MDAR.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("https://cdn.fontshare.com/wf/5SZVFDB7V52TI6ULVC6J3WQZQCIZVDV5/ODYPSTCUDMKSTYIPTV4CLQ7URIK7XYBJ/YS3VPNVO4B3TOJMEXDGFZQ4TLZGGSRZC.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ─────────────────────────────────────────────────────────────
    Finu design system — "Midnight Intelligence".
 
@@ -7,6 +41,11 @@
    ───────────────────────────────────────────────────────────── */
 
 .finu {
+  /* One grotesque family carries the whole voice (light display,
+     regular body) — the Cleo-style single-family system. */
+  --f-font-sans: "PP Neue Montreal", "Switzer", var(--f-font-display),
+    system-ui, sans-serif;
+
   /* Core tokens */
   --color-background: #050816;
   --color-surface: #0d1428;
@@ -21,6 +60,17 @@
   --color-warning: #f5c451;
   --color-danger: #ff6b7a;
 
+  /* Light app-surface tokens — the in-app mockups render light-mode
+     Finu screens against the midnight site. Brand accents reuse the
+     core tokens; neutrals below exist only for these light surfaces. */
+  --app-bg: #f7f9ff;
+  --app-surface: #ffffff;
+  --app-ink: #07152f;
+  --app-muted: #667085;
+  --app-border: #e6eaf2;
+  --app-success: #16a34a;
+  --app-warning: #f59e0b;
+
   /* Derived */
   --f-border-soft: rgba(42, 56, 90, 0.55);
   --f-text-faint: rgba(168, 179, 204, 0.62);
@@ -30,7 +80,7 @@
 
   background: var(--color-background);
   color: var(--color-text-primary);
-  font-family: var(--f-font-body), system-ui, sans-serif;
+  font-family: var(--f-font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -42,10 +92,10 @@
 
 /* Typography */
 .f-display {
-  font-family: var(--f-font-display), sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  font-family: var(--f-font-sans);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
 }
 
 .f-eyebrow {
@@ -85,7 +135,7 @@
   min-height: 48px;
   padding: 0.8rem 1.7rem;
   border-radius: 999px;
-  font-family: var(--f-font-display), sans-serif;
+  font-family: var(--f-font-sans);
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: -0.01em;

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { APP_URL } from "./links";
+import AmbientShader from "./AmbientShader";
 import MagneticButton from "./MagneticButton";
 import { Reveal, TextReveal } from "./TextReveal";
 
@@ -12,7 +13,8 @@ export default function FinalCTA() {
       className="scroll-mt-24 px-5 py-24 md:px-8 md:py-32"
     >
       <div className="f-cta-frame relative mx-auto max-w-[1200px] rounded-[var(--f-radius)] border border-[var(--f-border-soft)]">
-        {/* Static midnight gradient — the shader stays a hero-only moment */}
+        {/* Living ambient field over a static gradient fallback — the
+            page's second (and last) WebGL canvas, bookending the hero. */}
         <div
           aria-hidden
           className="absolute inset-0 overflow-hidden rounded-[inherit]"
@@ -20,7 +22,9 @@ export default function FinalCTA() {
             background:
               "radial-gradient(80% 120% at 78% 20%, rgba(79,124,255,0.28), transparent 55%), radial-gradient(60% 100% at 20% 90%, rgba(134,104,255,0.22), transparent 60%), #0d1428",
           }}
-        />
+        >
+          <AmbientShader />
+        </div>
         <div className="relative grid gap-12 p-8 md:grid-cols-[1.4fr_1fr] md:p-16">
           <div>
             <TextReveal
