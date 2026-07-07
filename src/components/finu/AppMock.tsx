@@ -3,15 +3,17 @@
 import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
-  ArrowRightLeft,
   ArrowUpRight,
   CalendarClock,
   CreditCard,
   Flame,
   Home,
+  MessageCircle,
+  PieChart,
+  PiggyBank,
+  Send,
   ShieldCheck,
   Sparkles,
-  UserRound,
 } from "lucide-react";
 import AnimatedValue from "./AnimatedValue";
 import FinuCard from "./FinuCard";
@@ -24,7 +26,8 @@ const INSIGHTS = [
     icon: ShieldCheck,
     tone: "var(--app-success)",
     label: "Safe to spend",
-    value: "$312",
+    value: "$284",
+    note: "until Friday",
     progress: 0.62,
   },
   {
@@ -32,6 +35,7 @@ const INSIGHTS = [
     tone: "var(--app-warning)",
     label: "Bills coming up",
     value: "$128",
+    note: "nothing scary",
     progress: 0.34,
   },
   {
@@ -39,16 +43,25 @@ const INSIGHTS = [
     tone: "var(--color-secondary)",
     label: "Savings streak",
     value: "6 wks",
+    note: "keep it rolling",
     progress: 0.86,
   },
 ];
 
+const QUICK_ACTIONS = [
+  { icon: Send, label: "Send" },
+  { icon: PiggyBank, label: "Save" },
+  { icon: PieChart, label: "Budget" },
+  { icon: CreditCard, label: "Card" },
+  { icon: Sparkles, label: "Ask Finu" },
+];
+
 const NAV = [
   { icon: Home, label: "Home", active: true },
+  { icon: PieChart, label: "Spend", active: false },
+  { icon: MessageCircle, label: "Chat", active: false },
+  { icon: PiggyBank, label: "Save", active: false },
   { icon: CreditCard, label: "Card", active: false },
-  { icon: ArrowRightLeft, label: "Pay", active: false },
-  { icon: Sparkles, label: "Finu AI", active: false },
-  { icon: UserRound, label: "You", active: false },
 ];
 
 /**
@@ -114,16 +127,30 @@ export default function AppMock() {
             <p className="mt-1.5 text-[0.66rem] text-[var(--app-muted)]">
               USDC · USDT · EURC across 4 networks
             </p>
-            <span
-              className="mt-4 flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-full text-[0.85rem] font-medium text-white"
-              style={{
-                background: "var(--color-primary)",
-                boxShadow: "0 10px 22px -10px rgba(79,124,255,0.65)",
-              }}
-            >
-              Check my spending
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </span>
+            <p className="mt-3 text-[0.78rem] leading-snug text-[var(--app-ink)]">
+              Food spending chilled out this week. Nice.
+            </p>
+            <div className="mt-4 flex gap-2.5">
+              <span
+                className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-full text-[0.85rem] font-medium text-white"
+                style={{
+                  background: "var(--color-primary)",
+                  boxShadow: "0 10px 22px -10px rgba(79,124,255,0.65)",
+                }}
+              >
+                Ask Finu
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
+              </span>
+              <span
+                className="flex min-h-[44px] flex-1 items-center justify-center rounded-full border text-[0.85rem] font-medium text-[var(--app-ink)]"
+                style={{
+                  borderColor: "var(--app-border)",
+                  background: "var(--app-soft-blue)",
+                }}
+              >
+                Move money
+              </span>
+            </div>
           </div>
         </div>
 
@@ -197,6 +224,9 @@ export default function AppMock() {
               <p className="mt-0.5 text-[0.86rem] font-semibold text-[var(--app-ink)]">
                 {tile.value}
               </p>
+              <p className="mt-0.5 text-[0.54rem] leading-tight text-[var(--app-muted)]">
+                {tile.note}
+              </p>
               <div
                 className="mt-2 h-1 overflow-hidden rounded-full"
                 style={{ background: "var(--app-border)" }}
@@ -224,6 +254,30 @@ export default function AppMock() {
                 />
               </div>
             </div>
+          ))}
+        </div>
+
+        {/* Quick actions */}
+        <div className="flex justify-between px-5 pt-4">
+          {QUICK_ACTIONS.map((action) => (
+            <span
+              key={action.label}
+              className="flex min-w-[44px] flex-col items-center gap-1.5"
+            >
+              <span
+                className="grid h-11 w-11 place-items-center rounded-full border"
+                style={{
+                  background: "var(--app-soft-blue)",
+                  borderColor: "var(--app-border)",
+                }}
+                aria-hidden
+              >
+                <action.icon className="h-[1.05rem] w-[1.05rem] text-[var(--color-primary)]" />
+              </span>
+              <span className="text-[0.56rem] font-medium text-[var(--app-muted)]">
+                {action.label}
+              </span>
+            </span>
           ))}
         </div>
 

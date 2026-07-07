@@ -54,7 +54,7 @@ export default function FinuCard({
   return (
     <div
       aria-label={`Finu ${variant} card`}
-      className={`relative aspect-[1.586] w-full overflow-hidden rounded-[20px] border p-5 ${className}`}
+      className={`relative aspect-[1.586] w-full overflow-hidden rounded-[24px] border p-5 ${className}`}
       style={{
         borderColor: "rgba(247,249,255,0.18)",
         background: skin.background,
