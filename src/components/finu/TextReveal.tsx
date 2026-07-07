@@ -1,9 +1,33 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+/* Safety net for both reveal components below: the "hidden" starting
+   position is baked into the very first paint (SSR included), so if
+   IntersectionObserver never fires — a stale WebView viewport in some
+   in-app browsers (Telegram, WhatsApp), a backgrounded/prerendered tab,
+   or just a slow main thread — the content must not stay invisible
+   forever. This timer forces the revealed state regardless. */
+const REVEAL_FALLBACK_MS = 900;
+
+function useGuaranteedInView(
+  ref: React.RefObject<Element | null>,
+  once: boolean
+) {
+  const observed = useInView(ref, { once, margin: "-10% 0px" });
+  const [forced, setForced] = useState(false);
+
+  useEffect(() => {
+    if (observed) return;
+    const timer = setTimeout(() => setForced(true), REVEAL_FALLBACK_MS);
+    return () => clearTimeout(timer);
+  }, [observed]);
+
+  return observed || forced;
+}
 
 /**
  * Word-by-word masked reveal. Each word rises out of an overflow-hidden
@@ -23,7 +47,7 @@ export function TextReveal({
   once?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once, margin: "-12% 0px" });
+  const inView = useGuaranteedInView(ref, once);
   const reduced = useReducedMotion();
   const words = children.split(" ");
 
@@ -75,6 +99,8 @@ export function Reveal({
   y?: number;
   once?: boolean;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useGuaranteedInView(ref, once);
   const reduced = useReducedMotion();
 
   if (reduced) {
@@ -83,10 +109,10 @@ export function Reveal({
 
   return (
     <motion.div
+      ref={ref}
       className={className}
       initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, margin: "-10% 0px" }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y }}
       transition={{ duration: 1, ease: EASE, delay }}
     >
       {children}

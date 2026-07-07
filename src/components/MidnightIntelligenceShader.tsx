@@ -195,15 +195,39 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     const isMobile = isTouch || window.innerWidth < 768;
 
-    const gl = canvas.getContext("webgl", {
-      alpha: false,
-      antialias: false,
-      depth: false,
-      stencil: false,
-      powerPreference: "high-performance",
-    });
+    /* Some in-app browsers (Telegram, WhatsApp) and locked-down
+       WebViews either throw instead of returning null when WebGL is
+       disabled by policy, or hand back a software rasterizer that is
+       far too slow for a full-screen shader. Both cases must fall
+       back to the plain CSS gradient already painted behind the
+       canvas — never leave the page waiting on a context that can't
+       carry the animation. */
+    let gl: WebGLRenderingContext | null = null;
+    try {
+      gl = canvas.getContext("webgl", {
+        alpha: false,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        powerPreference: "high-performance",
+      });
+    } catch {
+      gl = null;
+    }
 
     if (!gl) return;
+
+    try {
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      const renderer = debugInfo
+        ? String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL))
+        : "";
+      if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) {
+        return;
+      }
+    } catch {
+      /* Renderer string isn't essential — keep going if it's unavailable. */
+    }
 
     /* Quality tier: mobile drops an fbm octave and the filament pass. */
     const fragmentShaderSource =
@@ -343,6 +367,7 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
     let pageVisible = !document.hidden;
     let inViewport = true;
     let disposed = false;
+    let started = false;
 
     const render = (now: number) => {
       pointer.x += (pointer.targetX - pointer.x) * 0.045;
@@ -373,7 +398,7 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
     };
 
     const restart = () => {
-      if (disposed) return;
+      if (disposed || !started) return;
       cancelAnimationFrame(animationFrame);
       if (pageVisible && inViewport && !reducedMotion) {
         animationFrame = requestAnimationFrame(render);
@@ -397,14 +422,32 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
     );
     intersectionObserver.observe(canvas);
 
-    if (pageVisible) {
+    /* Defer the first frame past initial paint/hydration so the shader
+       never competes with getting real content on screen first — a
+       plain requestAnimationFrame still runs inside the same paint
+       cycle as everything else mounting, requestIdleCallback (with a
+       timeout fallback for Safari, which lacks it) waits until the
+       main thread is actually free. */
+    const scheduleIdle: (cb: () => void) => number =
+      typeof window.requestIdleCallback === "function"
+        ? (cb) => window.requestIdleCallback(cb, { timeout: 400 })
+        : (cb) => window.setTimeout(cb, 120);
+    const cancelIdle: (id: number) => void =
+      typeof window.cancelIdleCallback === "function"
+        ? window.cancelIdleCallback.bind(window)
+        : window.clearTimeout.bind(window);
+
+    const idleId = scheduleIdle(() => {
+      started = true;
+      if (disposed || !pageVisible || !inViewport) return;
       /* Reduced motion still gets one polished static frame. */
       animationFrame = requestAnimationFrame(render);
-    }
+    });
 
     return () => {
       disposed = true;
       pageVisible = false;
+      cancelIdle(idleId);
       cancelAnimationFrame(animationFrame);
 
       resizeObserver.disconnect();

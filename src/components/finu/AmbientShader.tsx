@@ -115,14 +115,34 @@ export default function AmbientShader({
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const gl = canvas.getContext("webgl", {
-      alpha: false,
-      antialias: false,
-      depth: false,
-      stencil: false,
-      powerPreference: "low-power",
-    });
+    /* Some in-app browsers/WebViews throw rather than return null when
+       WebGL is policy-disabled, or hand back a software rasterizer too
+       slow to carry this; both fall back to the CSS gradient beneath. */
+    let gl: WebGLRenderingContext | null = null;
+    try {
+      gl = canvas.getContext("webgl", {
+        alpha: false,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        powerPreference: "low-power",
+      });
+    } catch {
+      gl = null;
+    }
     if (!gl) return;
+
+    try {
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      const renderer = debugInfo
+        ? String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL))
+        : "";
+      if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) {
+        return;
+      }
+    } catch {
+      /* Renderer string isn't essential — keep going if unavailable. */
+    }
 
     const compile = (type: number, source: string) => {
       const shader = gl.createShader(type);
