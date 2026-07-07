@@ -72,17 +72,18 @@ void main() {
     (2.0 * gl_FragCoord.xy - resolution.xy) /
     min(resolution.x, resolution.y);
 
-  float screenX = gl_FragCoord.x / resolution.x;
   float t = u_time;
 
-  vec3 base     = vec3(0.0196, 0.0314, 0.0863); /* #050816 */
-  vec3 deep     = vec3(0.0627, 0.1059, 0.2863); /* #101B49 */
-  vec3 electric = vec3(0.2275, 0.2627, 0.7176); /* #3A43B7 */
-  vec3 violet   = vec3(0.4824, 0.3020, 1.0000); /* #7B4DFF */
+  vec3 base     = vec3(0.9686, 0.9765, 1.0000); /* #F7F9FF */
+  vec3 deep     = vec3(0.8900, 0.9180, 1.0000); /* #E3EAFF */
+  vec3 electric = vec3(0.1137, 0.2314, 1.0000); /* #1D3BFF */
+  vec3 violet   = vec3(0.4275, 0.2941, 1.0000); /* #6D4BFF */
   vec3 cyan     = vec3(0.1333, 0.7804, 0.9098); /* #22C7E8 */
 
-  /* Ambient breathing (~20s) fades out while the pointer is active. */
-  float breathe = 1.0 + 0.045 * sin(t * 0.314) * (1.0 - u_interaction * 0.7);
+  /* Ambient breathing (~20s): a gentle deepening pulse (brightening
+     would clamp against the near-white ground). */
+  float breathe =
+    1.0 - 0.02 * (0.5 + 0.5 * sin(t * 0.314)) * (1.0 - u_interaction * 0.7);
 
   /* Broad electric/violet balance cycle (~21s). */
   float cycle = 0.5 + 0.5 * sin(t * 0.298);
@@ -116,63 +117,61 @@ void main() {
   );
 
   vec3 color = base;
-  color = mix(color, deep, smoothstep(0.12, 0.82, depth) * 0.95);
-  color = mix(color, deep * 1.55, smoothstep(0.22, 0.88, q.x) * 0.55);
+  color = mix(color, deep, smoothstep(0.12, 0.82, depth) * 0.9);
+  color = mix(
+    color,
+    mix(deep, electric, 0.24),
+    smoothstep(0.22, 0.88, q.x) * 0.5
+  );
   color = mix(
     color,
     electric,
-    smoothstep(0.36, 0.9, field) * (0.52 + 0.16 * (1.0 - cycle))
+    smoothstep(0.36, 0.9, field) * (0.15 + 0.07 * (1.0 - cycle))
   );
 
   float violetMask = smoothstep(0.52, 0.94, r.y * 0.6 + field * 0.4);
-  color = mix(color, violet, violetMask * (0.24 + 0.16 * cycle));
+  color = mix(color, violet, violetMask * (0.07 + 0.05 * cycle));
 
 #if DETAIL == 1
-  /* Filaments: thin contour lines of the warped field. */
+  /* Filaments: thin contour lines of the warped field — mixed toward
+     the accents (additive would clamp to white on this light ground). */
   float bands = field * 9.0;
   float cell = fract(bands);
   float filament = 1.0 - smoothstep(0.02, 0.075, abs(cell - 0.5));
   float filamentMask =
     smoothstep(0.32, 0.72, field) * (0.45 + 0.55 * depth);
 
-  color += electric * filament * filamentMask * 0.17;
-  color += cyan * filament * filamentMask * 0.06;
+  color = mix(color, electric, filament * filamentMask * 0.14);
+  color = mix(color, cyan, filament * filamentMask * 0.05);
 
-  /* Sparse cyan packets traveling along some filaments (~7s). */
+  /* Sparse royal packets traveling along some filaments (~7s). */
   float bandSeed = hash(vec2(floor(bands), 17.0));
   float pulseGate = step(0.55, bandSeed);
   float along = q.y * 2.6 + bandSeed * 7.0;
   float pulsePhase = fract(along - t * 0.14);
   float pulse = exp(-pow((pulsePhase - 0.5) * 12.0, 2.0));
 
-  color += cyan * pulse * filament * filamentMask * pulseGate * 0.55;
+  color = mix(color, electric, pulse * filament * filamentMask * pulseGate * 0.35);
 #endif
 
-  /* Pointer glow: electric core with a cyan data trail on movement. */
-  color = mix(color, electric, pointerField * 0.16);
-  color += cyan * pointerField * (0.05 + u_velocity * 0.07);
+  /* Pointer glow: a royal bloom that deepens with movement. */
+  color = mix(color, electric, pointerField * (0.1 + u_velocity * 0.06));
+  color = mix(color, cyan, pointerField * 0.04);
 
-  color *= 1.0 + u_velocity * 0.05;
   color *= breathe;
 
-  /* Content-safe zone: keep the headline side dark on wide screens,
-     let the product side glow. */
-  float aspect = resolution.x / resolution.y;
-  float guard = mix(
-    1.0,
-    0.58 + 0.42 * smoothstep(0.04, 0.56, screenX),
-    step(1.05, aspect)
-  );
-  color *= guard;
-  color *= 1.0 + 0.16 * smoothstep(0.55, 1.0, screenX) * step(1.05, aspect);
+  /* Content-safe zone: keep the center light behind the navy headline. */
+  float centerDist = length(uv * vec2(0.85, 1.1));
+  float guardMask = 1.0 - smoothstep(0.25, 1.0, centerDist);
+  color = mix(color, base, guardMask * 0.55);
 
-  float vignette =
-    1.0 - smoothstep(0.6, 1.9, length(uv * vec2(0.72, 1.0)));
-  color *= mix(0.72, 1.0, vignette);
+  /* Edges settle a touch deeper so the frame reads intentional. */
+  float vignette = smoothstep(0.6, 1.9, length(uv * vec2(0.72, 1.0)));
+  color = mix(color, deep, vignette * 0.3);
 
   /* Fine grain against banding. */
   float grain = hash(gl_FragCoord.xy + fract(u_time) * 60.0) - 0.5;
-  color += grain * 0.014;
+  color += grain * 0.008;
 
   gl_FragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
 }

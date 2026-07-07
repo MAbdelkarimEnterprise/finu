@@ -27,9 +27,11 @@ export default function FinalCTA() {
         </div>
         <div className="relative grid gap-12 p-8 md:grid-cols-[1.4fr_1fr] md:p-16">
           <div>
+            {/* Explicit light text: this card is a deliberate navy
+                anchor on the light page, so tokens don't apply here. */}
             <TextReveal
               as="h2"
-              className="f-display max-w-xl text-[clamp(2rem,4.6vw,3.4rem)]"
+              className="f-display max-w-xl text-[clamp(2rem,4.6vw,3.4rem)] text-[#f7f9ff]"
             >
               Start your stablecoin payment journey with Finu
             </TextReveal>
@@ -38,7 +40,7 @@ export default function FinalCTA() {
             </span>
 
             <Reveal delay={0.15}>
-              <p className="f-display mt-6 text-lg text-[var(--color-text-secondary)] md:text-xl">
+              <p className="f-display mt-6 text-lg text-[rgba(247,249,255,0.72)] md:text-xl">
                 Swift<span className="text-[var(--color-accent)]">.</span>{" "}
                 Seamless<span className="text-[var(--color-accent)]">.</span>{" "}
                 Secure<span className="text-[var(--color-accent)]">.</span>
