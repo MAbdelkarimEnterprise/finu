@@ -45,8 +45,8 @@ function CardLayers() {
         width="28"
         height="18"
         rx="4"
-        fill="#0D1428"
-        stroke="#4F7CFF"
+        fill="#EEF3FF"
+        stroke="#1D3BFF"
         className="f-glyph-slide"
       />
       <rect x="16" y="15" width="8" height="2.4" rx="1.2" fill="#38DDF8" />
@@ -94,14 +94,14 @@ function CreditMeter() {
       <path
         d="M8 32 A 16 16 0 1 1 36 32"
         fill="none"
-        stroke="rgba(42,56,90,0.9)"
+        stroke="#E6EAF2"
         strokeWidth="3"
         strokeLinecap="round"
       />
       <path
         d="M8 32 A 16 16 0 1 1 36 32"
         fill="none"
-        stroke="#4F7CFF"
+        stroke="#1D3BFF"
         strokeWidth="3"
         strokeLinecap="round"
         pathLength={100}
@@ -148,10 +148,10 @@ function P2PNodes() {
         strokeDasharray="2.5 3.5"
         className="f-glyph-link"
       />
-      <circle cx="10" cy="22" r="4" fill="#0D1428" stroke="#4F7CFF" strokeWidth="1.6" />
-      <circle cx="34" cy="22" r="4" fill="#0D1428" stroke="#8668FF" strokeWidth="1.6" />
-      <circle cx="10" cy="22" r="1.5" fill="#4F7CFF" />
-      <circle cx="34" cy="22" r="1.5" fill="#8668FF" />
+      <circle cx="10" cy="22" r="4" fill="#EEF3FF" stroke="#1D3BFF" strokeWidth="1.6" />
+      <circle cx="34" cy="22" r="4" fill="#EEF3FF" stroke="#6D4BFF" strokeWidth="1.6" />
+      <circle cx="10" cy="22" r="1.5" fill="#1D3BFF" />
+      <circle cx="34" cy="22" r="1.5" fill="#6D4BFF" />
     </svg>
   );
 }

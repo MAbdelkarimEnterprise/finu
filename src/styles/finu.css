@@ -33,11 +33,13 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Finu design system — "Midnight Intelligence".
+   Finu design system — light theme.
 
-   An intelligent financial operating system: dark navy surfaces
-   (~75%), electric blue actions (~15%), violet + cyan reserved
-   for AI moments and live data (~10%). Scoped under .finu.
+   A premium conversational fintech surface: soft off-white page,
+   white cards, rich royal blue as the dominant accent, deep navy
+   ink, violet + cyan reserved for AI moments and live data.
+   Navy is kept for two deliberate anchors: the Finu card and the
+   final CTA. Scoped under .finu.
    ───────────────────────────────────────────────────────────── */
 
 .finu {
@@ -46,19 +48,22 @@
   --f-font-sans: "PP Neue Montreal", "Switzer", var(--f-font-display),
     system-ui, sans-serif;
 
-  /* Core tokens */
-  --color-background: #050816;
-  --color-surface: #0d1428;
-  --color-surface-raised: #141f3a;
-  --color-primary: #4f7cff;
-  --color-secondary: #8668ff;
+  /* Core tokens — light theme: soft off-white page, white surfaces,
+     rich royal blue as the dominant accent, deep navy ink. */
+  --color-background: #f7f9ff;
+  --color-surface: #ffffff;
+  --color-surface-raised: #eef3ff;
+  --color-primary: #1d3bff;
+  --color-primary-deep: #1026b8;
+  --color-secondary: #6d4bff;
   --color-accent: #38ddf8;
-  --color-text-primary: #f7f9ff;
-  --color-text-secondary: #a8b3cc;
-  --color-border: #2a385a;
-  --color-success: #39d98a;
-  --color-warning: #f5c451;
-  --color-danger: #ff6b7a;
+  --color-text-primary: #07152f;
+  --color-text-secondary: #667085;
+  --color-border: #e6eaf2;
+  --color-success: #16a34a;
+  --color-warning: #b45309;
+  --color-danger: #dc2626;
+  --color-navy: #07152f;
 
   /* Light app-surface tokens — the in-app mockups render light-mode
      Finu screens against the midnight site. Brand accents reuse the
@@ -73,8 +78,8 @@
   --app-warning: #f59e0b;
 
   /* Derived */
-  --f-border-soft: rgba(42, 56, 90, 0.55);
-  --f-text-faint: rgba(168, 179, 204, 0.62);
+  --f-border-soft: rgba(7, 21, 47, 0.09);
+  --f-text-faint: rgba(102, 112, 133, 0.72);
   --f-radius: clamp(1rem, 1.8vw, 1.5rem);
   --f-gutter: clamp(1rem, 3vw, 2.5rem);
   --f-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -88,7 +93,7 @@
 
 .finu ::selection {
   background: var(--color-primary);
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 /* Typography */
@@ -116,8 +121,8 @@
   height: 0.42em;
   flex: none;
   border-radius: 1px;
-  background: var(--color-accent);
-  box-shadow: 0 0 10px rgba(56, 221, 248, 0.55);
+  background: var(--color-primary);
+  box-shadow: 0 0 10px rgba(29, 59, 255, 0.4);
 }
 
 .f-mono {
@@ -160,7 +165,7 @@
   color: #ffffff;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.18) inset,
-    0 10px 30px -8px rgba(79, 124, 255, 0.55);
+    0 10px 26px -10px rgba(29, 59, 255, 0.5);
 }
 .f-btn-primary::after {
   content: "";
@@ -178,10 +183,10 @@
   pointer-events: none;
 }
 .f-btn-primary:hover {
-  background: #6089ff;
+  background: var(--color-primary-deep);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.2) inset,
-    0 16px 40px -10px rgba(79, 124, 255, 0.7);
+    0 16px 34px -12px rgba(16, 38, 184, 0.55);
 }
 .f-btn-primary:hover::after {
   transform: translateX(120%);
@@ -189,25 +194,25 @@
 
 /* Quiet outline button for secondary actions */
 .f-btn-ghost {
-  background: rgba(13, 20, 40, 0.55);
+  background: rgba(255, 255, 255, 0.75);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 .f-btn-ghost:hover {
-  border-color: rgba(79, 124, 255, 0.65);
-  background: rgba(20, 31, 58, 0.75);
+  border-color: rgba(29, 59, 255, 0.45);
+  background: var(--color-surface-raised);
   transform: translateY(-2px);
 }
 
 /* ── Navigation ──────────────────────────────────────────── */
 .f-nav-glass {
-  background: rgba(5, 8, 22, 0.78);
+  background: rgba(247, 249, 255, 0.82);
   border-color: var(--f-border-soft) !important;
   box-shadow:
-    0 12px 44px rgba(2, 4, 12, 0.55),
-    inset 0 1px 0 rgba(247, 249, 255, 0.05);
+    0 12px 40px rgba(7, 21, 47, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
 }
@@ -232,7 +237,7 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 1rem;
-  box-shadow: 0 24px 60px -18px rgba(2, 4, 12, 0.85);
+  box-shadow: 0 24px 56px -20px rgba(7, 21, 47, 0.22);
   overflow: hidden;
 }
 .f-dropdown-item {
@@ -263,7 +268,7 @@
   isolation: isolate;
   min-height: min(920px, 100svh);
   overflow: hidden;
-  background: #050816;
+  background: var(--color-background);
 }
 
 .midnight-intelligence-shader {
@@ -276,20 +281,19 @@
   background:
     radial-gradient(
       circle at 72% 38%,
-      rgba(79, 124, 255, 0.2),
+      rgba(29, 59, 255, 0.1),
       transparent 38%
     ),
     radial-gradient(
       circle at 48% 62%,
-      rgba(134, 104, 255, 0.12),
+      rgba(109, 75, 255, 0.07),
       transparent 45%
     ),
-    #050816;
+    #f7f9ff;
 }
 
-/* Veil kept light enough for the shader to read as alive; the hero
-   copy is centered, so the dark content-safe zone sits mid-frame and
-   the shader stays luminous toward the edges. */
+/* Veil: the hero copy is centered, so a soft light content-safe zone
+   sits mid-frame while the field stays colorful toward the edges. */
 .hero::before {
   content: "";
   position: absolute;
@@ -299,14 +303,14 @@
   background:
     radial-gradient(
       64% 58% at 50% 44%,
-      rgba(5, 8, 22, 0.78),
-      rgba(5, 8, 22, 0.32) 70%,
-      rgba(5, 8, 22, 0.05)
+      rgba(247, 249, 255, 0.85),
+      rgba(247, 249, 255, 0.4) 70%,
+      rgba(247, 249, 255, 0.05)
     ),
     linear-gradient(
       180deg,
-      rgba(5, 8, 22, 0.05) 55%,
-      #050816 100%
+      rgba(247, 249, 255, 0.05) 55%,
+      #f7f9ff 100%
     );
 }
 
@@ -320,9 +324,9 @@
     background:
       linear-gradient(
         180deg,
-        rgba(5, 8, 22, 0.68) 0%,
-        rgba(5, 8, 22, 0.42) 45%,
-        #050816 100%
+        rgba(247, 249, 255, 0.72) 0%,
+        rgba(247, 249, 255, 0.45) 45%,
+        #f7f9ff 100%
       );
   }
 }
@@ -332,15 +336,15 @@
     background:
       radial-gradient(
         circle at 72% 38%,
-        rgba(79, 124, 255, 0.2),
+        rgba(29, 59, 255, 0.1),
         transparent 38%
       ),
       radial-gradient(
         circle at 48% 62%,
-        rgba(134, 104, 255, 0.12),
+        rgba(109, 75, 255, 0.07),
         transparent 45%
       ),
-      #050816;
+      #f7f9ff;
   }
 }
 
@@ -362,10 +366,10 @@
 /* Hover: rise 4px, tilt ≤ 2deg, restrained edge illumination */
 .f-card-hover:hover {
   transform: translateY(-4px) rotateX(1.2deg);
-  border-color: rgba(79, 124, 255, 0.45);
+  border-color: rgba(29, 59, 255, 0.35);
   box-shadow:
-    0 24px 60px -24px rgba(2, 4, 12, 0.9),
-    0 0 0 1px rgba(79, 124, 255, 0.12);
+    0 24px 52px -24px rgba(7, 21, 47, 0.22),
+    0 0 0 1px rgba(29, 59, 255, 0.08);
 }
 .f-card-hover::after {
   content: "";
@@ -376,10 +380,10 @@
   opacity: 0;
   background: linear-gradient(
     140deg,
-    rgba(79, 124, 255, 0.18),
+    rgba(29, 59, 255, 0.08),
     transparent 34%,
     transparent 70%,
-    rgba(56, 221, 248, 0.1)
+    rgba(56, 221, 248, 0.07)
   );
   transition: opacity 0.55s var(--f-ease);
 }
@@ -404,23 +408,23 @@
 }
 .f-chip-success {
   color: var(--color-success);
-  background: rgba(57, 217, 138, 0.12);
-  border: 1px solid rgba(57, 217, 138, 0.3);
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.28);
 }
 .f-chip-warning {
   color: var(--color-warning);
-  background: rgba(245, 196, 81, 0.12);
-  border: 1px solid rgba(245, 196, 81, 0.3);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.32);
 }
 .f-chip-danger {
   color: var(--color-danger);
-  background: rgba(255, 107, 122, 0.12);
-  border: 1px solid rgba(255, 107, 122, 0.3);
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.26);
 }
 .f-chip-live {
-  color: var(--color-accent);
-  background: rgba(56, 221, 248, 0.1);
-  border: 1px solid rgba(56, 221, 248, 0.28);
+  color: var(--color-primary);
+  background: rgba(29, 59, 255, 0.07);
+  border: 1px solid rgba(29, 59, 255, 0.24);
 }
 
 .f-live-dot {
@@ -550,10 +554,9 @@
 .f-logo-tile img {
   transition: filter 0.4s var(--f-ease);
 }
-/* Brand-neutral halo on hover — white light, no recoloring. */
+/* Brand-neutral lift on hover — a soft shadow, no recoloring. */
 .f-logo-tile:hover img {
-  filter: brightness(1.1)
-    drop-shadow(0 0 16px rgba(247, 249, 255, 0.28));
+  filter: drop-shadow(0 6px 14px rgba(7, 21, 47, 0.18));
 }
 /* Mobile: logos read at full strength, tighter rhythm so the
    marquee doesn't feel sparse. */
@@ -646,14 +649,14 @@
 .f-glow-primary {
   background: radial-gradient(
     60% 60% at 50% 0%,
-    rgba(79, 124, 255, 0.14),
+    rgba(29, 59, 255, 0.14),
     transparent 70%
   );
 }
 .f-glow-violet {
   background: radial-gradient(
     55% 55% at 50% 100%,
-    rgba(134, 104, 255, 0.12),
+    rgba(109, 75, 255, 0.12),
     transparent 70%
   );
 }
@@ -675,7 +678,7 @@
   background: radial-gradient(
     240px circle at var(--px, 50%) var(--py, 50%),
     rgba(56, 221, 248, 0.075),
-    rgba(79, 124, 255, 0.06) 45%,
+    rgba(29, 59, 255, 0.06) 45%,
     transparent 70%
   );
   transition: opacity 0.5s var(--f-ease);
@@ -685,10 +688,10 @@
 }
 /* Border bloom that follows the pointer along the card edge. */
 .f-interactive[data-lit="true"] {
-  border-color: rgba(79, 124, 255, 0.5);
+  border-color: rgba(29, 59, 255, 0.4);
   box-shadow:
-    0 24px 60px -24px rgba(2, 4, 12, 0.9),
-    0 0 24px -12px rgba(56, 221, 248, 0.35);
+    0 24px 52px -24px rgba(7, 21, 47, 0.22),
+    0 0 24px -12px rgba(29, 59, 255, 0.22);
 }
 
 /* ── Ambient fields (below-the-hero continuity, CSS only) ──── */
@@ -708,14 +711,14 @@
 .f-ambient-blob[data-tone="blue"] {
   background: radial-gradient(
     closest-side,
-    rgba(79, 124, 255, 0.16),
+    rgba(29, 59, 255, 0.16),
     transparent
   );
 }
 .f-ambient-blob[data-tone="violet"] {
   background: radial-gradient(
     closest-side,
-    rgba(134, 104, 255, 0.13),
+    rgba(109, 75, 255, 0.13),
     transparent
   );
   animation-duration: 56s;
@@ -748,8 +751,8 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(79, 124, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79, 124, 255, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(29, 59, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 59, 255, 0.045) 1px, transparent 1px);
   background-size: 56px 56px;
   -webkit-mask-image: radial-gradient(
     75% 70% at 50% 40%,
@@ -785,7 +788,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(79, 124, 255, 0.55),
+    rgba(29, 59, 255, 0.55),
     rgba(56, 221, 248, 0.4),
     transparent
   );
@@ -868,8 +871,8 @@
   background: linear-gradient(
     105deg,
     transparent 32%,
-    rgba(56, 221, 248, 0.16) 48%,
-    rgba(247, 249, 255, 0.08) 54%,
+    rgba(255, 255, 255, 0.5) 48%,
+    rgba(29, 59, 255, 0.06) 54%,
     transparent 70%
   );
   transform: translateX(-130%);
@@ -936,8 +939,8 @@
   gap: 4px;
   padding: 4px;
   border-radius: 999px;
-  border: 1px solid var(--f-border-soft);
-  background: rgba(5, 8, 22, 0.6);
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.75);
 }
 .f-segment {
   position: relative;
@@ -961,8 +964,8 @@
   inset: 0;
   border-radius: 999px;
   background: var(--color-surface-raised);
-  border: 1px solid rgba(79, 124, 255, 0.5);
-  box-shadow: 0 0 18px -6px rgba(79, 124, 255, 0.45);
+  border: 1px solid rgba(29, 59, 255, 0.5);
+  box-shadow: 0 0 18px -6px rgba(29, 59, 255, 0.45);
 }
 
 /* Horizontal editorial bars (grow from the left once in view) */
@@ -982,15 +985,15 @@
 }
 @keyframes f-metric-land {
   0% {
-    box-shadow: 0 0 0 0 rgba(79, 124, 255, 0);
+    box-shadow: 0 0 0 0 rgba(29, 59, 255, 0);
   }
   35% {
     box-shadow:
-      0 0 0 1px rgba(79, 124, 255, 0.45),
-      0 0 42px -6px rgba(79, 124, 255, 0.4);
+      0 0 0 1px rgba(29, 59, 255, 0.45),
+      0 0 42px -6px rgba(29, 59, 255, 0.4);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(79, 124, 255, 0);
+    box-shadow: 0 0 0 0 rgba(29, 59, 255, 0);
   }
 }
 
@@ -1013,7 +1016,7 @@
   background: conic-gradient(
     from var(--f-cta-angle),
     transparent 0deg,
-    rgba(79, 124, 255, 0.65) 24deg,
+    rgba(29, 59, 255, 0.65) 24deg,
     rgba(56, 221, 248, 0.4) 48deg,
     transparent 80deg,
     transparent 360deg
@@ -1046,7 +1049,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(79, 124, 255, 0.5) 35%,
+    rgba(29, 59, 255, 0.5) 35%,
     rgba(56, 221, 248, 0.35) 65%,
     transparent
   );
@@ -1058,8 +1061,8 @@
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(3, 5, 14, 0.65) 22%,
-    rgba(3, 5, 14, 0.65) 78%,
+    rgba(238, 243, 255, 0.7) 22%,
+    rgba(238, 243, 255, 0.7) 78%,
     transparent
   );
 }
@@ -1067,15 +1070,15 @@
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(13, 20, 40, 0.45) 25%,
-    rgba(13, 20, 40, 0.45) 75%,
+    rgba(255, 255, 255, 0.75) 25%,
+    rgba(255, 255, 255, 0.75) 75%,
     transparent
   );
 }
 
 /* ── Product explorer ────────────────────────────────────── */
 .f-explorer-backdrop {
-  background: rgba(5, 8, 22, 0.88);
+  background: rgba(247, 249, 255, 0.92);
   backdrop-filter: blur(22px) saturate(130%);
   -webkit-backdrop-filter: blur(22px) saturate(130%);
 }
@@ -1145,8 +1148,8 @@
   min-height: 8.5rem;
   padding: 1.35rem 1.45rem;
   border-radius: calc(var(--f-radius) * 0.9);
-  background: rgba(13, 20, 40, 0.78);
-  border: 1px solid var(--f-border-soft);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--color-border);
   overflow: hidden;
   transition:
     transform 0.55s var(--f-ease),
@@ -1170,7 +1173,7 @@
   background: radial-gradient(
     260px circle at var(--px, 60%) var(--py, 40%),
     rgba(56, 221, 248, 0.09),
-    rgba(79, 124, 255, 0.07) 45%,
+    rgba(29, 59, 255, 0.07) 45%,
     transparent 70%
   );
   transition: opacity 0.5s var(--f-ease);
@@ -1179,11 +1182,11 @@
 /* Sharp-vs-soft focus choreography. */
 .f-explorer-tile[data-state="active"] {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(79, 124, 255, 0.65);
+  border-color: rgba(29, 59, 255, 0.5);
   box-shadow:
-    0 28px 64px -26px rgba(2, 4, 12, 0.95),
-    0 0 34px -12px rgba(56, 221, 248, 0.4),
-    0 0 0 1px rgba(79, 124, 255, 0.2);
+    0 28px 56px -26px rgba(7, 21, 47, 0.28),
+    0 0 30px -14px rgba(29, 59, 255, 0.3),
+    0 0 0 1px rgba(29, 59, 255, 0.12);
   z-index: 1;
 }
 .f-explorer-tile[data-state="active"]::before {
@@ -1216,7 +1219,7 @@
   opacity: 1;
   transform: scale(1.06);
   filter: brightness(1.3) saturate(1.15)
-    drop-shadow(0 0 10px rgba(79, 124, 255, 0.45));
+    drop-shadow(0 0 10px rgba(29, 59, 255, 0.45));
 }
 
 .f-explorer-action {

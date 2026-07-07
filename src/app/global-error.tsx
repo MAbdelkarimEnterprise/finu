@@ -32,22 +32,22 @@ export default function GlobalError({
           gap: "1.5rem",
           padding: "1.5rem",
           textAlign: "center",
-          background: "#050816",
-          color: "#F7F9FF",
+          background: "#F7F9FF",
+          color: "#07152F",
           fontFamily: "system-ui, sans-serif",
         }}
       >
         <h1 style={{ fontSize: "1.5rem", fontWeight: 500, margin: 0 }}>
           Something didn&apos;t load right.
         </h1>
-        <p style={{ color: "#A8B3CC", maxWidth: 360, fontSize: "0.9rem" }}>
+        <p style={{ color: "#667085", maxWidth: 360, fontSize: "0.9rem" }}>
           The page hit an unexpected error. Reloading usually fixes it.
         </p>
         <button
           type="button"
           onClick={reset}
           style={{
-            background: "#4F7CFF",
+            background: "#1D3BFF",
             color: "#fff",
             border: "none",
             borderRadius: 999,

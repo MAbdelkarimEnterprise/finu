@@ -113,10 +113,10 @@ export function makeParticles(count: number): Particle[] {
       size: 1.4 + rand() * 1.8,
       tone:
         t < 0.7
-          ? "rgba(79, 124, 255, 0.85)"
+          ? "rgba(29, 59, 255, 0.8)"
           : t < 0.88
             ? "rgba(56, 221, 248, 0.85)"
-            : "rgba(134, 104, 255, 0.85)",
+            : "rgba(109, 75, 255, 0.8)",
       stagger: rand(),
       phase: rand() * TAU,
     });
