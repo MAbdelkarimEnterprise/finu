@@ -10,7 +10,7 @@ export default function FinalCTA() {
     <section
       id="download"
       aria-labelledby="download-title"
-      className="scroll-mt-24 px-5 py-24 md:px-8 md:py-32"
+      className="scroll-mt-24 f-section"
     >
       <div className="f-cta-frame relative mx-auto max-w-[1200px] rounded-[var(--f-radius)] border border-[var(--f-border-soft)]">
         {/* Living ambient field over a static gradient fallback — the

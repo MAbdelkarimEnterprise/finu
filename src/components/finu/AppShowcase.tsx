@@ -17,7 +17,7 @@ export default function AppShowcase() {
     <section
       id="app"
       aria-labelledby="app-title"
-      className="relative scroll-mt-24 px-5 py-24 md:px-8 md:py-32"
+      className="relative scroll-mt-24 f-section"
     >
       <div className="f-glow-violet pointer-events-none absolute inset-x-0 bottom-0 h-72" />
       <div className="relative mx-auto grid max-w-[1200px] items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">

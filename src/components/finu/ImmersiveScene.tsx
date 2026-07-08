@@ -36,7 +36,7 @@ export default function ImmersiveScene({
   return (
     <section
       aria-label={eyebrow}
-      className={`f-scene f-scene-${tone} relative flex min-h-[100svh] items-center overflow-hidden px-5 py-24 md:px-8`}
+      className={`f-scene f-scene-${tone} relative flex min-h-[100svh] items-center overflow-hidden f-section`}
     >
       <div
         className={`mx-auto grid w-full max-w-[1200px] items-center gap-14 lg:grid-cols-2 lg:gap-10 ${
@@ -95,7 +95,7 @@ export function StatementBand({
   size?: "lg" | "md";
 }) {
   return (
-    <section className="px-5 py-28 md:px-8 md:py-40">
+    <section className="f-section-loose">
       <TextReveal
         as="h2"
         className={`f-display mx-auto max-w-4xl text-center ${

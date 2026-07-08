@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { ArrowUpRight, AudioLines, Sparkles } from "lucide-react";
 import { APP_URL, LINKS } from "./links";
+import SunRayShader from "./SunRayShader";
 import MagneticButton from "./MagneticButton";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -113,19 +114,14 @@ export default function ChatHero() {
     >
       {/* stickyContainer: 100dvh grid, every layer stacked in 1/1 */}
       <div className="sticky top-0 grid h-[100dvh] w-full overflow-hidden [&>*]:[grid-area:1/1]">
-        {/* Layer 1 — scene canvas */}
+        {/* Layer 1 — the god-ray canvas pouring light down behind the phone */}
         <div className="relative" aria-hidden>
-          <div className="f-garden-scene absolute inset-0">
-            <div className="f-garden-blob f-garden-blob-a" />
-            <div className="f-garden-blob f-garden-blob-b" />
-            <div className="f-garden-blob f-garden-blob-c" />
-            <div className="f-garden-river" />
-          </div>
+          <SunRayShader className="absolute inset-0" />
           <div
-            className="absolute inset-0"
+            className="absolute inset-x-0 bottom-0 h-[28%]"
             style={{
               background:
-                "linear-gradient(180deg, rgba(247,249,255,0.92) 0%, rgba(247,249,255,0.55) 26%, rgba(247,249,255,0.05) 55%, rgba(247,249,255,0.65) 100%)",
+                "linear-gradient(180deg, rgba(247,249,255,0) 0%, #f7f9ff 100%)",
             }}
           />
         </div>
