@@ -290,6 +290,13 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
     const interactionLocation = gl.getUniformLocation(program, "u_interaction");
     const velocityLocation = gl.getUniformLocation(program, "u_velocity");
 
+    /* An alpha:false context is opaque black until the first draw —
+       and the first animation frame is deferred to idle time below.
+       Clear to the page background immediately so the canvas never
+       flashes (or lingers) dark behind the light veil. */
+    gl.clearColor(0.9686, 0.9765, 1.0, 1.0); /* #F7F9FF */
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
     const pointer = {
       x: 0.66,
       y: 0.52,
@@ -317,6 +324,9 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
         canvas.width = width;
         canvas.height = height;
         gl.viewport(0, 0, width, height);
+        /* Resizing wipes the drawing buffer back to opaque black;
+           repaint the light ground until the next real frame. */
+        gl.clear(gl.COLOR_BUFFER_BIT);
       }
     };
 
