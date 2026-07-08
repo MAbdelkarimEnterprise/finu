@@ -77,6 +77,43 @@
   --app-success: #16a34a;
   --app-warning: #f59e0b;
 
+  /* Structural tokens — radius/gutter/type scales, header calc chain,
+     and pill heights, mirroring the reference token architecture. */
+  --radius-small: 16px;
+  --radius-medium: 24px;
+  --radius-large: 48px;
+  --gutter-outer: 16px;
+  --gutter-inner: 16px;
+  --gutter-slim: 8px;
+  --header-content-height: 48px;
+  --header-gutter: 16px;
+  --header-height: calc(
+    var(--header-content-height) + var(--header-gutter) * 2
+  );
+  --hero-padding-top: calc(var(--header-height) + 32px);
+  --button-pill-height-extra-large: 80px;
+  --button-pill-height-large: 60px;
+  --button-pill-height-medium: 48px;
+  --button-pill-height-small: 40px;
+  --font-weight-normal: 450;
+  --font-weight-light: 300;
+  --text-4xl: 5.5rem;
+  --text-3xl: 4rem;
+  --text-2xl: 3rem;
+  --text-xl: 2rem;
+  --text-lg: 1.5rem;
+  --text-base: 1.25rem;
+  --text-sm: 1rem;
+  --text-xs: 0.875rem;
+  --text-4xl--line-height: 1.045;
+  --text-3xl--line-height: 1.063;
+  --text-2xl--line-height: 1.083;
+  --text-xl--line-height: 1.125;
+  --text-lg--line-height: 1.167;
+  --text-base--line-height: 1.2;
+  --text-sm--line-height: 1.25;
+  --text-xs--line-height: 1.143;
+
   /* Derived */
   --f-border-soft: rgba(7, 21, 47, 0.09);
   --f-text-faint: rgba(102, 112, 133, 0.72);
@@ -99,7 +136,7 @@
 /* Typography */
 .f-display {
   font-family: var(--f-font-sans);
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   letter-spacing: -0.02em;
   line-height: 1.06;
 }
@@ -138,7 +175,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 48px;
+  min-height: var(--button-pill-height-medium);
   padding: 0.8rem 1.7rem;
   border-radius: 999px;
   font-family: var(--f-font-sans);
