@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useReducedMotion,
@@ -28,15 +28,35 @@ const CHAT = [
   },
 ] as const;
 
+/* Canned punchlines for each choice — the visitor gets to steer the
+   joke, which is the interaction, not a real transaction. */
+const REPLIES: Record<"save" | "spend", string> = {
+  save: "Done. $20 tucked away before it could become tacos 🌮✨",
+  spend: "Respect. I’ll just quietly judge from over here 👀",
+};
+
+function FinuBubble({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="f-bubble f-bubble-finu">
+      <span className="f-mono mb-1 flex items-center gap-1 text-[0.5rem] text-[var(--color-secondary)]">
+        <Sparkles className="h-3 w-3" aria-hidden /> Finu AI
+      </span>
+      {children}
+    </div>
+  );
+}
+
 /**
- * Opening scene: a full-viewport light field with the Finu chat phone
- * front and center, cropped at the fold. The conversation types in on
- * load (not scroll-gated, so the phone is never empty); scroll adds a
- * gentle parallax as the statement band takes over.
+ * Opening scene: the Finu chat phone in a garden-and-river field,
+ * cropped at the fold. The conversation types in on load, then hands
+ * the visitor the last word: choosing a chip plays Finu's comeback.
+ * The phone tilts gently toward the pointer on desktop.
  */
 export default function ChatHero() {
   const ref = useRef<HTMLElement>(null);
+  const phoneRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const [choice, setChoice] = useState<"save" | "spend" | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -53,6 +73,21 @@ export default function ChatHero() {
           animate: { opacity: 1, y: 0, scale: 1 },
           transition: { duration: 0.6, ease: EASE, delay },
         };
+
+  /* Gentle 3D lean toward the pointer — refs only, no re-renders. */
+  const onPhoneMove = (event: React.PointerEvent) => {
+    if (reduced || event.pointerType === "touch") return;
+    const el = phoneRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const nx = (event.clientX - rect.left) / rect.width - 0.5;
+    const ny = (event.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `rotateX(${(-ny * 5).toFixed(2)}deg) rotateY(${(nx * 6).toFixed(2)}deg)`;
+  };
+  const onPhoneLeave = () => {
+    const el = phoneRef.current;
+    if (el) el.style.transform = "";
+  };
 
   return (
     <section
@@ -118,54 +153,82 @@ export default function ChatHero() {
           </motion.div>
 
           {/* Phone — anchored to the fold, cropped like the reference */}
-          <div className="relative mt-10 flex w-full flex-1 items-end justify-center">
+          <div
+            className="relative mt-10 flex w-full flex-1 items-end justify-center"
+            style={{ perspective: "1200px" }}
+          >
             <motion.div
               style={reduced ? undefined : { y: phoneY }}
               initial={reduced ? false : { opacity: 0, y: 70 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, ease: EASE, delay: 0.5 }}
-              className="f-phone relative w-[min(21rem,86vw)] translate-y-[16%]"
+              className="w-[min(21rem,86vw)] translate-y-[16%]"
             >
-              <div className="f-phone-notch" aria-hidden />
-              <div className="flex h-full flex-col px-4 pb-6 pt-12">
-                <p className="text-center text-[1.3rem] font-medium text-[var(--app-ink)]">
-                  Hey, Maria
-                </p>
+              <div
+                ref={phoneRef}
+                className="f-phone relative transition-transform duration-300 ease-out"
+                onPointerMove={onPhoneMove}
+                onPointerLeave={onPhoneLeave}
+              >
+                <div className="f-phone-notch" aria-hidden />
+                <div className="flex h-full flex-col px-4 pb-6 pt-12">
+                  <p className="text-center text-[1.3rem] font-medium text-[var(--app-ink)]">
+                    Hey, Maria
+                  </p>
 
-                <div className="mt-5 flex-1 space-y-3">
-                  <motion.div {...bubbleIn(0.9)} className="f-bubble f-bubble-finu">
-                    <span className="f-mono mb-1 flex items-center gap-1 text-[0.5rem] text-[var(--color-secondary)]">
-                      <Sparkles className="h-3 w-3" aria-hidden /> Finu AI
-                    </span>
-                    {CHAT[0].text}
-                  </motion.div>
-                  <motion.div {...bubbleIn(1.8)} className="f-bubble f-bubble-user">
-                    {CHAT[1].text}
-                  </motion.div>
-                  <motion.div {...bubbleIn(2.7)} className="f-bubble f-bubble-finu">
-                    <span className="f-mono mb-1 flex items-center gap-1 text-[0.5rem] text-[var(--color-secondary)]">
-                      <Sparkles className="h-3 w-3" aria-hidden /> Finu AI
-                    </span>
-                    {CHAT[2].text}
-                  </motion.div>
-                  <motion.div {...bubbleIn(3.5)} className="flex gap-2 pl-2">
-                    <span className="f-chip f-chip-success">Tuck it away</span>
-                    <span className="f-chip f-chip-warning">Let me spend 🙃</span>
-                  </motion.div>
-                </div>
+                  <div className="mt-5 flex-1 space-y-3" aria-live="polite">
+                    <motion.div {...bubbleIn(0.9)}>
+                      <FinuBubble>{CHAT[0].text}</FinuBubble>
+                    </motion.div>
+                    <motion.div {...bubbleIn(1.8)} className="f-bubble f-bubble-user">
+                      {CHAT[1].text}
+                    </motion.div>
+                    <motion.div {...bubbleIn(2.7)}>
+                      <FinuBubble>{CHAT[2].text}</FinuBubble>
+                    </motion.div>
 
-                <div
-                  className="mt-4 flex items-center gap-2 rounded-full border px-4 py-3 text-[0.8rem] text-[var(--app-muted)]"
-                  style={{
-                    borderColor: "var(--app-border)",
-                    background: "var(--app-surface)",
-                  }}
-                >
-                  Ask Finu anything…
-                  <AudioLines
-                    className="ml-auto h-4 w-4 text-[var(--color-primary)]"
-                    aria-hidden
-                  />
+                    {choice === null ? (
+                      <motion.div {...bubbleIn(3.5)} className="flex gap-2 pl-2">
+                        <button
+                          type="button"
+                          onClick={() => setChoice("save")}
+                          className="f-chip f-chip-success cursor-pointer transition-transform hover:scale-105"
+                        >
+                          Tuck it away
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setChoice("spend")}
+                          className="f-chip f-chip-warning cursor-pointer transition-transform hover:scale-105"
+                        >
+                          Let me spend 🙃
+                        </button>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key={choice}
+                        initial={reduced ? false : { opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease: EASE }}
+                      >
+                        <FinuBubble>{REPLIES[choice]}</FinuBubble>
+                      </motion.div>
+                    )}
+                  </div>
+
+                  <div
+                    className="mt-4 flex items-center gap-2 rounded-full border px-4 py-3 text-[0.8rem] text-[var(--app-muted)]"
+                    style={{
+                      borderColor: "var(--app-border)",
+                      background: "var(--app-surface)",
+                    }}
+                  >
+                    Ask Finu anything…
+                    <AudioLines
+                      className="ml-auto h-4 w-4 text-[var(--color-primary)]"
+                      aria-hidden
+                    />
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -1611,3 +1611,32 @@
   );
   box-shadow: 0 18px 60px rgba(150, 190, 218, 0.5);
 }
+
+/* Explorer tile icon badge — clear royal mark on each product */
+.f-explorer-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  margin-bottom: 1.1rem;
+  border-radius: 1rem;
+  color: var(--color-primary);
+  background: rgba(29, 59, 255, 0.08);
+  border: 1px solid rgba(29, 59, 255, 0.16);
+  transition:
+    background-color 0.5s var(--f-ease),
+    color 0.5s var(--f-ease),
+    transform 0.5s var(--f-ease),
+    box-shadow 0.5s var(--f-ease);
+}
+.f-explorer-tile-big .f-explorer-icon {
+  width: 3.6rem;
+  height: 3.6rem;
+}
+.f-explorer-tile[data-state="active"] .f-explorer-icon,
+.f-explorer-tile:focus-visible .f-explorer-icon {
+  background: var(--color-primary);
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 10px 24px -10px rgba(29, 59, 255, 0.55);
+}

@@ -65,6 +65,15 @@ float fbm(vec2 p) {
   return value;
 }
 
+/* Gentle spectral tint for the rays — clamped triangle waves. */
+vec3 spectrum(float t) {
+  return clamp(
+    abs(mod(t * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0,
+    0.0,
+    1.0
+  );
+}
+
 void main() {
   vec2 resolution = max(u_resolution, vec2(1.0));
 
@@ -131,6 +140,34 @@ void main() {
 
   float violetMask = smoothstep(0.52, 0.94, r.y * 0.6 + field * 0.4);
   color = mix(color, violet, violetMask * (0.07 + 0.05 * cycle));
+
+  /* Sunlight pass — adapted from the angular-noise ray technique:
+     two noise fields scrolled against each other around the sun angle,
+     multiplied, then masked by distance so shafts fade like haze. Kept
+     desaturated and slow so it reads as atmosphere, not effect. */
+  vec2 sunPos = vec2(0.0, 1.45);
+  vec2 sunDir = uv - sunPos;
+  float sunAng = atan(sunDir.y, sunDir.x);
+  float sunDist = length(sunDir);
+
+  float rn1 = noise(vec2(sunAng * 7.0 + t * 0.05, 3.7));
+  float rn2 = noise(vec2(sunAng * 11.0 - t * 0.038 + 11.0, 8.2));
+  float rayNoise = smoothstep(0.34, 1.0, rn1 * rn2 * 1.7);
+
+  float rayFall = 1.0 - smoothstep(0.2, 2.2, sunDist);
+  float rayBand = smoothstep(0.22, 0.85, sunDist);
+  float rayA = rayNoise * rayFall * rayBand;
+
+  vec3 rayCol = mix(
+    vec3(1.0, 0.995, 0.97),
+    spectrum(fract(sunAng * 0.318 + t * 0.008)),
+    0.06
+  );
+  color = mix(color, rayCol, rayA * 0.4);
+
+  /* The light source itself: a soft warm-white bloom past the top edge. */
+  float sunGlow = exp(-sunDist * sunDist * 0.5);
+  color = mix(color, vec3(1.0, 0.99, 0.955), sunGlow * 0.55);
 
 #if DETAIL == 1
   /* Filaments: thin contour lines of the warped field — mixed toward

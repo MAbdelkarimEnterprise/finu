@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 import type { FinuProduct } from "./products";
-import ProductGlyph, { DottedArrow } from "./ProductGlyph";
+import { DottedArrow } from "./ProductGlyph";
 
 type TileState = "idle" | "active" | "dim";
 
@@ -56,8 +56,11 @@ const ProductExplorerTile = forwardRef<
       onBlur={onDeactivate}
       onClick={onNavigate}
     >
-      <span className="f-explorer-glyph" aria-hidden>
-        <ProductGlyph id={product.id} />
+      <span className="f-explorer-icon" aria-hidden>
+        <product.icon
+          className={big ? "h-7 w-7" : "h-6 w-6"}
+          strokeWidth={1.7}
+        />
       </span>
 
       <span className="mt-auto block">
