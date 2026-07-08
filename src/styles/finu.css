@@ -1549,3 +1549,65 @@
   border: 1px solid var(--app-border);
   color: var(--app-ink);
 }
+
+/* ── Garden-and-river hero scene (painted stand-in for a photo) ── */
+.f-garden-scene {
+  background:
+    /* meadow */
+    linear-gradient(
+      180deg,
+      #dbe9f7 0%,
+      #e8f2f6 24%,
+      #cfe3cf 38%,
+      #a9cba4 52%,
+      #8fbc8f 66%,
+      #7dab7f 78%,
+      #6f9e74 100%
+    );
+  overflow: hidden;
+}
+/* Soft tree masses on the horizon */
+.f-garden-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(46px);
+}
+.f-garden-blob-a {
+  left: -12%;
+  top: 26%;
+  width: 55vw;
+  height: 34vh;
+  background: rgba(84, 128, 90, 0.75);
+}
+.f-garden-blob-b {
+  right: -14%;
+  top: 22%;
+  width: 60vw;
+  height: 38vh;
+  background: rgba(70, 112, 78, 0.7);
+}
+.f-garden-blob-c {
+  left: 28%;
+  top: 33%;
+  width: 44vw;
+  height: 22vh;
+  background: rgba(104, 146, 106, 0.55);
+}
+/* The river: a soft light band cutting the meadow, sky reflected */
+.f-garden-river {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 56%;
+  height: 20%;
+  transform: rotate(-2.5deg);
+  border-radius: 50%;
+  filter: blur(10px);
+  background: linear-gradient(
+    180deg,
+    rgba(214, 233, 245, 0.95),
+    rgba(178, 210, 232, 0.9) 45%,
+    rgba(150, 190, 218, 0.85)
+  );
+  box-shadow: 0 18px 60px rgba(150, 190, 218, 0.5);
+}
