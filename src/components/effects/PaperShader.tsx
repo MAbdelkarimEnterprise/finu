@@ -41,14 +41,14 @@ void main() {
 
   /* Mix colors on the noise; lift the peaks toward white. */
   vec3 color = mix(u_color1, u_color2, noise * 0.5 + 0.5);
-  color = mix(color, vec3(1.0), pow(abs(noise), 2.0) * u_intensity * 0.35);
+  color = mix(color, vec3(1.0), pow(abs(noise), 2.0) * u_intensity * 0.55);
 
   /* Radial glow from the center. */
-  float glow = 1.0 - length(uv - 0.5) * 1.6;
+  float glow = 1.0 - length(uv - 0.5) * 1.1;
   glow = pow(max(glow, 0.0), 2.0);
 
   vec3 ground = mix(u_color1 * 0.85, u_color1, uv.y);
-  gl_FragColor = vec4(mix(ground, color, glow * 0.85), 1.0);
+  gl_FragColor = vec4(mix(ground, color, max(glow * 0.9, 0.3)), 1.0);
 }
 `;
 
