@@ -94,7 +94,7 @@ export default function PartnersSection() {
     <section
       id="partners"
       aria-labelledby="partners-title"
-      className="f-section-tone-deep relative scroll-mt-24 px-5 py-24 md:px-8 md:py-28"
+      className="f-section-tone-deep relative scroll-mt-24 f-section"
     >
       <div className="relative mx-auto max-w-[1200px]">
         <Reveal className="text-center">

@@ -278,7 +278,7 @@ export default function ParticleNarrative() {
     return (
       <section
         aria-labelledby="narrative-title"
-        className="relative px-5 py-24 md:px-8"
+        className="relative f-section"
       >
         <h2 id="narrative-title" className="sr-only">
           How Finu moves money

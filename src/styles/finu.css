@@ -1476,6 +1476,21 @@
   opacity: 1;
 }
 
+/* ── Layout rhythm system — one spacing scale for every section ── */
+.f-section {
+  padding-block: clamp(5.5rem, 10vw, 8.5rem);
+  padding-inline: clamp(var(--gutter-outer), 4vw, 2.5rem);
+}
+.f-section-loose {
+  padding-block: clamp(7.5rem, 14vw, 12rem);
+  padding-inline: clamp(var(--gutter-outer), 4vw, 2.5rem);
+}
+.f-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
 /* Focus */
 .finu :focus-visible {
   outline: 2px solid var(--color-accent);

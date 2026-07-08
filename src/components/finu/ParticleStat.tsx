@@ -129,7 +129,7 @@ export default function ParticleStat() {
   return (
     <section
       aria-labelledby="particle-stat-title"
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-5 py-24 md:px-8"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden f-section"
     >
       <canvas
         ref={canvasRef}

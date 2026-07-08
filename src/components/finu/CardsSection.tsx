@@ -31,7 +31,7 @@ export default function CardsSection() {
     <section
       id="cards"
       aria-labelledby="cards-title"
-      className="relative scroll-mt-24 px-5 py-24 md:px-8 md:py-32"
+      className="relative scroll-mt-24 f-section"
     >
       <div className="f-glow-primary pointer-events-none absolute inset-x-0 top-0 h-72" />
       <div className="relative mx-auto max-w-[1200px]">

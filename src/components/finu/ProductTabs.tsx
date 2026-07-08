@@ -285,7 +285,7 @@ export default function ProductTabs() {
     <section
       id="products"
       aria-labelledby="products-title"
-      className="f-section-tone-deep relative scroll-mt-24 px-5 py-24 md:px-8 md:py-32"
+      className="f-section-tone-deep relative scroll-mt-24 f-section"
     >
       <div className="f-ambient" aria-hidden>
         <div
