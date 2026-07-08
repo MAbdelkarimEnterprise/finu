@@ -53,26 +53,45 @@ export default function TestimonialsSection() {
           Hear from our community
         </span>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <Reveal key={t.quote} delay={(i % 3) * 0.08}>
-              <figure className="f-card f-card-hover flex h-full flex-col justify-between gap-6 p-7">
-                <div>
-                  <Quote
-                    className="h-5 w-5 text-[var(--color-primary)]"
-                    aria-hidden
-                  />
-                  <blockquote className="mt-4 text-[0.95rem] leading-relaxed text-[var(--color-text-primary)]">
-                    {t.quote}
-                  </blockquote>
-                </div>
-                <figcaption className="text-[0.76rem] text-[var(--f-text-faint)]">
-                  — {t.source}
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+        {/* Two auto-panning rows drifting opposite ways; pauses on
+            hover/focus, static overflow-scroll under reduced motion.
+            The duplicated halves are aria-hidden so screen readers
+            get each quote once. */}
+        {[TESTIMONIALS.slice(0, 3), TESTIMONIALS.slice(3)].map((row, r) => (
+          <div
+            key={r}
+            className={`f-marquee ${r === 0 ? "mt-14" : "mt-5"}`}
+            style={
+              { "--f-pan-duration": r === 0 ? "58s" : "74s" } as React.CSSProperties
+            }
+          >
+            <div
+              className="f-marquee-track gap-5 pr-5"
+              style={r === 1 ? { animationDirection: "reverse" } : undefined}
+            >
+              {[...row, ...row].map((t, i) => (
+                <figure
+                  key={i}
+                  aria-hidden={i >= row.length}
+                  className="f-card flex w-[20rem] flex-none flex-col justify-between gap-5 p-6 md:w-[24rem]"
+                >
+                  <div>
+                    <Quote
+                      className="h-5 w-5 text-[var(--color-primary)]"
+                      aria-hidden
+                    />
+                    <blockquote className="mt-4 text-[0.95rem] leading-relaxed text-[var(--color-text-primary)]">
+                      {t.quote}
+                    </blockquote>
+                  </div>
+                  <figcaption className="text-[0.76rem] text-[var(--f-text-faint)]">
+                    — {t.source}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        ))}
 
         <Reveal className="mt-10 text-center">
           <a

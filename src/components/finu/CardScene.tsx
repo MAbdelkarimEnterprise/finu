@@ -34,7 +34,7 @@ export default function CardScene() {
     <section
       id="cards"
       aria-labelledby="card-scene-title"
-      className="f-scene f-scene-royal relative flex min-h-[100svh] flex-col justify-center overflow-hidden f-section scroll-mt-24"
+      className="f-scene f-scene-royal relative mx-[var(--gutter-slim)] flex min-h-[100svh] flex-col justify-center overflow-hidden rounded-[var(--radius-large)] rounded-br-none f-section scroll-mt-24"
     >
       <div className="mx-auto w-full max-w-[1200px]">
         <Reveal>
