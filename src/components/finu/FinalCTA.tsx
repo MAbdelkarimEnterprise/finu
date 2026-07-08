@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { APP_URL } from "./links";
-import AmbientShader from "./AmbientShader";
+import AmbientShader from "../effects/AmbientShader";
 import MagneticButton from "./MagneticButton";
 import { Reveal, TextReveal } from "./TextReveal";
 

@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { MidnightIntelligenceShader } from "@/components/MidnightIntelligenceShader";
+import { MidnightIntelligenceShader } from "@/components/effects/MidnightIntelligenceShader";
 import { APP_URL, LINKS } from "./links";
 import MagneticButton from "./MagneticButton";
 import { TextReveal } from "./TextReveal";

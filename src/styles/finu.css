@@ -114,6 +114,32 @@
   --text-sm--line-height: 1.25;
   --text-xs--line-height: 1.143;
 
+  /* Z-index layers */
+  --z-backdrop: -10;
+  --z-scene: 0;
+  --z-content: 10;
+  --z-nav: 50;
+  --z-overlay: 70;
+
+  /* Motion */
+  --duration-fast: 0.3s;
+  --duration-base: 0.55s;
+  --duration-slow: 0.9s;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Shadows */
+  --shadow-card: 0 10px 28px -18px rgba(7, 21, 47, 0.25);
+  --shadow-raised: 0 24px 52px -24px rgba(7, 21, 47, 0.22);
+  --shadow-deep: 0 50px 110px -35px rgba(2, 4, 12, 0.9);
+
+  /* Ocean palette (shader uniforms + backdrop sheets) */
+  --ocean-light: #cde4f7;
+  --ocean-mid: #478bc4;
+  --ocean-deep: #0e2952;
+
+  /* Ocean depth (0 = surface, 1 = seabed) — set by OceanBackdrop */
+  --ocean-depth: 0;
+
   /* Derived */
   --f-border-soft: rgba(7, 21, 47, 0.09);
   --f-text-faint: rgba(102, 112, 133, 0.72);
@@ -121,7 +147,7 @@
   --f-gutter: clamp(1rem, 3vw, 2.5rem);
   --f-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-  background: var(--color-background);
+  background: transparent; /* the fixed OceanBackdrop is the ground */
   color: var(--color-text-primary);
   font-family: var(--f-font-sans);
   -webkit-font-smoothing: antialiased;
@@ -1476,6 +1502,22 @@
   opacity: 1;
 }
 
+/* Frosted scrim: keeps navy text AA-readable over the deep water.
+   Apply to any section that rides into the depths; remove it to let
+   a section sit raw on the dive. */
+.f-scrim {
+  position: relative;
+}
+.f-scrim::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(247, 249, 255, calc(0.5 + var(--ocean-depth, 0) * 0.4));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
 /* ── Layout rhythm system — one spacing scale for every section ── */
 .f-section {
   padding-block: clamp(5.5rem, 10vw, 8.5rem);
@@ -1538,25 +1580,25 @@
   background:
     radial-gradient(90% 70% at 80% 10%, rgba(29, 59, 255, 0.07), transparent 60%),
     radial-gradient(80% 60% at 10% 90%, rgba(109, 75, 255, 0.05), transparent 60%),
-    #eef3ff;
+    rgba(238, 243, 255, 0.78);
 }
 .f-scene-sky {
   background:
     radial-gradient(100% 80% at 20% 0%, rgba(56, 221, 248, 0.09), transparent 55%),
     radial-gradient(90% 70% at 90% 100%, rgba(29, 59, 255, 0.08), transparent 60%),
-    #f0f6ff;
+    rgba(240, 246, 255, 0.78);
 }
 .f-scene-royal {
   background:
     radial-gradient(110% 90% at 75% 15%, rgba(29, 59, 255, 0.13), transparent 60%),
     radial-gradient(90% 80% at 12% 95%, rgba(109, 75, 255, 0.09), transparent 65%),
-    #e9efff;
+    rgba(233, 239, 255, 0.78);
 }
 .f-scene-sand {
   background:
     radial-gradient(100% 80% at 80% 5%, rgba(255, 255, 255, 0.8), transparent 55%),
     radial-gradient(100% 90% at 10% 100%, rgba(29, 59, 255, 0.05), transparent 60%),
-    #f4f2ec;
+    rgba(244, 242, 236, 0.78);
 }
 
 /* ── Chat phone (hero) ─────────────────────────────────────── */
