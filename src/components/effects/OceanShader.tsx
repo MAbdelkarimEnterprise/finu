@@ -71,16 +71,16 @@ void main() {
   q.y += cos(q.x * 1.7 - t * 1.8) * 0.015;
 
   /* Depth gradient: light at the surface, deep at the bottom. */
-  vec3 color = mix(u_deep, u_mid, smoothstep(-0.1, 0.75, screenY));
-  color = mix(color, u_light, smoothstep(0.62, 1.05, screenY));
+  vec3 color = mix(u_deep, u_mid, smoothstep(0.05, 0.85, screenY));
+  color = mix(color, u_light, smoothstep(0.85, 1.15, screenY));
 
   /* Caustics: two ridged fbm sheets drifting against each other,
      strongest near the surface, dissolving with depth. */
   float c1 = fbm(q * 2.6 + vec2(t * 0.9, -t * 0.5));
   float c2 = fbm(q * 3.1 - vec2(t * 0.7, t * 0.4) + 4.7);
   float caustic = pow(1.0 - abs(c1 - c2), 6.0);
-  float surface = smoothstep(0.35, 0.95, screenY);
-  color += vec3(0.65, 0.85, 0.95) * caustic * surface * 0.16;
+  float surface = smoothstep(0.12, 0.85, screenY);
+  color += vec3(0.65, 0.88, 0.98) * caustic * surface * 0.34;
 
   /* Light shafts filtering down from above the frame. */
   vec2 sunPos = vec2(0.15, 1.35);
@@ -91,11 +91,11 @@ void main() {
   float r2 = noise(vec2(ang * 1.9 - t * 0.4 + 7.0, 5.3));
   float shafts = smoothstep(0.42, 1.0, r1 * r2 * 2.1);
   float reach = (1.0 - smoothstep(0.3, 1.9, dist)) * smoothstep(0.15, 0.7, dist);
-  color += vec3(0.75, 0.9, 0.98) * shafts * reach * 0.22;
+  color += vec3(0.78, 0.92, 1.0) * shafts * reach * 0.42;
 
   /* Sparse drifting motes catching the light. */
   float motes = smoothstep(0.985, 1.0, noise(q * 22.0 + vec2(t * 1.6, -t * 2.2)));
-  color += vec3(0.9, 0.97, 1.0) * motes * surface * 0.5;
+  color += vec3(0.92, 0.98, 1.0) * motes * surface * 0.85;
 
   /* Frame + grain. */
   float vig = smoothstep(0.75, 2.1, length(p * vec2(0.75, 1.0)));
