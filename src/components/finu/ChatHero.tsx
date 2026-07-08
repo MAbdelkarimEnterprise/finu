@@ -8,7 +8,6 @@ import {
   useTransform,
 } from "framer-motion";
 import { ArrowUpRight, AudioLines, Sparkles } from "lucide-react";
-import { MidnightIntelligenceShader } from "@/components/MidnightIntelligenceShader";
 import { APP_URL, LINKS } from "./links";
 import MagneticButton from "./MagneticButton";
 
@@ -61,10 +60,27 @@ export default function ChatHero() {
       aria-label="Finu — AI financial assistant"
       className="relative h-[200svh]"
     >
-      <div className="hero sticky top-0 h-[100svh]">
-        <MidnightIntelligenceShader />
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+        {/* Garden-and-river scene — painted stand-in until a licensed
+            photo/generated image lands in public/images/hero-scene.jpg;
+            then .f-garden-scene just gains a background-image. */}
+        <div className="f-garden-scene absolute inset-0" aria-hidden>
+          <div className="f-garden-blob f-garden-blob-a" />
+          <div className="f-garden-blob f-garden-blob-b" />
+          <div className="f-garden-blob f-garden-blob-c" />
+          <div className="f-garden-river" />
+        </div>
+        {/* Legibility veils: soft light at the top, fade to page below */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(247,249,255,0.92) 0%, rgba(247,249,255,0.55) 26%, rgba(247,249,255,0.05) 55%, rgba(247,249,255,0.65) 100%)",
+          }}
+        />
 
-        <div className="hero-content mx-auto flex h-full max-w-[1360px] flex-col items-center px-5 pt-28 md:px-8 md:pt-32">
+        <div className="relative z-10 mx-auto flex h-full max-w-[1360px] flex-col items-center px-5 pt-28 md:px-8 md:pt-32">
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,14 +90,14 @@ export default function ChatHero() {
           >
             AI-powered financial intelligence
           </motion.p>
-          <motion.h1
+          <motion.h2
             initial={reduced ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.28 }}
             className="f-display mt-4 max-w-3xl text-center text-[clamp(2rem,4.6vw,3.2rem)]"
           >
             The world’s first AI financial assistant
-          </motion.h1>
+          </motion.h2>
 
           <motion.div
             initial={reduced ? false : { opacity: 0, y: 16 }}
