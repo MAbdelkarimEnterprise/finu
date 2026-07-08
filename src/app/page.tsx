@@ -5,7 +5,6 @@ import "@/styles/finu.css";
 import { finuFontClass } from "@/components/finu/fonts";
 import PageShell from "@/components/finu/PageShell";
 import ChatHero from "@/components/finu/ChatHero";
-import IntroStatement from "@/components/finu/IntroStatement";
 import ImmersiveScene, {
   StatementBand,
 } from "@/components/finu/ImmersiveScene";
@@ -29,8 +28,6 @@ export default function HomePage() {
   return (
     <div className={finuFontClass}>
       <PageShell>
-        <IntroStatement />
-
         <ChatHero />
 
         <ImmersiveScene
