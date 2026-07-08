@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { APP_URL } from "./links";
-import AmbientShader from "../effects/AmbientShader";
+import PaperShader from "../effects/PaperShader";
 import MagneticButton from "./MagneticButton";
 import { Reveal, TextReveal } from "./TextReveal";
 
@@ -13,17 +13,14 @@ export default function FinalCTA() {
       className="scroll-mt-24 f-section"
     >
       <div className="f-cta-frame relative mx-auto max-w-[1200px] rounded-[var(--f-radius)] border border-[var(--f-border-soft)]">
-        {/* Living ambient field over a static gradient fallback — the
-            page's second (and last) WebGL canvas, bookending the hero. */}
+        {/* The paper shader over the CTA gradient fallback — the
+            royal closing moment, bookending the hero's ocean. */}
         <div
           aria-hidden
           className="absolute inset-0 overflow-hidden rounded-[inherit]"
-          style={{
-            background:
-              "radial-gradient(80% 120% at 78% 20%, rgba(79,124,255,0.28), transparent 55%), radial-gradient(60% 100% at 20% 90%, rgba(134,104,255,0.22), transparent 60%), #0d1428",
-          }}
+          style={{ background: "var(--gradient-cta)" }}
         >
-          <AmbientShader />
+          <PaperShader color1="#174FE0" color2="#5AA8FF" />
         </div>
         <div className="relative grid gap-12 p-8 md:grid-cols-[1.4fr_1fr] md:p-16">
           <div>
@@ -31,7 +28,7 @@ export default function FinalCTA() {
                 anchor on the light page, so tokens don't apply here. */}
             <TextReveal
               as="h2"
-              className="f-display max-w-xl text-[clamp(2rem,4.6vw,3.4rem)] text-[#f7f9ff]"
+              className="f-display max-w-xl text-[clamp(2rem,4.6vw,3.4rem)] text-[#ffffff]"
             >
               Start your stablecoin payment journey with Finu
             </TextReveal>
@@ -40,7 +37,7 @@ export default function FinalCTA() {
             </span>
 
             <Reveal delay={0.15}>
-              <p className="f-display mt-6 text-lg text-[rgba(247,249,255,0.72)] md:text-xl">
+              <p className="f-display mt-6 text-lg text-[rgba(255, 255, 255,0.72)] md:text-xl">
                 Swift<span className="text-[var(--color-accent)]">.</span>{" "}
                 Seamless<span className="text-[var(--color-accent)]">.</span>{" "}
                 Secure<span className="text-[var(--color-accent)]">.</span>

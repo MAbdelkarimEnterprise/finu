@@ -32,8 +32,8 @@ export default function GlobalError({
           gap: "1.5rem",
           padding: "1.5rem",
           textAlign: "center",
-          background: "#F7F9FF",
-          color: "#07152F",
+          background: "#ffffff",
+          color: "#111827",
           fontFamily: "system-ui, sans-serif",
         }}
       >
@@ -47,7 +47,7 @@ export default function GlobalError({
           type="button"
           onClick={reset}
           style={{
-            background: "#1D3BFF",
+            background: "#1e5eff",
             color: "#fff",
             border: "none",
             borderRadius: 999,

@@ -40,10 +40,10 @@ export default function ParticleStat() {
       phase: rand() * TAU,
       tone:
         rand() < 0.55
-          ? "rgba(29, 59, 255, 0.55)"
+          ? "rgba(30, 94, 255, 0.55)"
           : rand() < 0.8
-            ? "rgba(7, 21, 47, 0.35)"
-            : "rgba(109, 75, 255, 0.45)",
+            ? "rgba(17, 24, 39, 0.35)"
+            : "rgba(77, 124, 255, 0.45)",
     }));
 
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);

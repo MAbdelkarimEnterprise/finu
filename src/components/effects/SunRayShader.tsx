@@ -289,7 +289,7 @@ export default function SunRayShader({
       aria-hidden="true"
       style={{
         background:
-          "linear-gradient(180deg, #c9ddf8 0%, #eaf2fc 55%, #f7f9ff 100%)",
+          "linear-gradient(180deg, #c9ddf8 0%, #eaf2fc 55%, #ffffff 100%)",
       }}
     />
   );

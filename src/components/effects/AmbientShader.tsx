@@ -57,7 +57,7 @@ void main() {
   vec3 deep     = vec3(0.031, 0.051, 0.129);
   vec3 electric = vec3(0.310, 0.486, 1.000); // #4F7CFF
   vec3 violet   = vec3(0.525, 0.408, 1.000); // #8668FF
-  vec3 cyan     = vec3(0.220, 0.867, 0.973); // #38DDF8
+  vec3 cyan     = vec3(0.220, 0.867, 0.973); // #5aa8ff
 
   vec2 warp = vec2(
     fbm(p * 0.9 + vec2(t, -t * 0.6)),

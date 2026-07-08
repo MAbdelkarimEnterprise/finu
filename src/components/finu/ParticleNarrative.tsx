@@ -376,7 +376,7 @@ function StaticRing() {
         cy="160"
         r="88"
         fill="none"
-        stroke="rgba(56,221,248,0.35)"
+        stroke="rgba(90, 168, 255,0.35)"
         strokeWidth="1.4"
         strokeDasharray="1.5 9"
       />

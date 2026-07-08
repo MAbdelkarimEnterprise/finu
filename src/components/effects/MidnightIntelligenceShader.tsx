@@ -83,10 +83,10 @@ void main() {
 
   float t = u_time;
 
-  vec3 base     = vec3(0.9686, 0.9765, 1.0000); /* #F7F9FF */
+  vec3 base     = vec3(0.9686, 0.9765, 1.0000); /* #ffffff */
   vec3 deep     = vec3(0.8900, 0.9180, 1.0000); /* #E3EAFF */
-  vec3 electric = vec3(0.1137, 0.2314, 1.0000); /* #1D3BFF */
-  vec3 violet   = vec3(0.4275, 0.2941, 1.0000); /* #6D4BFF */
+  vec3 electric = vec3(0.1137, 0.2314, 1.0000); /* #1e5eff */
+  vec3 violet   = vec3(0.4275, 0.2941, 1.0000); /* #4d7cff */
   vec3 cyan     = vec3(0.1333, 0.7804, 0.9098); /* #22C7E8 */
 
   /* Ambient breathing (~20s): a gentle deepening pulse (brightening
@@ -331,7 +331,7 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
        and the first animation frame is deferred to idle time below.
        Clear to the page background immediately so the canvas never
        flashes (or lingers) dark behind the light veil. */
-    gl.clearColor(0.9686, 0.9765, 1.0, 1.0); /* #F7F9FF */
+    gl.clearColor(0.9686, 0.9765, 1.0, 1.0); /* #ffffff */
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     const pointer = {

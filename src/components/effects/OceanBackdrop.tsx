@@ -14,11 +14,11 @@ import { useReducedMotion } from "framer-motion";
  * Reduced motion pins the dive at the surface.
  */
 const SURFACE =
-  "linear-gradient(180deg, #f7f9ff 0%, #eaf3fc 60%, #dcebf9 100%)";
+  "linear-gradient(180deg, #ffffff 0%, #f8fafd 55%, #eef4ff 100%)";
 const OPEN_WATER =
-  "linear-gradient(180deg, #cfe3f6 0%, #9dc2e6 55%, #6d9ccb 100%)";
+  "linear-gradient(180deg, #d9ecff 0%, #9cc6f5 55%, #5aa8ff 100%)";
 const DEPTH =
-  "linear-gradient(180deg, #35608f 0%, #1c3a63 55%, #0c2240 100%)";
+  "linear-gradient(180deg, #2f5fb8 0%, #14294f 55%, #0b1220 100%)";
 
 export default function OceanBackdrop() {
   const reduced = useReducedMotion();
