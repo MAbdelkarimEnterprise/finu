@@ -228,10 +228,8 @@ export default function FinuNav() {
       className="fixed inset-x-0 top-0 z-50 px-3 md:px-5"
     >
       <div
-        className={`relative mx-auto mt-3 flex max-w-[1360px] items-center justify-between gap-4 rounded-2xl border px-4 transition-all duration-700 md:px-5 ${
-          scrolled || mobileOpen
-            ? "f-nav-glass py-2"
-            : "border-transparent bg-transparent py-3.5"
+        className={`f-nav-glass relative mx-auto mt-3 flex w-full max-w-[1360px] items-center justify-between gap-4 rounded-full border px-4 transition-all duration-700 md:px-5 lg:w-fit lg:justify-center lg:gap-8 lg:px-6 ${
+          scrolled || mobileOpen ? "py-2" : "py-2.5"
         }`}
       >
         <Link href="/" aria-label="Finu home" className="relative z-10 flex-none">

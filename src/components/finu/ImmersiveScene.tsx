@@ -8,6 +8,7 @@ import Eyebrow from "./Eyebrow";
 import { Reveal, TextReveal } from "./TextReveal";
 
 type Tone = "mist" | "sky" | "royal" | "sand";
+type Squared = "bl" | "br";
 
 /**
  * Full-viewport immersive product scene: soft tinted full-bleed field,
@@ -23,6 +24,7 @@ export default function ImmersiveScene({
   cta = "Learn more",
   visual,
   reverse = false,
+  squared,
 }: {
   tone?: Tone;
   eyebrow: string;
@@ -32,11 +34,12 @@ export default function ImmersiveScene({
   cta?: string;
   visual?: ReactNode;
   reverse?: boolean;
+  squared?: Squared;
 }) {
   return (
     <section
       aria-label={eyebrow}
-      className={`f-scene f-scene-${tone} relative flex min-h-[100svh] items-center overflow-hidden f-section`}
+      className={`f-scene f-scene-${tone} relative mx-[var(--gutter-slim)] flex min-h-[100svh] items-center overflow-hidden rounded-[var(--radius-large)] f-section ${squared === "bl" ? "rounded-bl-none" : squared === "br" ? "rounded-br-none" : ""}`}
     >
       <div
         className={`mx-auto grid w-full max-w-[1200px] items-center gap-14 lg:grid-cols-2 lg:gap-10 ${

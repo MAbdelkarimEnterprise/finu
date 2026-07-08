@@ -32,6 +32,7 @@ export default function HomePage() {
 
         <ImmersiveScene
           tone="mist"
+          squared="bl"
           eyebrow="Finu AI"
           title="Finu gets to know your money."
           body="Finu analyzes spending, calls out bad habits, and makes you better at money."
@@ -42,6 +43,7 @@ export default function HomePage() {
 
         <ImmersiveScene
           tone="sky"
+          squared="br"
           eyebrow="International Transfer"
           title="Send crypto, receive local currency."
           body="Experience hassle-free sending. Every transaction protected, every recipient just moments away."
@@ -56,6 +58,7 @@ export default function HomePage() {
 
         <ImmersiveScene
           tone="sand"
+          squared="bl"
           eyebrow="Multi-Currency Wallet"
           title="Bridging crypto and everyday life."
           body="Crypto or local currency. Jump straight into action and access your funds easily."
