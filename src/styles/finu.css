@@ -1479,3 +1479,73 @@
     transform: scaleX(1) !important;
   }
 }
+/* → append to src/styles/finu.css (before the reduced-motion block) */
+
+/* ── Immersive scenes: soft full-bleed tints in the light palette ── */
+.f-scene-mist {
+  background:
+    radial-gradient(90% 70% at 80% 10%, rgba(29, 59, 255, 0.07), transparent 60%),
+    radial-gradient(80% 60% at 10% 90%, rgba(109, 75, 255, 0.05), transparent 60%),
+    #eef3ff;
+}
+.f-scene-sky {
+  background:
+    radial-gradient(100% 80% at 20% 0%, rgba(56, 221, 248, 0.09), transparent 55%),
+    radial-gradient(90% 70% at 90% 100%, rgba(29, 59, 255, 0.08), transparent 60%),
+    #f0f6ff;
+}
+.f-scene-royal {
+  background:
+    radial-gradient(110% 90% at 75% 15%, rgba(29, 59, 255, 0.13), transparent 60%),
+    radial-gradient(90% 80% at 12% 95%, rgba(109, 75, 255, 0.09), transparent 65%),
+    #e9efff;
+}
+.f-scene-sand {
+  background:
+    radial-gradient(100% 80% at 80% 5%, rgba(255, 255, 255, 0.8), transparent 55%),
+    radial-gradient(100% 90% at 10% 100%, rgba(29, 59, 255, 0.05), transparent 60%),
+    #f4f2ec;
+}
+
+/* ── Chat phone (hero) ─────────────────────────────────────── */
+.f-phone {
+  aspect-ratio: 9 / 18.5;
+  border-radius: 2.6rem;
+  background: var(--app-bg);
+  border: 1px solid var(--app-border);
+  box-shadow:
+    0 60px 120px -40px rgba(7, 21, 47, 0.35),
+    0 0 0 7px #0b1020,
+    0 0 0 8px rgba(7, 21, 47, 0.4);
+  overflow: hidden;
+}
+.f-phone-notch {
+  position: absolute;
+  top: 0.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: #0b1020;
+}
+
+.f-bubble {
+  max-width: 85%;
+  padding: 0.7rem 0.95rem;
+  border-radius: 1.15rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+.f-bubble-user {
+  margin-left: auto;
+  border-bottom-right-radius: 0.35rem;
+  background: var(--color-primary);
+  color: #ffffff;
+}
+.f-bubble-finu {
+  border-bottom-left-radius: 0.35rem;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  color: var(--app-ink);
+}
