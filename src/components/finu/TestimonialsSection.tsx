@@ -37,7 +37,7 @@ export default function TestimonialsSection() {
     <section
       id="community"
       aria-labelledby="community-title"
-      className="scroll-mt-24 f-section"
+      className="f-scrim scroll-mt-24 f-section"
     >
       <div className="mx-auto max-w-[1200px]">
         <Reveal>

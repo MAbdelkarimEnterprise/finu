@@ -7,7 +7,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { MidnightIntelligenceShader } from "@/components/MidnightIntelligenceShader";
+import { MidnightIntelligenceShader } from "@/components/effects/MidnightIntelligenceShader";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 

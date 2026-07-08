@@ -86,3 +86,42 @@ Manual deploy, if ever needed:
 ```bash
 netlify deploy --build --prod
 ```
+
+## Design tokens & the ocean system
+
+**Tokens** live in `src/styles/finu.css` under `.finu` (single source of
+truth): brand colors (`--color-*`), light app-surface neutrals
+(`--app-*`), radius/gutter scales (`--radius-*`, `--gutter-*`), the
+header calc chain (`--header-height` → `--hero-padding-top`), button
+pill heights, the type scale (`--text-*` with per-size line-heights),
+z-index layers (`--z-*`), motion (`--duration-*`, `--ease-out-expo`),
+shadows (`--shadow-*`), and the ocean palette (`--ocean-light/mid/deep`).
+Components consume tokens via `var(...)`; layout rhythm comes from
+`.f-section` / `.f-section-loose` / `.f-container` (or the
+`components/ui/Section` primitive).
+
+**Component structure**: `components/ui` (primitives),
+`components/sections` (page sections, mapped in `sections/index.ts`),
+`components/effects` (WebGL + ocean layers), `components/finu`
+(implementation home for sections/legacy).
+
+**Ocean system** (three parts, all in `components/effects`):
+- `OceanShader.tsx` — raw-WebGL underwater light for the hero
+  (chosen over three.js/r3f: one fullscreen quad doesn't justify
+  ~700KB). Colors come from the `--ocean-*` tokens as uniforms; tune
+  speed via the `u_time * 0.05` factor and caustic strength via the
+  `* 0.16` term. DPR is capped (1.25 mobile / 1.5 desktop); it pauses
+  offscreen and in hidden tabs and never creates a GL context under
+  `prefers-reduced-motion` (the CSS gradient on the canvas stands in).
+- `OceanLayers.tsx` — bubbles, plankton, kelp silhouettes, and the
+  occasional jellyfish; fixed, pointer-transparent, parallaxed by
+  scroll depth and pointer. Counts drop on mobile; reduced motion
+  renders nothing.
+- `OceanBackdrop.tsx` — the dive controller: three gradient sheets
+  crossfaded by scroll progress (opacity-only, compositor-friendly)
+  publishing `--ocean-depth` (0 surface → 1 seabed) for CSS consumers.
+
+**Per-section control**: sections ride the dive by default. Add
+`f-scrim` to any section to frost it for readability over deep water
+(strength scales with `--ocean-depth`); remove it to sit raw on the
+dive. To opt a section out entirely, give it an opaque background.

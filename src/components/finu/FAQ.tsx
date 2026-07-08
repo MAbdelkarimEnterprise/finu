@@ -29,7 +29,7 @@ export default function FAQ() {
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="scroll-mt-24 f-section"
+      className="f-scrim scroll-mt-24 f-section"
     >
       <div className="mx-auto grid max-w-[1080px] gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <TextReveal

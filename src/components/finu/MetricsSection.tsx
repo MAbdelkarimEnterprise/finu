@@ -205,7 +205,7 @@ export default function MetricsSection() {
     <section
       id="metrics"
       aria-labelledby="metrics-title"
-      className="f-section-tone-raised relative scroll-mt-24 f-section"
+      className="f-scrim f-section-tone-raised relative scroll-mt-24 f-section"
     >
       <div className="f-grid-texture" aria-hidden />
       <div className="f-glow-primary pointer-events-none absolute inset-x-0 top-0 h-64" />
