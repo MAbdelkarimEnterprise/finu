@@ -32,8 +32,8 @@ export default function DataPath({
     >
       <defs>
         <linearGradient id="f-datapath-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#38DDF8" stopOpacity="0" />
-          <stop offset="50%" stopColor="#38DDF8" />
+          <stop offset="0%" stopColor="#5aa8ff" stopOpacity="0" />
+          <stop offset="50%" stopColor="#5aa8ff" />
           <stop offset="100%" stopColor="#4F7CFF" stopOpacity="0" />
         </linearGradient>
       </defs>

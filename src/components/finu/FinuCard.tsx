@@ -8,8 +8,8 @@ type Variant = "royal" | "navy";
 const SKINS: Record<Variant, { background: string; glow: string }> = {
   royal: {
     background:
-      "linear-gradient(140deg, #6a90ff 0%, #4f7cff 32%, #2e4fd9 72%, #24399f 100%)",
-    glow: "radial-gradient(closest-side, rgba(247,249,255,0.45), transparent)",
+      "linear-gradient(140deg, #4d7cff 0%, #1e5eff 32%, #174fe0 72%, #123db8 100%)",
+    glow: "radial-gradient(closest-side, rgba(255, 255, 255,0.45), transparent)",
   },
   navy: {
     background:
@@ -23,13 +23,13 @@ function Chip() {
   return (
     <span
       aria-hidden
-      className="grid h-7 w-9 place-items-center rounded-md border border-[rgba(7,21,47,0.25)]"
+      className="grid h-7 w-9 place-items-center rounded-md border border-[rgba(17, 24, 39,0.25)]"
       style={{
         background:
           "linear-gradient(135deg, #f2d693, #d9ab55 55%, #f2d693)",
       }}
     >
-      <span className="h-3.5 w-5 rounded-sm border border-[rgba(7,21,47,0.3)]" />
+      <span className="h-3.5 w-5 rounded-sm border border-[rgba(17, 24, 39,0.3)]" />
     </span>
   );
 }
@@ -56,10 +56,10 @@ export default function FinuCard({
       aria-label={`Finu ${variant} card`}
       className={`relative aspect-[1.586] w-full overflow-hidden rounded-[24px] border p-5 ${className}`}
       style={{
-        borderColor: "rgba(247,249,255,0.18)",
+        borderColor: "rgba(255, 255, 255,0.18)",
         background: skin.background,
         boxShadow:
-          "0 24px 50px -22px rgba(7,21,47,0.55), inset 0 1px 0 rgba(247,249,255,0.25)",
+          "0 24px 50px -22px rgba(17, 24, 39,0.55), inset 0 1px 0 rgba(255, 255, 255,0.25)",
       }}
     >
       {/* Gloss + corner glow */}
@@ -87,7 +87,7 @@ export default function FinuCard({
             className="h-4 w-auto brightness-0 invert"
           />
           <Wifi
-            className="h-5 w-5 rotate-90 text-[rgba(247,249,255,0.75)]"
+            className="h-5 w-5 rotate-90 text-[rgba(255, 255, 255,0.75)]"
             aria-hidden
           />
         </div>
@@ -95,23 +95,23 @@ export default function FinuCard({
         <Chip />
 
         <div>
-          <p className="f-mono text-[0.72rem] tracking-[0.28em] text-[rgba(247,249,255,0.92)]">
+          <p className="f-mono text-[0.72rem] tracking-[0.28em] text-[rgba(255, 255, 255,0.92)]">
             •••• •••• •••• 4021
           </p>
           <div className="mt-2.5 flex items-end justify-between">
             <div>
-              <p className="f-mono text-[0.45rem] text-[rgba(247,249,255,0.55)]">
+              <p className="f-mono text-[0.45rem] text-[rgba(255, 255, 255,0.55)]">
                 CARDHOLDER
               </p>
-              <p className="f-mono mt-0.5 text-[0.6rem] tracking-[0.12em] text-[rgba(247,249,255,0.9)]">
+              <p className="f-mono mt-0.5 text-[0.6rem] tracking-[0.12em] text-[rgba(255, 255, 255,0.9)]">
                 {holder}
               </p>
             </div>
             <div>
-              <p className="f-mono text-[0.45rem] text-[rgba(247,249,255,0.55)]">
+              <p className="f-mono text-[0.45rem] text-[rgba(255, 255, 255,0.55)]">
                 EXPIRES
               </p>
-              <p className="f-mono mt-0.5 text-[0.6rem] text-[rgba(247,249,255,0.9)]">
+              <p className="f-mono mt-0.5 text-[0.6rem] text-[rgba(255, 255, 255,0.9)]">
                 {expiry}
               </p>
             </div>

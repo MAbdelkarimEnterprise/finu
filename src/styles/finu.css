@@ -48,32 +48,48 @@
   --f-font-sans: "PP Neue Montreal", "Switzer", var(--f-font-display),
     system-ui, sans-serif;
 
-  /* Core tokens — light theme: soft off-white page, white surfaces,
-     rich royal blue as the dominant accent, deep navy ink. */
-  --color-background: #f7f9ff;
+  /* Core tokens — FINU design system: white surfaces, #1E5EFF
+     primary family, sky accent, near-black ink. */
+  --color-background: #ffffff;
+  --color-background-soft: #f8fafd;
+  --color-background-muted: #eef4ff;
+  --color-background-dark: #0b1220;
   --color-surface: #ffffff;
-  --color-surface-raised: #eef3ff;
-  --color-primary: #1d3bff;
-  --color-primary-deep: #1026b8;
-  --color-secondary: #6d4bff;
-  --color-accent: #38ddf8;
-  --color-text-primary: #07152f;
-  --color-text-secondary: #667085;
-  --color-border: #e6eaf2;
+  --color-surface-raised: #eef4ff;
+  --color-surface-glass: rgba(255, 255, 255, 0.72);
+  --color-primary: #1e5eff;
+  --color-primary-hover: #174fe0;
+  --color-primary-light: #4d7cff;
+  --color-primary-dark: #123db8;
+  --color-primary-deep: #174fe0;
+  --color-secondary: #4d7cff;
+  --color-accent: #5aa8ff;
+  --color-accent-light: #d9ecff;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-inverse: #ffffff;
+  --color-border: #e5eaf2;
+  --color-border-light: #f2f5fa;
   --color-success: #16a34a;
   --color-warning: #b45309;
   --color-danger: #dc2626;
-  --color-navy: #07152f;
+  --color-navy: #0b1220;
+
+  /* Signature gradients */
+  --gradient-hero: linear-gradient(135deg, #1e5eff 0%, #5aa8ff 100%);
+  --gradient-section: linear-gradient(180deg, #ffffff 0%, #f8fafd 100%);
+  --gradient-cta: linear-gradient(135deg, #174fe0 0%, #1e5eff 55%, #5aa8ff 100%);
 
   /* Light app-surface tokens — the in-app mockups render light-mode
      Finu screens against the midnight site. Brand accents reuse the
      core tokens; neutrals below exist only for these light surfaces. */
-  --app-bg: #f7f9ff;
+  --app-bg: #f8fafd;
   --app-surface: #ffffff;
-  --app-ink: #07152f;
-  --app-muted: #667085;
-  --app-border: #e6eaf2;
-  --app-soft-blue: #eef3ff;
+  --app-ink: #111827;
+  --app-muted: #6b7280;
+  --app-border: #e5eaf2;
+  --app-soft-blue: #eef4ff;
   --app-success: #16a34a;
   --app-warning: #f59e0b;
 
@@ -128,21 +144,25 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Shadows */
-  --shadow-card: 0 10px 28px -18px rgba(7, 21, 47, 0.25);
-  --shadow-raised: 0 24px 52px -24px rgba(7, 21, 47, 0.22);
-  --shadow-deep: 0 50px 110px -35px rgba(2, 4, 12, 0.9);
+  --shadow-sm: 0 2px 8px rgba(17, 24, 39, 0.05);
+  --shadow-md: 0 8px 30px rgba(30, 94, 255, 0.1);
+  --shadow-lg: 0 18px 60px rgba(30, 94, 255, 0.14);
+  --shadow-xl: 0 30px 90px rgba(30, 94, 255, 0.18);
+  --shadow-card: var(--shadow-md);
+  --shadow-raised: var(--shadow-lg);
+  --shadow-deep: var(--shadow-xl);
 
   /* Ocean palette (shader uniforms + backdrop sheets) */
-  --ocean-light: #cde4f7;
-  --ocean-mid: #478bc4;
-  --ocean-deep: #0e2952;
+  --ocean-light: #d9ecff;
+  --ocean-mid: #5aa8ff;
+  --ocean-deep: #0b1220;
 
   /* Ocean depth (0 = surface, 1 = seabed) — set by OceanBackdrop */
   --ocean-depth: 0;
 
   /* Derived */
-  --f-border-soft: rgba(7, 21, 47, 0.09);
-  --f-text-faint: rgba(102, 112, 133, 0.72);
+  --f-border-soft: rgba(17, 24, 39, 0.08);
+  --f-text-faint: rgba(107, 114, 128, 0.8);
   --f-radius: clamp(1rem, 1.8vw, 1.5rem);
   --f-gutter: clamp(1rem, 3vw, 2.5rem);
   --f-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -185,7 +205,7 @@
   flex: none;
   border-radius: 1px;
   background: var(--color-primary);
-  box-shadow: 0 0 10px rgba(29, 59, 255, 0.4);
+  box-shadow: 0 0 10px rgba(30, 94, 255, 0.4);
 }
 
 .f-mono {
@@ -228,7 +248,7 @@
   color: #ffffff;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.18) inset,
-    0 10px 26px -10px rgba(29, 59, 255, 0.5);
+    0 10px 26px -10px rgba(30, 94, 255, 0.5);
 }
 .f-btn-primary::after {
   content: "";
@@ -249,7 +269,7 @@
   background: var(--color-primary-deep);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.2) inset,
-    0 16px 34px -12px rgba(16, 38, 184, 0.55);
+    0 16px 34px -12px rgba(23, 79, 224, 0.55);
 }
 .f-btn-primary:hover::after {
   transform: translateX(120%);
@@ -264,20 +284,18 @@
   -webkit-backdrop-filter: blur(12px);
 }
 .f-btn-ghost:hover {
-  border-color: rgba(29, 59, 255, 0.45);
+  border-color: rgba(30, 94, 255, 0.45);
   background: var(--color-surface-raised);
   transform: translateY(-2px);
 }
 
 /* ── Navigation ──────────────────────────────────────────── */
 .f-nav-glass {
-  background: rgba(247, 249, 255, 0.82);
-  border-color: var(--f-border-soft) !important;
-  box-shadow:
-    0 12px 40px rgba(7, 21, 47, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  background: var(--color-surface-glass);
+  border-color: rgba(229, 234, 242, 0.8) !important;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
 
 .f-navlink {
@@ -300,7 +318,7 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 1rem;
-  box-shadow: 0 24px 56px -20px rgba(7, 21, 47, 0.22);
+  box-shadow: 0 24px 56px -20px rgba(17, 24, 39, 0.22);
   overflow: hidden;
 }
 .f-dropdown-item {
@@ -344,15 +362,15 @@
   background:
     radial-gradient(
       circle at 72% 38%,
-      rgba(29, 59, 255, 0.1),
+      rgba(30, 94, 255, 0.1),
       transparent 38%
     ),
     radial-gradient(
       circle at 48% 62%,
-      rgba(109, 75, 255, 0.07),
+      rgba(77, 124, 255, 0.07),
       transparent 45%
     ),
-    #f7f9ff;
+    #ffffff;
 }
 
 /* Veil: the hero copy is centered, so a soft light content-safe zone
@@ -366,14 +384,14 @@
   background:
     radial-gradient(
       64% 58% at 50% 44%,
-      rgba(247, 249, 255, 0.85),
-      rgba(247, 249, 255, 0.4) 70%,
-      rgba(247, 249, 255, 0.05)
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.4) 70%,
+      rgba(255, 255, 255, 0.05)
     ),
     linear-gradient(
       180deg,
-      rgba(247, 249, 255, 0.05) 55%,
-      #f7f9ff 100%
+      rgba(255, 255, 255, 0.05) 55%,
+      #ffffff 100%
     );
 }
 
@@ -387,9 +405,9 @@
     background:
       linear-gradient(
         180deg,
-        rgba(247, 249, 255, 0.72) 0%,
-        rgba(247, 249, 255, 0.45) 45%,
-        #f7f9ff 100%
+        rgba(255, 255, 255, 0.72) 0%,
+        rgba(255, 255, 255, 0.45) 45%,
+        #ffffff 100%
       );
   }
 }
@@ -399,15 +417,15 @@
     background:
       radial-gradient(
         circle at 72% 38%,
-        rgba(29, 59, 255, 0.1),
+        rgba(30, 94, 255, 0.1),
         transparent 38%
       ),
       radial-gradient(
         circle at 48% 62%,
-        rgba(109, 75, 255, 0.07),
+        rgba(77, 124, 255, 0.07),
         transparent 45%
       ),
-      #f7f9ff;
+      #ffffff;
   }
 }
 
@@ -429,10 +447,10 @@
 /* Hover: rise 4px, tilt ≤ 2deg, restrained edge illumination */
 .f-card-hover:hover {
   transform: translateY(-4px) rotateX(1.2deg);
-  border-color: rgba(29, 59, 255, 0.35);
+  border-color: rgba(30, 94, 255, 0.35);
   box-shadow:
-    0 24px 52px -24px rgba(7, 21, 47, 0.22),
-    0 0 0 1px rgba(29, 59, 255, 0.08);
+    0 24px 52px -24px rgba(17, 24, 39, 0.22),
+    0 0 0 1px rgba(30, 94, 255, 0.08);
 }
 .f-card-hover::after {
   content: "";
@@ -443,10 +461,10 @@
   opacity: 0;
   background: linear-gradient(
     140deg,
-    rgba(29, 59, 255, 0.08),
+    rgba(30, 94, 255, 0.08),
     transparent 34%,
     transparent 70%,
-    rgba(56, 221, 248, 0.07)
+    rgba(90, 168, 255, 0.07)
   );
   transition: opacity 0.55s var(--f-ease);
 }
@@ -486,8 +504,8 @@
 }
 .f-chip-live {
   color: var(--color-primary);
-  background: rgba(29, 59, 255, 0.07);
-  border: 1px solid rgba(29, 59, 255, 0.24);
+  background: rgba(30, 94, 255, 0.07);
+  border: 1px solid rgba(30, 94, 255, 0.24);
 }
 
 .f-live-dot {
@@ -619,7 +637,7 @@
 }
 /* Brand-neutral lift on hover — a soft shadow, no recoloring. */
 .f-logo-tile:hover img {
-  filter: drop-shadow(0 6px 14px rgba(7, 21, 47, 0.18));
+  filter: drop-shadow(0 6px 14px rgba(17, 24, 39, 0.18));
 }
 /* Mobile: logos read at full strength, tighter rhythm so the
    marquee doesn't feel sparse. */
@@ -712,14 +730,14 @@
 .f-glow-primary {
   background: radial-gradient(
     60% 60% at 50% 0%,
-    rgba(29, 59, 255, 0.14),
+    rgba(30, 94, 255, 0.14),
     transparent 70%
   );
 }
 .f-glow-violet {
   background: radial-gradient(
     55% 55% at 50% 100%,
-    rgba(109, 75, 255, 0.12),
+    rgba(77, 124, 255, 0.12),
     transparent 70%
   );
 }
@@ -740,8 +758,8 @@
   opacity: 0;
   background: radial-gradient(
     240px circle at var(--px, 50%) var(--py, 50%),
-    rgba(56, 221, 248, 0.075),
-    rgba(29, 59, 255, 0.06) 45%,
+    rgba(90, 168, 255, 0.075),
+    rgba(30, 94, 255, 0.06) 45%,
     transparent 70%
   );
   transition: opacity 0.5s var(--f-ease);
@@ -751,10 +769,10 @@
 }
 /* Border bloom that follows the pointer along the card edge. */
 .f-interactive[data-lit="true"] {
-  border-color: rgba(29, 59, 255, 0.4);
+  border-color: rgba(30, 94, 255, 0.4);
   box-shadow:
-    0 24px 52px -24px rgba(7, 21, 47, 0.22),
-    0 0 24px -12px rgba(29, 59, 255, 0.22);
+    0 24px 52px -24px rgba(17, 24, 39, 0.22),
+    0 0 24px -12px rgba(30, 94, 255, 0.22);
 }
 
 /* ── Ambient fields (below-the-hero continuity, CSS only) ──── */
@@ -774,14 +792,14 @@
 .f-ambient-blob[data-tone="blue"] {
   background: radial-gradient(
     closest-side,
-    rgba(29, 59, 255, 0.16),
+    rgba(30, 94, 255, 0.16),
     transparent
   );
 }
 .f-ambient-blob[data-tone="violet"] {
   background: radial-gradient(
     closest-side,
-    rgba(109, 75, 255, 0.13),
+    rgba(77, 124, 255, 0.13),
     transparent
   );
   animation-duration: 56s;
@@ -790,7 +808,7 @@
 .f-ambient-blob[data-tone="cyan"] {
   background: radial-gradient(
     closest-side,
-    rgba(56, 221, 248, 0.07),
+    rgba(90, 168, 255, 0.07),
     transparent
   );
   animation-duration: 64s;
@@ -814,8 +832,8 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(29, 59, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29, 59, 255, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(30, 94, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 94, 255, 0.045) 1px, transparent 1px);
   background-size: 56px 56px;
   -webkit-mask-image: radial-gradient(
     75% 70% at 50% 40%,
@@ -851,8 +869,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(29, 59, 255, 0.55),
-    rgba(56, 221, 248, 0.4),
+    rgba(30, 94, 255, 0.55),
+    rgba(90, 168, 255, 0.4),
     transparent
   );
   filter: blur(0.5px);
@@ -913,13 +931,13 @@
 }
 @keyframes f-eyebrow-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(56, 221, 248, 0.55);
+    box-shadow: 0 0 0 0 rgba(90, 168, 255, 0.55);
   }
   60% {
-    box-shadow: 0 0 0 9px rgba(56, 221, 248, 0);
+    box-shadow: 0 0 0 9px rgba(90, 168, 255, 0);
   }
   100% {
-    box-shadow: 0 0 10px rgba(56, 221, 248, 0.55);
+    box-shadow: 0 0 10px rgba(90, 168, 255, 0.55);
   }
 }
 
@@ -935,7 +953,7 @@
     105deg,
     transparent 32%,
     rgba(255, 255, 255, 0.5) 48%,
-    rgba(29, 59, 255, 0.06) 54%,
+    rgba(30, 94, 255, 0.06) 54%,
     transparent 70%
   );
   transform: translateX(-130%);
@@ -1027,8 +1045,8 @@
   inset: 0;
   border-radius: 999px;
   background: var(--color-surface-raised);
-  border: 1px solid rgba(29, 59, 255, 0.5);
-  box-shadow: 0 0 18px -6px rgba(29, 59, 255, 0.45);
+  border: 1px solid rgba(30, 94, 255, 0.5);
+  box-shadow: 0 0 18px -6px rgba(30, 94, 255, 0.45);
 }
 
 /* Horizontal editorial bars (grow from the left once in view) */
@@ -1048,15 +1066,15 @@
 }
 @keyframes f-metric-land {
   0% {
-    box-shadow: 0 0 0 0 rgba(29, 59, 255, 0);
+    box-shadow: 0 0 0 0 rgba(30, 94, 255, 0);
   }
   35% {
     box-shadow:
-      0 0 0 1px rgba(29, 59, 255, 0.45),
-      0 0 42px -6px rgba(29, 59, 255, 0.4);
+      0 0 0 1px rgba(30, 94, 255, 0.45),
+      0 0 42px -6px rgba(30, 94, 255, 0.4);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(29, 59, 255, 0);
+    box-shadow: 0 0 0 0 rgba(30, 94, 255, 0);
   }
 }
 
@@ -1079,8 +1097,8 @@
   background: conic-gradient(
     from var(--f-cta-angle),
     transparent 0deg,
-    rgba(29, 59, 255, 0.65) 24deg,
-    rgba(56, 221, 248, 0.4) 48deg,
+    rgba(30, 94, 255, 0.65) 24deg,
+    rgba(90, 168, 255, 0.4) 48deg,
     transparent 80deg,
     transparent 360deg
   );
@@ -1112,8 +1130,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(29, 59, 255, 0.5) 35%,
-    rgba(56, 221, 248, 0.35) 65%,
+    rgba(30, 94, 255, 0.5) 35%,
+    rgba(90, 168, 255, 0.35) 65%,
     transparent
   );
   opacity: 0.8;
@@ -1141,7 +1159,7 @@
 
 /* ── Product explorer ────────────────────────────────────── */
 .f-explorer-backdrop {
-  background: rgba(247, 249, 255, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(22px) saturate(130%);
   -webkit-backdrop-filter: blur(22px) saturate(130%);
 }
@@ -1235,8 +1253,8 @@
   opacity: 0;
   background: radial-gradient(
     260px circle at var(--px, 60%) var(--py, 40%),
-    rgba(56, 221, 248, 0.09),
-    rgba(29, 59, 255, 0.07) 45%,
+    rgba(90, 168, 255, 0.09),
+    rgba(30, 94, 255, 0.07) 45%,
     transparent 70%
   );
   transition: opacity 0.5s var(--f-ease);
@@ -1245,11 +1263,11 @@
 /* Sharp-vs-soft focus choreography. */
 .f-explorer-tile[data-state="active"] {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(29, 59, 255, 0.5);
+  border-color: rgba(30, 94, 255, 0.5);
   box-shadow:
-    0 28px 56px -26px rgba(7, 21, 47, 0.28),
-    0 0 30px -14px rgba(29, 59, 255, 0.3),
-    0 0 0 1px rgba(29, 59, 255, 0.12);
+    0 28px 56px -26px rgba(17, 24, 39, 0.28),
+    0 0 30px -14px rgba(30, 94, 255, 0.3),
+    0 0 0 1px rgba(30, 94, 255, 0.12);
   z-index: 1;
 }
 .f-explorer-tile[data-state="active"]::before {
@@ -1282,7 +1300,7 @@
   opacity: 1;
   transform: scale(1.06);
   filter: brightness(1.3) saturate(1.15)
-    drop-shadow(0 0 10px rgba(29, 59, 255, 0.45));
+    drop-shadow(0 0 10px rgba(30, 94, 255, 0.45));
 }
 
 .f-explorer-action {
@@ -1513,7 +1531,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(247, 249, 255, calc(0.5 + var(--ocean-depth, 0) * 0.4));
+  background: rgba(255, 255, 255, calc(0.5 + var(--ocean-depth, 0) * 0.4));
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -1578,26 +1596,26 @@
 /* ── Immersive scenes: soft full-bleed tints in the light palette ── */
 .f-scene-mist {
   background:
-    radial-gradient(90% 70% at 80% 10%, rgba(29, 59, 255, 0.07), transparent 60%),
-    radial-gradient(80% 60% at 10% 90%, rgba(109, 75, 255, 0.05), transparent 60%),
+    radial-gradient(90% 70% at 80% 10%, rgba(30, 94, 255, 0.07), transparent 60%),
+    radial-gradient(80% 60% at 10% 90%, rgba(77, 124, 255, 0.05), transparent 60%),
     rgba(238, 243, 255, 0.78);
 }
 .f-scene-sky {
   background:
-    radial-gradient(100% 80% at 20% 0%, rgba(56, 221, 248, 0.09), transparent 55%),
-    radial-gradient(90% 70% at 90% 100%, rgba(29, 59, 255, 0.08), transparent 60%),
+    radial-gradient(100% 80% at 20% 0%, rgba(90, 168, 255, 0.09), transparent 55%),
+    radial-gradient(90% 70% at 90% 100%, rgba(30, 94, 255, 0.08), transparent 60%),
     rgba(240, 246, 255, 0.78);
 }
 .f-scene-royal {
   background:
-    radial-gradient(110% 90% at 75% 15%, rgba(29, 59, 255, 0.13), transparent 60%),
-    radial-gradient(90% 80% at 12% 95%, rgba(109, 75, 255, 0.09), transparent 65%),
+    radial-gradient(110% 90% at 75% 15%, rgba(30, 94, 255, 0.13), transparent 60%),
+    radial-gradient(90% 80% at 12% 95%, rgba(77, 124, 255, 0.09), transparent 65%),
     rgba(233, 239, 255, 0.78);
 }
 .f-scene-sand {
   background:
     radial-gradient(100% 80% at 80% 5%, rgba(255, 255, 255, 0.8), transparent 55%),
-    radial-gradient(100% 90% at 10% 100%, rgba(29, 59, 255, 0.05), transparent 60%),
+    radial-gradient(100% 90% at 10% 100%, rgba(30, 94, 255, 0.05), transparent 60%),
     rgba(244, 242, 236, 0.78);
 }
 
@@ -1608,9 +1626,9 @@
   background: var(--app-bg);
   border: 1px solid var(--app-border);
   box-shadow:
-    0 60px 120px -40px rgba(7, 21, 47, 0.35),
+    0 60px 120px -40px rgba(17, 24, 39, 0.35),
     0 0 0 7px #0b1020,
-    0 0 0 8px rgba(7, 21, 47, 0.4);
+    0 0 0 8px rgba(17, 24, 39, 0.4);
   overflow: hidden;
 }
 .f-phone-notch {
@@ -1715,8 +1733,8 @@
   margin-bottom: 1.1rem;
   border-radius: 1rem;
   color: var(--color-primary);
-  background: rgba(29, 59, 255, 0.08);
-  border: 1px solid rgba(29, 59, 255, 0.16);
+  background: rgba(30, 94, 255, 0.08);
+  border: 1px solid rgba(30, 94, 255, 0.16);
   transition:
     background-color 0.5s var(--f-ease),
     color 0.5s var(--f-ease),
@@ -1732,5 +1750,5 @@
   background: var(--color-primary);
   color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 10px 24px -10px rgba(29, 59, 255, 0.55);
+  box-shadow: 0 10px 24px -10px rgba(30, 94, 255, 0.55);
 }

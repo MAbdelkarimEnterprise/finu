@@ -82,7 +82,7 @@ export default function AppMock() {
         initial={reduced ? false : { opacity: 0, y: 36 }}
         animate={inView ? { opacity: 1, y: 0 } : undefined}
         transition={{ duration: 1, ease: EASE }}
-        className="overflow-hidden rounded-[32px] border border-[rgba(247,249,255,0.14)]"
+        className="overflow-hidden rounded-[32px] border border-[rgba(255, 255, 255,0.14)]"
         style={{
           background: "var(--app-bg)",
           boxShadow:
@@ -115,7 +115,7 @@ export default function AppMock() {
             style={{
               background: "var(--app-surface)",
               borderColor: "var(--app-border)",
-              boxShadow: "0 10px 28px -18px rgba(7,21,47,0.25)",
+              boxShadow: "0 10px 28px -18px rgba(17, 24, 39,0.25)",
             }}
           >
             <p className="text-[0.68rem] font-medium uppercase tracking-[0.08em] text-[var(--app-muted)]">
@@ -166,7 +166,7 @@ export default function AppMock() {
             style={{
               background: "var(--app-surface)",
               borderColor: "var(--app-border)",
-              boxShadow: "0 10px 28px -18px rgba(7,21,47,0.25)",
+              boxShadow: "0 10px 28px -18px rgba(17, 24, 39,0.25)",
             }}
           >
             <div className="flex items-center gap-2">

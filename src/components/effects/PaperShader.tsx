@@ -9,102 +9,68 @@ void main() {
 }
 `;
 
-/* Original FINU ambient field: two slow domain-warped fbm layers in
-   the Midnight palette, weighted toward the right so the CTA copy on
-   the left keeps its dark, readable ground. */
+/*
+ * Raw-WebGL port of the TONED background-paper-shader plane. The
+ * fragment math is carried over intact — the two-frequency animated
+ * noise, the color1/color2 mix, the white lift on noise peaks, and
+ * the radial glow — and the original's vertex wobble becomes an
+ * equivalent domain distortion so a fullscreen quad reads the same
+ * without a mesh. Same uniform family: time, intensity, color1,
+ * color2. Defaults are the Finu hero gradient pair.
+ */
 const fragmentSource = `
 precision highp float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
-
-float hash(vec2 p) {
-  p = fract(p * vec2(234.34, 435.345));
-  p += dot(p, p + 34.23);
-  return fract(p.x * p.y);
-}
-
-float noise(vec2 p) {
-  vec2 i = floor(p);
-  vec2 f = fract(p);
-  f = f * f * (3.0 - 2.0 * f);
-  float a = hash(i);
-  float b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0));
-  float d = hash(i + vec2(1.0, 1.0));
-  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
-}
-
-float fbm(vec2 p) {
-  float v = 0.0;
-  float amp = 0.55;
-  for (int i = 0; i < 4; i++) {
-    v += amp * noise(p);
-    p = p * 2.03 + vec2(11.3, 5.7);
-    amp *= 0.5;
-  }
-  return v;
-}
+uniform float u_intensity;
+uniform vec3 u_color1;
+uniform vec3 u_color2;
 
 void main() {
-  vec2 res = max(u_resolution, vec2(1.0));
-  vec2 uv = gl_FragCoord.xy / res;
-  vec2 p = (2.0 * gl_FragCoord.xy - res) / min(res.x, res.y);
+  vec2 uv = gl_FragCoord.xy / max(u_resolution, vec2(1.0));
+  float time = u_time;
 
-  float t = u_time * 0.05;
+  /* The plane wobble, folded into the sample space. */
+  uv.y += sin(uv.x * 10.0 + time) * 0.02 * u_intensity;
+  uv.x += cos(uv.y * 8.0 + time * 1.5) * 0.01 * u_intensity;
 
-  vec3 base     = vec3(0.051, 0.078, 0.157); // #0D1428
-  vec3 deep     = vec3(0.031, 0.051, 0.129);
-  vec3 electric = vec3(0.310, 0.486, 1.000); // #4F7CFF
-  vec3 violet   = vec3(0.525, 0.408, 1.000); // #8668FF
-  vec3 cyan     = vec3(0.220, 0.867, 0.973); // #5aa8ff
+  /* Animated noise pattern — same two frequency bands. */
+  float noise = sin(uv.x * 20.0 + time) * cos(uv.y * 15.0 + time * 0.8);
+  noise += sin(uv.x * 35.0 - time * 2.0) * cos(uv.y * 25.0 + time * 1.2) * 0.5;
 
-  vec2 warp = vec2(
-    fbm(p * 0.9 + vec2(t, -t * 0.6)),
-    fbm(p * 0.9 + vec2(-t * 0.7, t))
-  );
-  float field = fbm(p * 0.7 + warp * 0.85 + vec2(t * 0.4, 0.0));
+  /* Mix colors on the noise; lift the peaks toward white. */
+  vec3 color = mix(u_color1, u_color2, noise * 0.5 + 0.5);
+  color = mix(color, vec3(1.0), pow(abs(noise), 2.0) * u_intensity * 0.35);
 
-  vec3 color = mix(deep, base, smoothstep(0.15, 0.75, field));
+  /* Radial glow from the center. */
+  float glow = 1.0 - length(uv - 0.5) * 1.6;
+  glow = pow(max(glow, 0.0), 2.0);
 
-  /* Blue bloom, strongest toward the upper right */
-  float blueMask =
-    smoothstep(0.35, 0.95, field) *
-    smoothstep(-0.4, 1.1, p.x) *
-    smoothstep(1.4, -0.4, p.y * 0.6 - 0.2);
-  color = mix(color, electric, blueMask * 0.34);
-
-  /* Violet undertow, lower left */
-  float violetMask =
-    smoothstep(0.45, 1.0, warp.y) *
-    smoothstep(1.1, -0.6, p.x);
-  color = mix(color, violet, violetMask * 0.2);
-
-  /* A faint cyan thread where the two layers shear */
-  float thread = 1.0 - smoothstep(0.0, 0.05, abs(field - warp.x * 0.9));
-  color += cyan * thread * 0.05;
-
-  /* Keep the left third calm for the copy */
-  color = mix(color, deep, smoothstep(0.55, 0.0, uv.x) * 0.55);
-
-  /* Soft frame vignette + grain against banding */
-  float vig = 1.0 - smoothstep(0.5, 1.5, length(p * vec2(0.8, 1.05)));
-  color *= mix(0.72, 1.0, vig);
-  color += (hash(gl_FragCoord.xy + fract(u_time) * 40.0) - 0.5) * 0.014;
-
-  gl_FragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
+  vec3 ground = mix(u_color1 * 0.85, u_color1, uv.y);
+  gl_FragColor = vec4(mix(ground, color, glow * 0.85), 1.0);
 }
 `;
 
+function hexToRGB(hex: string): [number, number, number] {
+  const n = parseInt(hex.replace("#", ""), 16);
+  return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+}
+
 /**
- * Second, lighter ambient shader — used once (final CTA) so the page
- * bookends with living light without exceeding two WebGL canvases.
- * Pauses offscreen and in hidden tabs; under reduced motion it never
- * mounts a context and the CSS gradient beneath it stands in.
+ * Fullscreen paper-shader background. Ported from the TONED project
+ * onto Finu's dependency-free WebGL pipeline: pauses offscreen and
+ * in hidden tabs, caps DPR, clears to color1 before the first frame,
+ * and skips the GL context under reduced motion (the CSS gradient
+ * fallback stands in).
  */
-export default function AmbientShader({
+export default function PaperShader({
+  color1 = "#1E5EFF",
+  color2 = "#5AA8FF",
   className = "",
 }: {
+  color1?: string;
+  color2?: string;
   className?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -112,12 +78,8 @@ export default function AmbientShader({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    /* Some in-app browsers/WebViews throw rather than return null when
-       WebGL is policy-disabled, or hand back a software rasterizer too
-       slow to carry this; both fall back to the CSS gradient beneath. */
     let gl: WebGLRenderingContext | null = null;
     try {
       gl = canvas.getContext("webgl", {
@@ -133,30 +95,27 @@ export default function AmbientShader({
     if (!gl) return;
 
     try {
-      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-      const renderer = debugInfo
-        ? String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL))
+      const info = gl.getExtension("WEBGL_debug_renderer_info");
+      const renderer = info
+        ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL))
         : "";
-      if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) {
-        return;
-      }
+      if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) return;
     } catch {
-      /* Renderer string isn't essential — keep going if unavailable. */
+      /* non-essential */
     }
 
     const compile = (type: number, source: string) => {
-      const shader = gl.createShader(type);
-      if (!shader) return null;
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error(gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
+      const sh = gl.createShader(type);
+      if (!sh) return null;
+      gl.shaderSource(sh, source);
+      gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(sh));
+        gl.deleteShader(sh);
         return null;
       }
-      return shader;
+      return sh;
     };
-
     const vs = compile(gl.VERTEX_SHADER, vertexSource);
     const fs = compile(gl.FRAGMENT_SHADER, fragmentSource);
     if (!vs || !fs) return;
@@ -185,8 +144,19 @@ export default function AmbientShader({
 
     const uResolution = gl.getUniformLocation(program, "u_resolution");
     const uTime = gl.getUniformLocation(program, "u_time");
+    const uIntensity = gl.getUniformLocation(program, "u_intensity");
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+    const c1 = hexToRGB(color1);
+    const c2 = hexToRGB(color2);
+    gl.uniform3f(gl.getUniformLocation(program, "u_color1"), ...c1);
+    gl.uniform3f(gl.getUniformLocation(program, "u_color2"), ...c2);
+
+    gl.clearColor(c1[0], c1[1], c1[2], 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    const isMobile =
+      window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.5);
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       const w = Math.max(1, Math.floor(rect.width * dpr));
@@ -195,6 +165,7 @@ export default function AmbientShader({
         canvas.width = w;
         canvas.height = h;
         gl.viewport(0, 0, w, h);
+        gl.clear(gl.COLOR_BUFFER_BIT);
       }
     };
     const ro = new ResizeObserver(resize);
@@ -208,8 +179,11 @@ export default function AmbientShader({
 
     const render = (now: number) => {
       if (!running) return;
+      const t = (now - startedAt) / 1000;
       gl.uniform2f(uResolution, canvas.width, canvas.height);
-      gl.uniform1f(uTime, (now - startedAt) / 1000);
+      /* Original tempo, slowed a touch for a marketing surface. */
+      gl.uniform1f(uTime, t * 0.6);
+      gl.uniform1f(uIntensity, 1.0 + Math.sin(t * 2.0) * 0.3);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       raf = requestAnimationFrame(render);
     };
@@ -245,13 +219,16 @@ export default function AmbientShader({
       gl.deleteShader(vs);
       gl.deleteShader(fs);
     };
-  }, []);
+  }, [color1, color2]);
 
   return (
     <canvas
       ref={canvasRef}
       className={`block h-full w-full ${className}`}
       aria-hidden="true"
+      style={{
+        background: `linear-gradient(135deg, ${color1} 0%, ${color2} 100%)`,
+      }}
     />
   );
 }

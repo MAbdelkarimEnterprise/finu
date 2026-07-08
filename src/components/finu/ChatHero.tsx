@@ -121,7 +121,7 @@ export default function ChatHero() {
             className="absolute inset-x-0 bottom-0 h-[28%]"
             style={{
               background:
-                "linear-gradient(180deg, rgba(247,249,255,0) 0%, #f7f9ff 100%)",
+                "linear-gradient(180deg, rgba(255, 255, 255,0) 0%, #ffffff 100%)",
             }}
           />
         </div>

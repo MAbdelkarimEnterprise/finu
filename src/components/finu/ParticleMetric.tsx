@@ -58,10 +58,10 @@ export default function ParticleMetric({ config }: { config: RingConfig }) {
           glyph: rand() < 0.72 ? 0 : 1,
           tone:
             t < 0.68
-              ? "rgba(29, 59, 255, 0.85)"
+              ? "rgba(30, 94, 255, 0.85)"
               : t < 0.88
-                ? "rgba(56, 221, 248, 0.9)"
-                : "rgba(109, 75, 255, 0.85)",
+                ? "rgba(90, 168, 255, 0.9)"
+                : "rgba(77, 124, 255, 0.85)",
           phase: rand() * TAU,
           alpha: 0,
           radiusPush: 0,
@@ -119,7 +119,7 @@ export default function ParticleMetric({ config }: { config: RingConfig }) {
       ctx.scale(dpr, dpr);
 
       /* Faint guide orbits */
-      ctx.strokeStyle = "rgba(7, 21, 47, 0.12)";
+      ctx.strokeStyle = "rgba(17, 24, 39, 0.12)";
       ctx.lineWidth = 1;
       ctx.setLineDash([2, 7]);
       ctx.beginPath();

@@ -17,7 +17,7 @@ function AiSpark() {
         <line x1="6" y1="22" x2="13" y2="22" />
         <line x1="31" y1="22" x2="38" y2="22" />
       </g>
-      <g fill="#38DDF8" className="f-glyph-orbit">
+      <g fill="#5aa8ff" className="f-glyph-orbit">
         <circle cx="22" cy="8" r="1.6" />
         <circle cx="36" cy="22" r="1.6" />
         <circle cx="22" cy="36" r="1.6" />
@@ -46,11 +46,11 @@ function CardLayers() {
         height="18"
         rx="4"
         fill="#EEF3FF"
-        stroke="#1D3BFF"
+        stroke="#1e5eff"
         className="f-glyph-slide"
       />
-      <rect x="16" y="15" width="8" height="2.4" rx="1.2" fill="#38DDF8" />
-      <circle cx="34" cy="23" r="2" fill="rgba(247,249,255,0.5)" />
+      <rect x="16" y="15" width="8" height="2.4" rx="1.2" fill="#5aa8ff" />
+      <circle cx="34" cy="23" r="2" fill="rgba(255, 255, 255,0.5)" />
     </svg>
   );
 }
@@ -67,7 +67,7 @@ function TransferPath() {
       />
       <circle cx="6" cy="30" r="2.4" fill="#4F7CFF" />
       <circle cx="38" cy="26" r="2.4" fill="#39D98A" />
-      <circle r="2" fill="#38DDF8" className="f-glyph-travel" />
+      <circle r="2" fill="#5aa8ff" className="f-glyph-travel" />
     </svg>
   );
 }
@@ -76,7 +76,7 @@ function WalletStack() {
   return (
     <svg viewBox="0 0 44 44" className="f-glyph" aria-hidden>
       <g className="f-glyph-breathe">
-        <rect x="9" y="12" width="26" height="5" rx="2.5" fill="rgba(56,221,248,0.55)" />
+        <rect x="9" y="12" width="26" height="5" rx="2.5" fill="rgba(90, 168, 255,0.55)" />
       </g>
       <g className="f-glyph-breathe" style={{ animationDelay: "-1.2s" }}>
         <rect x="9" y="20" width="26" height="5" rx="2.5" fill="rgba(79,124,255,0.7)" />
@@ -101,13 +101,13 @@ function CreditMeter() {
       <path
         d="M8 32 A 16 16 0 1 1 36 32"
         fill="none"
-        stroke="#1D3BFF"
+        stroke="#1e5eff"
         strokeWidth="3"
         strokeLinecap="round"
         pathLength={100}
         className="f-glyph-meter"
       />
-      <circle cx="22" cy="27" r="2.4" fill="#38DDF8" />
+      <circle cx="22" cy="27" r="2.4" fill="#5aa8ff" />
     </svg>
   );
 }
@@ -124,12 +124,12 @@ function SwapOrbit() {
       <path
         d="M32 28 A 12 12 0 0 1 12 28"
         fill="none"
-        stroke="rgba(56,221,248,0.5)"
+        stroke="rgba(90, 168, 255,0.5)"
         strokeWidth="1.4"
       />
       <g className="f-glyph-spin">
         <circle cx="22" cy="8" r="2.2" fill="#4F7CFF" />
-        <circle cx="22" cy="36" r="2.2" fill="#38DDF8" />
+        <circle cx="22" cy="36" r="2.2" fill="#5aa8ff" />
       </g>
     </svg>
   );
@@ -143,15 +143,15 @@ function P2PNodes() {
         y1="22"
         x2="31"
         y2="22"
-        stroke="rgba(56,221,248,0.55)"
+        stroke="rgba(90, 168, 255,0.55)"
         strokeWidth="1.4"
         strokeDasharray="2.5 3.5"
         className="f-glyph-link"
       />
-      <circle cx="10" cy="22" r="4" fill="#EEF3FF" stroke="#1D3BFF" strokeWidth="1.6" />
-      <circle cx="34" cy="22" r="4" fill="#EEF3FF" stroke="#6D4BFF" strokeWidth="1.6" />
-      <circle cx="10" cy="22" r="1.5" fill="#1D3BFF" />
-      <circle cx="34" cy="22" r="1.5" fill="#6D4BFF" />
+      <circle cx="10" cy="22" r="4" fill="#EEF3FF" stroke="#1e5eff" strokeWidth="1.6" />
+      <circle cx="34" cy="22" r="4" fill="#EEF3FF" stroke="#4d7cff" strokeWidth="1.6" />
+      <circle cx="10" cy="22" r="1.5" fill="#1e5eff" />
+      <circle cx="34" cy="22" r="1.5" fill="#4d7cff" />
     </svg>
   );
 }
