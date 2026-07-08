@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { ArrowUpRight, AudioLines, Sparkles } from "lucide-react";
 import { APP_URL, LINKS } from "./links";
-import OceanShader from "../effects/OceanShader";
+import ShaderBackground from "../effects/ShaderBackground";
 import MagneticButton from "./MagneticButton";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -114,9 +114,9 @@ export default function ChatHero() {
     >
       {/* stickyContainer: 100dvh grid, every layer stacked in 1/1 */}
       <div className="sticky top-0 grid h-[100dvh] w-full overflow-hidden [&>*]:[grid-area:1/1]">
-        {/* Layer 1 — the underwater light canvas behind the phone */}
+        {/* Layer 1 — the paper-shaders mesh behind the phone */}
         <div className="relative" aria-hidden>
-          <OceanShader className="absolute inset-0" />
+          <ShaderBackground />
           <div
             className="absolute inset-x-0 bottom-0 h-[28%]"
             style={{

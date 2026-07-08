@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { APP_URL } from "./links";
-import PaperShader from "../effects/PaperShader";
+import ShaderBackground from "../effects/ShaderBackground";
 import MagneticButton from "./MagneticButton";
 import { Reveal, TextReveal } from "./TextReveal";
 
@@ -20,7 +20,11 @@ export default function FinalCTA() {
           className="absolute inset-0 overflow-hidden rounded-[inherit]"
           style={{ background: "var(--gradient-cta)" }}
         >
-          <PaperShader color1="#174FE0" color2="#5AA8FF" />
+          <ShaderBackground
+            colors={["#123DB8", "#174FE0", "#1E5EFF", "#5AA8FF", "#D9ECFF"]}
+            fallback="var(--gradient-cta)"
+            speed={0.5}
+          />
         </div>
         <div className="relative grid gap-12 p-8 md:grid-cols-[1.4fr_1fr] md:p-16">
           <div>
