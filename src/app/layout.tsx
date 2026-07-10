@@ -11,15 +11,15 @@ export const metadata: Metadata = {
     template: "%s · Finu",
   },
   description:
-    "The world's first AI financial assistant. Finu analyzes your spending, calls out bad habits, and makes you better at money.",
+    "Finu is your money companion. Plain-English spending insights, a bill radar, a subscription catcher, and a cash-flow forecast that finally makes payday make sense.",
   keywords: [
-    "AI financial assistant",
-    "stablecoins",
-    "crypto card",
-    "AI payments",
-    "multi-currency wallet",
-    "USDC",
-    "international transfer",
+    "money companion",
+    "AI money assistant",
+    "spending insights",
+    "cash flow forecast",
+    "bill reminders",
+    "subscription tracker",
+    "budgeting without spreadsheets",
   ],
   openGraph: {
     type: "website",
@@ -27,14 +27,23 @@ export const metadata: Metadata = {
     siteName: "Finu",
     title: "Money talks. Finu talks back.",
     description:
-      "The world's first AI financial assistant. Finu analyzes your spending, calls out bad habits, and makes you better at money.",
+      "Finu is your money companion. Plain-English spending insights, a bill radar, a subscription catcher, and a cash-flow forecast that finally makes payday make sense.",
     locale: "en_US",
+    images: [
+      {
+        url: "/images/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Finu — Money talks. Finu talks back.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Money talks. Finu talks back.",
     description:
-      "The world's first AI financial assistant. Finu analyzes your spending, calls out bad habits, and makes you better at money.",
+      "Finu is your money companion. Plain-English spending insights, a bill radar, a subscription catcher, and a cash-flow forecast that finally makes payday make sense.",
+    images: ["/images/og.jpg"],
   },
   robots: {
     index: true,

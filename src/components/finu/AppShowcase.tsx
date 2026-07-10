@@ -36,9 +36,9 @@ export default function AppShowcase() {
           </span>
           <Reveal delay={0.15}>
             <p className="mt-6 max-w-md text-base leading-relaxed text-[var(--color-text-secondary)]">
-              Finu analyzes spending, calls out bad habits, and makes you
-              better at money — with your balance, transfers, and insights in
-              one place.
+              Finu reads your spending, spots the leaks, and turns it all
+              into plain answers — balance, transfers, and insights in one
+              place.
             </p>
             <div className="mt-8">
               <MagneticButton href={APP_URL} className="f-btn f-btn-primary group">

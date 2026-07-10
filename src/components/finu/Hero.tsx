@@ -41,8 +41,8 @@ export default function Hero() {
           transition={{ duration: 1, ease: EASE, delay: 0.75 }}
           className="mt-6 max-w-md text-base leading-relaxed text-[var(--color-text-secondary)] md:text-lg"
         >
-          Finu analyzes your spending, calls out bad habits, and helps you
-          get better at money.
+          Finu reads your spending, flags what&apos;s quietly draining you,
+          and answers money questions in plain human language.
         </motion.p>
 
         <motion.div

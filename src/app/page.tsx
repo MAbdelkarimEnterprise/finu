@@ -1,44 +1,47 @@
 import type { Metadata } from "next";
 import "@/styles/finu.css";
+import "@/styles/tokens.css";
+import "@/styles/landing.css";
 import { finuFontClass } from "@/components/finu/fonts";
-import PageShell from "@/components/finu/PageShell";
-import Hero from "@/components/finu/Hero";
-import AppShowcase from "@/components/finu/AppShowcase";
-import CardsSection from "@/components/finu/CardsSection";
-import ProductTabs from "@/components/finu/ProductTabs";
-import PartnersSection from "@/components/finu/PartnersSection";
-import MetricsSection from "@/components/finu/MetricsSection";
-import TestimonialsSection from "@/components/finu/TestimonialsSection";
-import FAQ from "@/components/finu/FAQ";
-import FinalCTA from "@/components/finu/FinalCTA";
-import DataPath from "@/components/finu/DataPath";
-import ParticleNarrative from "@/components/finu/ParticleNarrative";
+import SmoothScroll from "@/components/finu/SmoothScroll";
+import Footer from "@/components/finu/Footer";
+import Header from "@/components/landing/Header";
+import Hero from "@/components/landing/Hero";
+import TrustStrip from "@/components/landing/TrustStrip";
+import Problem from "@/components/landing/Problem";
+import ProductChat from "@/components/landing/ProductChat";
+import FeatureBands from "@/components/landing/FeatureBands";
+import Comparison from "@/components/landing/Comparison";
+import Testimonials from "@/components/landing/Testimonials";
+import LandingFAQ from "@/components/landing/LandingFAQ";
+import FinalCTA from "@/components/landing/FinalCTA";
 
 export const metadata: Metadata = {
   // Title falls through to the root layout default (no template suffix).
   description:
-    "Finu analyzes your spending, calls out bad habits, and makes you better at money. Pay, transfer, save, and manage stablecoins with intelligence built in.",
+    "Finu is your money companion. Plain-English spending insights, a bill radar, a subscription catcher, and a cash-flow forecast that finally makes payday make sense.",
 };
 
 export default function HomePage() {
   return (
     <div className={finuFontClass}>
-      <PageShell>
-        <Hero />
-        <DataPath height={104} className="-mb-6" />
-        <AppShowcase />
-        <CardsSection />
-        <ProductTabs />
-        <ParticleNarrative />
-        <DataPath height={104} className="-my-4" />
-        <PartnersSection />
-        <div className="f-seam" aria-hidden />
-        <MetricsSection />
-        <TestimonialsSection />
-        <div className="f-seam" aria-hidden />
-        <FAQ />
-        <FinalCTA />
-      </PageShell>
+      <SmoothScroll>
+        <div className="finu min-h-screen">
+          <Header />
+          <main>
+            <Hero />
+            <TrustStrip />
+            <Problem />
+            <ProductChat />
+            <FeatureBands />
+            <Comparison />
+            <Testimonials />
+            <LandingFAQ />
+            <FinalCTA />
+          </main>
+          <Footer />
+        </div>
+      </SmoothScroll>
     </div>
   );
 }

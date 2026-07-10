@@ -1,0 +1,35 @@
+/* Landing-only styles that don't belong in the shared finu.css. */
+
+/* Chat typing indicator (ProductChat). */
+.f-typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-text-muted);
+  opacity: 0.4;
+  animation: f-typing 1s ease-in-out infinite;
+}
+@keyframes f-typing {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .f-typing-dot {
+    animation: none;
+  }
+}
+
+/* The hero phone deliberately overhangs into the trust strip, so the
+   hero must not clip vertically. Horizontal bleed stays clipped by
+   the page-level overflow-x on .finu. */
+.hero-open {
+  overflow: visible;
+  min-height: 0;
+}
