@@ -438,9 +438,17 @@ export function MidnightIntelligenceShader({ className = "" }: ShaderProps) {
 
     const idleId = scheduleIdle(() => {
       started = true;
-      if (disposed || !pageVisible || !inViewport) return;
-      /* Reduced motion still gets one polished static frame. */
-      animationFrame = requestAnimationFrame(render);
+      if (disposed) return;
+      if (pageVisible && inViewport) {
+        /* Reduced motion still gets one polished static frame. */
+        animationFrame = requestAnimationFrame(render);
+      } else {
+        /* Hidden or off-screen at load: rAF won't fire, but an
+           opaque-black canvas must never be what a tab switch
+           reveals — paint one frame directly; the observers resume
+           the loop when the hero is actually watchable. */
+        render(performance.now());
+      }
     });
 
     return () => {

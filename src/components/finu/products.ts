@@ -30,7 +30,7 @@ export const FINU_PRODUCTS: FinuProduct[] = [
     label: "Finu AI",
     icon: MessageSquareText,
     title: "Money talks. Finu talks back.",
-    body: "Finu analyzes spending, calls out bad habits, and makes you better at money.",
+    body: "Finu reads your spending, spots the leaks, and answers in plain human language.",
     href: LINKS.ai,
   },
   {

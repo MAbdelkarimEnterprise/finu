@@ -52,7 +52,7 @@ const METRICS: Metric[] = [
     value: 5_000_000,
     suffix: "+",
     label: "Financial advice",
-    copy: "Finu analyzes spending, calls out bad habits, and makes you better at money.",
+    copy: "Finu reads your spending, spots the leaks, and answers in plain human language.",
     ring: { count: 148, radius: 1.05 },
   },
 ];
