@@ -1,7 +1,7 @@
-# Finu — Money talks. Finu talks back.
+# FINU marketing site
 
-Marketing site for [Finu](https://meetfinu.com/): the AI financial
-assistant for stablecoin payments, transfers, credit, swaps, and P2P.
+A marketing and demo site I built for [Finu](https://meetfinu.com/), an AI money assistant.
+27 commits over 6 days (Jul 5–10, 2026), solo.
 
 Design direction: **Midnight Intelligence** — dark navy surfaces
 (~75%), electric blue actions (~15%), violet + cyan reserved for AI
